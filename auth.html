@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>bugit</title>
+
+  <style type="text/css">
+    * { margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; }
+    body {
+        padding: 40px;
+        overflow: hidden;
+        -webkit-app-region: no-drag;
+    }
+    .window {
+        background: #fff;
+        height: 147px;
+        width: 410px;
+        margin: 0 auto;
+        border-radius: 5px;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 22px 50px 4px rgba(0,0,0,0.56), 0 0 0 1px rgba(0, 0, 0, 0.3);
+        padding: 3px 5px;
+        text-align: left;
+        position:absolute;
+    }
+
+    button {
+      -webkit-app-region: no-drag;
+    }
+  </style>
+
+</head>
+<body style="-webkit-app-region: drag">
+  <div class="window">
+    <div class="contenair">
+      <div id="login">
+        <ul>
+          <li>
+            <input type="text" id="login-name">
+          </li>
+          <li>
+            <input type="text" id="login-password">
+          </li>
+        </ul>
+        <button class="connect">Connect</button>
+      </div>
+      <div class="target"></div>
+    </div>
+  </div>
+    <script src="jquery-2.0.3/build/jquery.js"></script>
+    <script src="underscore-1.5.2/build/underscore.js"></script>
+    <script src="backbone-1.1.0/build/backbone.js"></script>
+    <script src="react-0.8.0/build/react.js"></script>
+    <script src="react-0.8.0/build/JSXTransformer.js"></script>
+    <script type="text/jsx">
+
+      /**
+       * @jsx React.DOM
+       */
+
+       var Profile = Backbone.Model.extend({
+          defaults : 
+          {
+              name:         null
+            , public_repos: null
+            , avatar_url:   null
+          }
+      });
+
+      var xhrCall = function( options )
+      {
+        var _void    = function(){}
+
+        var defaults = {
+            type:        'GET'
+          , dataType:    'json'
+          , data:        {}
+          , cache:       false
+          , queryString: false
+          , setAuth:     false
+          , success:     function( data, textStatus, jqXHR )
+            {
+      console.log( data )
+              fetchProfile( data )
+            }
+          , error:       function( jqXHR, textStatus, errorThrown )
+            {
+      console.log( errorThrown )
+      console.log( textStatus )
+            }
+        }
+
+        options = options || {}
+
+        if( !options.url )
+          throw new Error('no URL provided')
+
+        var settings = $.extend( {}, defaults, options )
+
+        var xhr = $.ajax( settings )
+
+        return xhr
+      }
+
+      xhrCall.prototype.getAuth = function()
+      {
+        return {
+          Authorization: 'Basic ' + Subbly.getCredentials()
+        }
+      }
+
+      var CardComponent = React.createClass({
+        componentWillMount : function() {
+          profile.on("change", (function() {
+            this.forceUpdate();
+          }.bind(this)));
+        },
+        componentWillUnmount : function() {
+          profile.off("change");
+        },
+        render : function() {
+          return (
+            <div className="card">
+              <div className="picture">
+                <img src={this.props.profile.get("avatar_url")} width="50" />
+              </div>
+              <div className="name">
+                {this.props.profile.get("name")}
+                <small>
+                  ({this.props.profile.get("public_repos")}) repos
+                </small>
+              </div>
+            </div>
+          );
+        }
+      });
+      
+      var connect = document.querySelector(".connect");
+      var target  = document.querySelector(".target");
+      var profile = new Profile();
+
+      var fetchProfile = function( result ) {
+        React.renderComponent(
+          <CardComponent profile={profile} />,
+          target
+        );
+console.log('fetchProfile', result )
+
+        document.getElementById('login').style.display = 'none'
+
+        profile.set("name", result.name);
+        profile.set("public_repos", result.public_repos);
+        profile.set("avatar_url", result.avatar_url);
+
+        // var params = "?redirect=false&width=200&height=200";
+
+        // FB.api("/me/picture" + params, "get", {}, function(result) {
+        //   profile.set("picture", result.data.url);
+        // });
+      };
+
+      $(function()
+      {
+        var nw = require('nw.gui').Window.get()
+        nw.showDevTools()
+
+        var gui = require('nw.gui');
+        var win = gui.Window.get();
+        var nativeMenuBar = new gui.Menu({ type: "menubar" });
+        nativeMenuBar.createMacBuiltin("My App");
+        win.menu = nativeMenuBar;
+
+        nw.focus();
+
+        connect.addEventListener("click", function() {
+          console.warn('ok')
+          var username     = document.getElementById('login-name').value
+            , password     = document.getElementById('login-password').value
+            , encode       = window.btoa( unescape( encodeURIComponent( [ username, password ].join(':') ) ) )
+            , authenticate = new xhrCall(
+              {
+                  url:       'https://api.github.com/user'
+                , headers: {
+                    Authorization: 'Basic ' + encode
+                  }
+              })
+        });
+      })
+    </script>
+</body>
+</html>

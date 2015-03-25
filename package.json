@@ -1,0 +1,16 @@
+{
+  "name": "bugit",
+  "main": "auth.html",
+  "window": {
+        "title": "Test",
+        "toolbar": false,
+        "position": "center",
+        "width": 500,
+        "height": 300,
+        "resizable": true,
+        "show": true,
+        "frame": false,
+        "transparent": true
+  },
+  "chromium-args" : "--javascript-harmony --disable-gpu --force-cpu-draw"
+}
