@@ -24,6 +24,7 @@
         padding: 3px 5px;
         text-align: left;
         position:absolute;
+        pointer-events: none;
     }
 
     button {
@@ -148,12 +149,12 @@
         );
 console.log('fetchProfile', result )
 
-        document.getElementById('login').style.display = 'none'
+        // document.getElementById('login').style.display = 'none'
 
-        profile.set("name", result.name);
-        profile.set("public_repos", result.public_repos);
-        profile.set("avatar_url", result.avatar_url);
-
+        // profile.set("name", result.name);
+        // profile.set("public_repos", result.public_repos);
+        // profile.set("avatar_url", result.avatar_url);
+profile.set("public_repos", result.length);
         // var params = "?redirect=false&width=200&height=200";
 
         // FB.api("/me/picture" + params, "get", {}, function(result) {
@@ -181,7 +182,7 @@ console.log('fetchProfile', result )
             , encode       = window.btoa( unescape( encodeURIComponent( [ username, password ].join(':') ) ) )
             , authenticate = new xhrCall(
               {
-                  url:       'https://api.github.com/user'
+                  url:       'https://api.github.com/user/repos' //'https://api.github.com/user'
                 , headers: {
                     Authorization: 'Basic ' + encode
                   }
