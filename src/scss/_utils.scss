@@ -1,0 +1,108 @@
+/* 
+Utility class for small fixes
+Last Updated: 2015-03-20
+*/
+
+// Borders
+// --------------------------------------------------
+
+// border less
+.u-br-l { border:none !important; }
+
+// Clear
+// --------------------------------------------------
+
+.u-cb { clear:both !important;  }
+.u-cl { clear:left !important;  }
+.u-cr { clear:right !important; }
+.u-cf { @include clearfix; }
+
+// Display
+// --------------------------------------------------
+    
+.u-db  { display:block !important; }
+.u-dn  { display:none !important;  }
+.u-di  { display:inline !important; }
+.u-dib { display: inline-block !important; }
+
+.visible { visibility:visible !important; }
+.hidden { visibility:hidden !important; }
+
+// Float
+// --------------------------------------------------
+
+.u-fl { float: left !important; }
+.u-fr { float: right !important; }
+.u-fn { float: none !important; }
+
+// float fixer
+.u-ff {
+  overflow:hidden;
+  width:100%;
+}
+
+// Font style
+// --------------------------------------------------
+    
+.strong { font-weight: bold !important; }
+.italic { font-style:  italic !important; }
+.normal { font-weight: normal !important; }
+
+.uppercase  { text-transform:uppercase !important; }
+.lowercase  { text-transform:lowercase !important; }
+.capitalize { text-transform:capitalize !important; }
+
+.u-deco-none      { text-decoration:none !important; }
+.u-deco-underline { text-decoration: underline !important; }
+
+.u-tr { text-align:right !important; }
+.u-tl { text-align:left !important; }
+.u-tc { text-align:center !important; }
+.u-tj { text-align:justify !important; }
+
+.word-wrap {
+  word-wrap: break-word;
+  overflow-wrap:break-word;
+}
+
+
+// Position
+// --------------------------------------------------
+
+.u-pa { position: absolute !important; }
+.u-pr { position:relative !important; }
+
+// Cursor
+// ---------------------------------------------------
+
+.u-cp { cursor: pointer !important; }
+.u-cd { cursor: default !important; }
+
+//
+// Utility class for Flexbox
+// --------------------------------------------------
+//
+
+.u-fb {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+//== Distribution and axe
+//
+
+.u-fb-row { 
+  flex-direction: row !important;
+
+  &.reverse { 
+    flex-direction: row-reverse !important;
+  }
+}
+
+.u-fb-col {
+  flex-direction: column !important;
+
+  &.reverse { 
+    flex-direction: column-reverse !important;
+  }
+}

@@ -1,0 +1,69 @@
+
+
+//== Colors
+//
+//## Gray and brand colors for use across Project.
+
+$gray:                   #363636;
+$gray-light:             #f4f4f2;
+$gray-dark:              #b8b8b8;
+$gray-darker:            #6e6e6e;
+
+$border-color:           #dcdcd7;
+$brand-primary:          #52cc52;
+
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+$body-bg: #fff; //#f7f7f7;
+//** Global text color on `<body>`.
+$text-color:            $gray;
+
+$content-max-with:    1040px;
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+
+$font-family-sans-serif:  'proxima-nova-soft', Helvetica, Arial, sans-serif;
+$font-family-brand:       'ff-enzo-web', Helvetica, Arial, sans-serif;
+
+$font-size-base:          14px;
+$font-size-large:         ceil(($font-size-base * 1.25)); // ~18px
+$font-size-small:         ceil(($font-size-base * 0.85)); // ~12px
+
+$font-size-h1:            ceil(($font-size-base * 4.28)); // ~60px
+$font-size-h2:            floor(($font-size-base * 2.6)); // ~36px
+$font-size-h3:            ceil(($font-size-base * 1.85)); // ~26px
+$font-size-h4:            floor(($font-size-base * 1.43)); // ~20px
+
+
+//== Components
+//
+//##
+
+$border-radius-small:       2px;
+$border-radius-btn:        40px;
+
+//== Forms
+//
+//##
+
+//** `<input>` background color
+$input-bg:                       #fff;
+
+//** Text color for `<input>`s
+$input-color:                    $gray;
+
+//** `<input>` border color
+$input-border:                   rgba($gray-darker,.7);
+
+$input-border-radius:            $border-radius-small;
+
+//** Border color for inputs on focus
+$input-border-focus:             rgba($gray-darker,1);
+
+$input-height-base:              46px;
