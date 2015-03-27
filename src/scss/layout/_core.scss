@@ -19,10 +19,12 @@ Last Updated: 2015-03-20
 html, body { 
   height: 100%; 
   width: 100%; 
+  user-select: none;
+  cursor: default
 }
 
 body {
-  // background: red;
+  background: red;
   overflow: hidden;
   padding: 8px 20px 20px;
 }
