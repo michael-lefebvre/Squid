@@ -9,27 +9,49 @@
   <link rel="stylesheet" href="build/golf.css">
 
 </head>
-<body>
+<body class="-login">
   <div class="window">
     <div class="container">
-      <div class="welcome">
-        <div class="logo"></div>
-        <h1>Welcome to Golf</h1>
-        <p>
-          Golf gives you a quick access to all your Github repositories. Browse, search and clone to your desktop using Github for Mac.
-        </p>
-      </div><!-- /.welcome -->
-      <div class="login">
-        <p class="form-control">
-          <input type="text" id="login-email" class="input" placeholder="Your username or email">
-        </p>
-        <p class="form-control">
-          <input type="password" id="login-password" class="input" placeholder="Your password">
-        </p>
-        <p>
-          We don’t store your credentials. But of course, we just need them to access your repositories.
-        </p>
-      </div><!-- /.login -->
+      <div class="header">
+        <div class="header__content is-header-welcome">
+          <div class="header__welcome">
+            <div class="logo"></div>
+            <h1>Welcome to Golf</h1>
+            <p>
+              Golf gives you a quick access to all your Github repositories. Browse, search and clone to your desktop using Github for Mac.
+            </p>
+          </div><!-- /.header__welcome -->
+          <div class="header__connected">
+            <div class="card">
+              <div class="card__picture">
+                <img src="https://avatars0.githubusercontent.com/u/279053?v=3&s=40" width="34" />
+              </div>
+              <div class="card__name">
+                Hi michael-lefebvre
+              </div>
+              <div class="card__repos">
+                You have <strong>30 repositories</strong> available
+              </div>
+            </div>
+          </div><!-- /.header__connected -->
+        </div><!-- /.header__content -->
+      </div><!-- /.header -->
+      <div class="content"></div><!-- /.content -->
+      <div class="footer">
+        <div class="footer__content">
+          <div class="login">
+            <p class="form-control">
+              <input type="text" id="login-email" class="input" placeholder="Your username or email">
+            </p>
+            <p class="form-control">
+              <input type="password" id="login-password" class="input" placeholder="Your password">
+            </p>
+            <p>
+              We don’t store your credentials. But of course, we just need them to access your repositories.
+            </p>
+          </div><!-- /.login -->
+        </div><!-- /.footer__content -->
+      </div><!-- /.footer -->
     </div><!-- /.container -->
   </div><!-- /.window -->
   <script src="build/golf.js"></script>

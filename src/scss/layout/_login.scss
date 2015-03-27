@@ -6,12 +6,21 @@
   width: 72px;
 }
 
-.welcome {
+.header__content {
+  transition: all 250ms ease;
+}
+
+.login .header__content {
+  transform: translateY(-254px);
+}
+
+.header__welcome {
   background: #FBFCFF;
-  border-bottom: 1px solid #B6B6B6;
   // box-shadow: 0px -1px 0px 0px #B6B6B6;
+  opacity: 1;
   padding: 45px 20px 40px;
   text-align: center;
+  transition: opacity 500ms ease;
   
   h1 {
     color: black;
@@ -42,4 +51,13 @@
       margin-bottom: 10px;
     }
   }
+}
+
+.is-header-welcome {
+
+}
+
+.header__connected {
+  background-image: -webkit-linear-gradient(-180deg, #FBFCFF 0%, #ECECEC 100%);
+  height: 69px;
 }
