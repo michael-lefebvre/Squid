@@ -9,11 +9,12 @@
   <link rel="stylesheet" href="build/golf.css">
 
 </head>
-<body class="-login">
+<body class="-context_logged">
+  <span class="window-arrow"></span>
   <div class="window">
     <div class="container">
       <div class="header">
-        <div class="header__content is-header-welcome">
+        <div class="header__content">
           <div class="header__welcome">
             <div class="logo"></div>
             <h1>Welcome to Golf</h1>
@@ -24,21 +25,26 @@
           <div class="header__connected">
             <div class="card">
               <div class="card__picture">
-                <img src="https://avatars0.githubusercontent.com/u/279053?v=3&s=40" width="34" />
+                <img src="src/fixtures/avatar.jpg" width="34">
               </div>
-              <div class="card__name">
-                Hi michael-lefebvre
-              </div>
-              <div class="card__repos">
-                You have <strong>30 repositories</strong> available
-              </div>
-            </div>
+              <div class="card__profile">
+                <div class="card__name">
+                  Hi michael-lefebvre,
+                </div>
+                <div class="card__repos">
+                  You have <strong>30 repositories</strong> available
+                </div>
+              </div><!-- /.card__profile -->
+              <div class="header__search"></div><!-- /.header__search -->
+            </div><!-- /.card -->
           </div><!-- /.header__connected -->
         </div><!-- /.header__content -->
       </div><!-- /.header -->
-      <div class="content"></div><!-- /.content -->
       <div class="footer">
         <div class="footer__content">
+          <div class="footer_logged">
+              <div class="footer__gears"></div><!-- /.footer__gears -->
+          </div><!-- /.footer_logged -->
           <div class="login">
             <p class="form-control">
               <input type="text" id="login-email" class="input" placeholder="Your username or email">
@@ -52,6 +58,36 @@
           </div><!-- /.login -->
         </div><!-- /.footer__content -->
       </div><!-- /.footer -->
+      <div class="repositories">
+        <div class="repositories__content">
+          <div class="repositories__search">
+            <input type="text" id="search-query" class="input" placeholder="Search a repository…">
+          </div><!-- /.repositories__search -->
+          <div class="repositories__list -loading">
+            <ul>
+              <li>
+                <span class="repo__avatar">
+                  <img src="src/fixtures/org-efounders.png" width="34">
+                </span><!-- /.repo__avatar -->
+                <span class="repo__label">
+                  <span>
+                    <span class="repo__org">efounders/</span><span class="repo__name">efounders-website</span>
+                  </span>
+                </span><!-- /.repo__label -->
+              </li>
+              <li>
+                <span class="repo__avatar">
+                  <img src="src/fixtures/org-front.png" width="34">
+                </span><!-- /.repo__avatar -->
+                <span class="repo__label">
+                  <span class="repo__org">frontapp/</span><span class="repo__name">front</span>
+                  <span class="repo__desc">Make your Customers &amp; your Team Happier</span><!-- /.repo_desc -->
+                </span><!-- /.repo__label -->
+              </li>
+            </ul>            
+          </div><!-- /.repositories__list -->
+        </div><!-- /.repositories__content -->
+      </div><!-- /.repositories -->
     </div><!-- /.container -->
   </div><!-- /.window -->
   <script src="build/golf.js"></script>

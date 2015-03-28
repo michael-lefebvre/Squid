@@ -37,23 +37,22 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   height: 425px;
   margin: 0 auto;
-  // pointer-events: none;
+  overflow: hidden;
   position: relative;
   text-align: left;
   width: 340px;
+}
 
-  &:before {
-    content: '';
-    border-bottom: 5px solid #FBFCFF;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    left: 50%;
-    margin-left: -4px;
-    position: absolute;
-    top: -5px;
-    height: 0; 
-    width: 0; 
-  }
+.window-arrow {
+  border-bottom: 5px solid #FBFCFF;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  left: 50%;
+  margin-left: -4px;
+  position: absolute;
+  top: 3px;
+  height: 0; 
+  width: 0; 
 }
 
 .container {
@@ -66,23 +65,29 @@ body {
 // Sections
 // ---------------
 
-.header {
-  // background: #FBFCFF;
-  border-bottom: 1px solid #B6B6B6;
-  height: 255px;
-  overflow: hidden
+.header,
+.header__content,
+.content,
+.footer,
+.footer__content,
+.repositories__content {
+  overflow: hidden;
+  transition: all $core-duration $bezier;
 }
 
-.login .header {
-  height: 69px
+.header {
+  @include position( absolute, 0 null null 0 );
+  // background: #FBFCFF;
+  border-bottom: 1px solid #B6B6B6;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+  height: $header-open-height;
+  overflow: hidden;
+  width: 100%;
+  z-index: $zindex-hearder;
 }
 
 .content {}
-.footer {
-  height: 170px;
-  @include position( absolute, null 0 0 0);
-  overflow: hidden
-}
+
 
 // Form
 // ---------------
@@ -95,4 +100,46 @@ body {
   height: 40px;
   line-height: 40px;
   padding: 0 12px;
+}
+
+// Loader
+// ---------------
+
+@include keyframes( loader ) {
+  0% {
+    opacity: 1;
+    transform: scale(.125); 
+  }
+  100% { 
+    opacity: 0;
+    transform: scale(.4); 
+  }
+}
+
+.loading {
+  position: relative;
+
+  &:before {
+    content: '';
+    border-radius: 150px;
+    background-clip: padding-box;
+    margin: 2em auto;
+    background-color: #bbb;
+    height: 64px;
+    width: 64px;
+    animation: loader 1s infinite;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -32px 0 0 -32px;
+    z-index: 100;
+  }
+  &:after {
+    content: '';
+    display: block;
+    // background: rgba( #aaa, .1);
+    @include position( absolute, 0 0 0 0);
+    z-index: 10;
+  }
 }

@@ -1,0 +1,96 @@
+
+.repositories {
+  @include position( absolute, $header-close-height 0 $footer-close-height 0);
+  overflow: hidden;
+  visibility: hidden;
+  z-index: $zindex-repo;
+  // transition: all 0ms linear;
+  // transition-delay: 0s;
+}
+
+.repositories__content {
+  height: 383px;
+}
+
+// .repositories,
+.repositories__content,
+.repositories__list {
+  transition: all 300ms $bezier;
+}
+
+.repositories__content {
+  transform: translateY(-$repo-search_height);
+}
+
+.repositories__list {
+  height: ( $content-height - $header-close-height - $footer-close-height );
+}
+.repositories__search {
+  border-bottom: 1px solid #B6B6B6;
+}
+
+.repositories__search .input {
+  height: 30px;
+  line-height: 30px;
+  margin: 5px 10px;
+  width: calc( 100% - 20px);
+}
+
+.repositories__list {
+  ul { 
+    height: calc( 100% + 1px );
+    list-style: none;
+    overflow-y: auto;
+  }
+
+  li {
+    background: #fff;
+    display: block;
+    border-bottom: 1px solid #D6D6D6;
+    height: 64px;
+    line-height: 64px;
+    padding: 0 10px;
+    position: relative;
+
+    // &:before {
+    //   background: #D6D6D6;
+    //   bottom: -1px;
+    //   content: '';
+    //   display: block;
+    //   height: 1px;
+    //   left: 0;
+    //   position: absolute;
+    //   width: 0;
+    // }
+  }
+}
+
+.repo__label {
+  display: table-cell;
+  height: 64px;
+  line-height: 18px;
+  vertical-align: middle;
+}
+
+.repo__name {
+  color: #4183C4;
+  font-weight: bold;
+}
+
+.repo__avatar {
+  height: 100%;
+  float: left;
+  margin-right: 10px;
+  width: 34px;
+
+  img {
+    display: inline-block;
+    vertical-align: middle
+  }
+}
+
+.repo__desc {
+  color: #999;
+  display: block;
+  font-size: 11px;
+}

@@ -22,7 +22,18 @@ $body-bg: #fff; //#f7f7f7;
 //** Global text color on `<body>`.
 $text-color:            $gray;
 
-$content-max-with:    1040px;
+$content-height:      425px;
+
+$header-open-height:  255px;
+$header-close-height:  70px;
+
+$footer-close-height:  40px;
+$footer-open-height:  171px;
+
+$repo-search_height:   41px;
+
+$bezier: cubic-bezier(0.77,0,.175,1);
+$core-duration:       800ms; //800ms
 
 //== Typography
 //
@@ -67,3 +78,13 @@ $input-border-radius:            $border-radius-small;
 $input-border-focus:             rgba($gray-darker,1);
 
 $input-height-base:              46px;
+
+
+
+//-- Z-index master list
+//
+// Note: These variables are not generated into the Customizer.
+
+$zindex-hearder:            1000;
+$zindex-footer:             1000;
+$zindex-repo:               500;

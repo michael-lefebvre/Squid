@@ -1,0 +1,45 @@
+
+.context_logged {
+
+  .header {
+    height: $header-close-height
+  }
+
+
+  .header__content {
+    transform: translateY(-$header-open-height);
+  }
+
+  .footer {
+    height: 40px;
+  }
+
+  .footer__content {
+    transform: translateY(0);
+  }
+
+  .repositories {
+    visibility: visible;
+    // transition-delay: 2s;
+  }
+
+  .repositories__list {
+    li:before {
+      transition-delay: 200ms;
+      width: 100%;
+    }
+  }
+}
+
+.context_search {
+  .repositories__content {
+    transform: translateY(0);
+     height: 315px;
+  }
+  .repositories__list {
+    height: ( $content-height - $header-close-height - $footer-close-height - $repo-search-height );
+  }
+  // .repositories {
+  //   bottom: 0
+  // }
+}

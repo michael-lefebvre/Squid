@@ -6,21 +6,14 @@
   width: 72px;
 }
 
-.header__content {
-  transition: all 250ms ease;
-}
-
-.login .header__content {
-  transform: translateY(-254px);
-}
-
 .header__welcome {
   background: #FBFCFF;
   // box-shadow: 0px -1px 0px 0px #B6B6B6;
   opacity: 1;
   padding: 45px 20px 40px;
   text-align: center;
-  transition: opacity 500ms ease;
+  // transition: opacity 500ms ease;
+  height: $header-open-height;
   
   h1 {
     color: black;
@@ -59,5 +52,49 @@
 
 .header__connected {
   background-image: -webkit-linear-gradient(-180deg, #FBFCFF 0%, #ECECEC 100%);
-  height: 69px;
+  height: $header-close-height;
+}
+
+.card {
+  @include clearfix;
+  padding: 17px 0 0 15px;
+  position: relative
+}
+
+.card__picture {
+  border-radius: 999px;
+  float: left;
+  height: 34px;
+  overflow: hidden;
+  width: 34px;
+}
+
+.card__profile {
+  float: left;
+  margin-left: 10px;
+}
+
+.card__name {
+  color: #999;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.card__repos {
+  color: #666;
+  font-size: 14px;
+
+  strong {
+    color: #333;
+  }
+}
+
+.header__search {
+  background: url(../src/icons/search.svg) center no-repeat;
+  height: 20px;
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  width: 20px;
 }

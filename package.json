@@ -17,6 +17,7 @@
     "gulp": "^3.6.2",
     "gulp-autoprefixer": "^2.1.0",
     "gulp-bower": "0.0.10",
+    "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.4",
     "gulp-plumber": "^1.0.0",
     "gulp-rename": "^1.2.0",
@@ -24,9 +25,7 @@
     "gulp-sourcemaps": "^1.5.0",
     "gulp-uglify": "^0.3.0",
     "gulp-watch": "^0.6.4",
-    "node-bourbon": "1.2.3",
-    "gulp-concat": "^2.2.0",
-    "gulp-uglify": "^0.3.0"
+    "node-bourbon": "1.2.3"
   },
-  "chromium-args" : "--javascript-harmony --disable-gpu --force-cpu-draw"
+  "chromium-args": "--javascript-harmony --disable-gpu --force-cpu-draw"
 }
