@@ -24,21 +24,21 @@ $('div.header__search').on('click', function()
 
 // var nw = require('nw.gui').Window.get()
 //   , visible = false
-// // nw.showDevTools()
+// nw.showDevTools()
 
 // var gui = require('nw.gui');
 // var win = gui.Window.get();
-// var nativeMenuBar = new gui.Menu({ type: "menubar" });
-// nativeMenuBar.createMacBuiltin("My App");
-// win.menu = nativeMenuBar;
+var nativeMenuBar = new gui.Menu({ type: "menubar" });
+nativeMenuBar.createMacBuiltin("My App");
+win.menu = nativeMenuBar;
 
-// var winWidth = ( ( gui.App.manifest.window.width / 2 ) - 10 )
+// var winWidth = ( ( gui.App.manifest.window.width / 2 ) - 15 )
 
 // var icon = ( hires() ) ? 'Icon-@2x.png' : 'Icon.png'
 
 
 // // Create a tray icon
-// var tray = new gui.Tray({ title: 'Tray', icon: icon })
+// var tray = new gui.Tray({ title: '', icon: icon })
 
 // var showWindow = function( event )
 // {
@@ -70,5 +70,7 @@ $('div.header__search').on('click', function()
 // tray.on('click', showWindow )
 
 // win.on('blur', hideWindow )
+
+// win.show()
 
 // win.showDevTools()

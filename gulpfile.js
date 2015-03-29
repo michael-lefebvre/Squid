@@ -39,6 +39,7 @@ gulp.task('concat', function ()
       , './src/lib/react-0.8.0/build/react.js'
       , './src/lib/react-0.8.0/build/JSXTransformer.js'
       , './src/js/closure.intro.js'
+      , './src/js/helpers/tray.js'
       , './src/js/golf.js'
       , './src/js/test.js'
       , './src/js/closure.outro.js'])
