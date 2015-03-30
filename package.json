@@ -3,6 +3,8 @@
   "description": "Squid gives you a quick access to all your Github repositories.",
   "version": "0.1.0",
   "main": "index.html",
+  "serviceUrl": "https://api.github.com/",
+  "single-instance": true,
   "window": {
     "title": "Squid",
     "toolbar": false,
@@ -12,6 +14,9 @@
     "frame": false,
     "transparent": true,
     "show": false
+  },
+  "dependencies": {
+    "react": "^0.12.2"
   },
   "devDependencies": {
     "gulp": "^3.6.2",

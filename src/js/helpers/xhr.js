@@ -27,7 +27,7 @@ var xhrCall = function( options )
   if( !options.url )
     throw new Error('no URL provided')
 
-  // options.url = Golf.apiUrl( options.url )
+  options.url = Squid.formatUrl( options.url )
 
   var settings = $.extend( {}, defaults, options )
 
@@ -50,6 +50,6 @@ var xhrCall = function( options )
 xhrCall.prototype.getAuth = function()
 {
   return {
-    Authorization: 'Basic ' + Golf.getCredentials()
+    Authorization: 'Basic ' + Squid.getCredentials()
   }
 }

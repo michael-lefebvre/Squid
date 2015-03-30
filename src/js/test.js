@@ -73,4 +73,4 @@ win.menu = nativeMenuBar;
 
 // win.show()
 
-// win.showDevTools()
+win.showDevTools()

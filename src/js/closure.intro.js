@@ -1,4 +1,8 @@
 
+/**
+ * @jsx React.DOM
+ */
+
 ;(function (window, undefined) 
 {
   'use strict';
@@ -12,6 +16,10 @@
     , AppRouter     = false
     , gui           = require('nw.gui')
     , win           = gui.Window.get()
+    , models        = {}
+    // , React         = require('react')
+    // , SquidApp      = require('./components/TodoApp.react')
+
 
 // var nw = require('nw.gui').Window.get()
 // // nw.showDevTools()

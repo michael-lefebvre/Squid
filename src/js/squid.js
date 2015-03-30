@@ -38,7 +38,7 @@ SquidCore.prototype.init = function()
   // Events
   this._tray._tray.on( 'click', _.bind( this.show, this ) )
 
-  win.on('blur', _.bind( this.hide, this ) )
+  // win.on('blur', _.bind( this.hide, this ) )
 
   return this
 }
@@ -260,6 +260,19 @@ SquidCore.prototype.logout = function()
 // API
 //-------------------------------
 
+
+// Format full URL to API service
+//
+//      @params  {string}  service's URL
+//      @return  {string}
+//
+SquidCore.prototype.formatUrl = function( fragment )
+{
+  if( !fragment )
+    throw new Error( 'Squid need a Github API method' )
+
+  return gui.App.manifest.serviceUrl + fragment
+}
 
 // Call a service protected by closure
 //
