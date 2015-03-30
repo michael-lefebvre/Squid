@@ -2,7 +2,7 @@
   // On DOMready
   $(function()
   {
-    Golf.init()
+    Squid.init()
   })
 
 })( window ); // end closure

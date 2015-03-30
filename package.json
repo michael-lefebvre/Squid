@@ -1,10 +1,10 @@
 {
-  "name": "Golf",
-  "description": "Golf gives you a quick access to all your Github repositories.",
+  "name": "Squid",
+  "description": "Squid gives you a quick access to all your Github repositories.",
   "version": "0.1.0",
   "main": "index.html",
   "window": {
-    "title": "Golf",
+    "title": "Squid",
     "toolbar": false,
     "width": 380,
     "height": 465,

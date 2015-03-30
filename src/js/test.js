@@ -29,7 +29,7 @@ $('div.header__search').on('click', function()
 // var gui = require('nw.gui');
 // var win = gui.Window.get();
 var nativeMenuBar = new gui.Menu({ type: "menubar" });
-nativeMenuBar.createMacBuiltin("My App");
+nativeMenuBar.createMacBuiltin('Squid');
 win.menu = nativeMenuBar;
 
 // var winWidth = ( ( gui.App.manifest.window.width / 2 ) - 15 )

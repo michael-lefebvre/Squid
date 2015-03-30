@@ -1,5 +1,5 @@
 
-var GolfCore = function()
+var SquidCore = function()
 {
   // APP'S Constants
   // -------------
@@ -26,12 +26,12 @@ var GolfCore = function()
   // window position on display
   this._winPos            = ( ( gui.App.manifest.window.width / 2 ) - 15 )
 
-  // return Golf reference
+  // return Squid reference
   return this
 }
 
 //  App Starter point
-GolfCore.prototype.init = function()
+SquidCore.prototype.init = function()
 {
   console.info( 'Initialize App router' )
 
@@ -47,7 +47,7 @@ GolfCore.prototype.init = function()
 //-------------------------------
 
 // Display App
-GolfCore.prototype.show = function( event )
+SquidCore.prototype.show = function( event )
 {
 console.log('call show')
   if( this._isVisible )
@@ -65,7 +65,7 @@ console.log('call show')
 }
 
 // Hide App
-GolfCore.prototype.hide = function()
+SquidCore.prototype.hide = function()
 {
   if( !this._isVisible )
     return
@@ -91,7 +91,7 @@ GolfCore.prototype.hide = function()
 //      @param   {function} scope context
 //      @return  {void}
 //
-GolfCore.prototype.on = function( name, callback, context )
+SquidCore.prototype.on = function( name, callback, context )
 {
   this._event.on( name, callback, context )
 }
@@ -104,7 +104,7 @@ GolfCore.prototype.on = function( name, callback, context )
 //      @param   {function} scope context
 //      @return  {void}
 //
-GolfCore.prototype.once = function( name, callback, context )
+SquidCore.prototype.once = function( name, callback, context )
 {
   this._event.once( name, callback, context )
 }
@@ -118,7 +118,7 @@ GolfCore.prototype.once = function( name, callback, context )
 //      @return  {void}
 //
 
-GolfCore.prototype.off = function( name, callback, context )
+SquidCore.prototype.off = function( name, callback, context )
 {
   this._event.off( name, callback, context )
 }
@@ -131,7 +131,7 @@ GolfCore.prototype.off = function( name, callback, context )
 //      @return  {void}
 //
 // TODO: `args1... oh my god ! need to find a better solution
-GolfCore.prototype.trigger = function( args1, args2, args3, args4, args5, args6, args7 )
+SquidCore.prototype.trigger = function( args1, args2, args3, args4, args5, args6, args7 )
 {
 /*
 var args = [].slice.call( arguments, 1 )
@@ -151,7 +151,7 @@ this._event.trigger.apply( this, arguments )
 //
 //      return  {mixed}
 //
-GolfCore.prototype.getCookie = function( cookieName )
+SquidCore.prototype.getCookie = function( cookieName )
 {
   console.groupCollapsed( 'get cookie: ' + cookieName )
 
@@ -188,7 +188,7 @@ GolfCore.prototype.getCookie = function( cookieName )
 //
 //      return  {void}
 //
-GolfCore.prototype.setCookie = function( cookieName, value, expire )
+SquidCore.prototype.setCookie = function( cookieName, value, expire )
 {
   document.cookie = cookieName + '=' + value + '; path=/'
 }
@@ -204,7 +204,7 @@ GolfCore.prototype.setCookie = function( cookieName, value, expire )
 //      @param   {string}   `Basic Auth` encoded string
 //      @return  {void}
 //
-GolfCore.prototype.setCredentials = function( credentials )
+SquidCore.prototype.setCredentials = function( credentials )
 {
   console.info('Set user credentials')
 
@@ -217,7 +217,7 @@ GolfCore.prototype.setCredentials = function( credentials )
 //
 //      @return  {object}
 //
-GolfCore.prototype.getCredentials = function()
+SquidCore.prototype.getCredentials = function()
 {
   if( !this._credentials )
     throw new Error( 'User credentials are not set' )
@@ -230,7 +230,7 @@ GolfCore.prototype.getCredentials = function()
 //
 //      @return  {boolean}
 //
-GolfCore.prototype.isLogin = function()
+SquidCore.prototype.isLogin = function()
 {
   var credentials = this.getCookie( this._CREDENTIALSCOOKIE )
 
@@ -245,7 +245,7 @@ GolfCore.prototype.isLogin = function()
 //
 //      @return  {void}
 //
-GolfCore.prototype.logout = function()
+SquidCore.prototype.logout = function()
 {
   console.info( 'user logout' )
 
@@ -267,13 +267,13 @@ GolfCore.prototype.logout = function()
 //      @params  {object}  service arguments
 //      @return  {mixed}
 //
-GolfCore.prototype.api = function( serviceName, args )
+SquidCore.prototype.api = function( serviceName, args )
 {
   var service = Helpers.getNested( Components, serviceName, false )
     , args    = args || null
 
   if( !service )
-    throw new Error( 'Golf API do not include ' + serviceName )
+    throw new Error( 'Squid API do not include ' + serviceName )
 
   // if it's a Backbone's element ( a.k.a. a model, collection or view)
   // we create a new instance
@@ -285,7 +285,7 @@ GolfCore.prototype.api = function( serviceName, args )
 
 // Global Init
 
-console.groupCollapsed( 'Golf Global Init' )
+console.groupCollapsed( 'Squid Global Init' )
 
-window.Golf = new GolfCore()
+window.Squid = new SquidCore()
 

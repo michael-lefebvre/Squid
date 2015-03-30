@@ -16,7 +16,7 @@ gulp.task('default', [
 // Compile Sass
 gulp.task('sass', function () 
 {
-  gulp.src('./src/scss/golf.scss')
+  gulp.src('./src/scss/squid.scss')
     .pipe( sourcemaps.init() )
     .pipe( sass({
       includePaths: require('node-bourbon').includePaths
@@ -40,11 +40,11 @@ gulp.task('concat', function ()
       , './src/lib/react-0.8.0/build/JSXTransformer.js'
       , './src/js/closure.intro.js'
       , './src/js/helpers/tray.js'
-      , './src/js/golf.js'
+      , './src/js/squid.js'
       , './src/js/test.js'
       , './src/js/closure.outro.js'])
     .pipe( sourcemaps.init() )
-      .pipe( concat('golf.js') )
+      .pipe( concat('squid.js') )
     .pipe( sourcemaps.write() )
     // .pipe( uglify() )
     .pipe( gulp.dest( buildFolder ) )
