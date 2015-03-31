@@ -1,8 +1,4 @@
 
-/**
- * @jsx React.DOM
- */
-
 ;(function (window, undefined) 
 {
   'use strict';

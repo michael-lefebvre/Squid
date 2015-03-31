@@ -19,7 +19,8 @@
     "react": "^0.12.2"
   },
   "devDependencies": {
-    "gulp": "^3.6.2",
+    "browserify": "^7.0.3",
+    "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.1.0",
     "gulp-bower": "0.0.10",
     "gulp-concat": "^2.2.0",
@@ -30,7 +31,20 @@
     "gulp-sourcemaps": "^1.5.0",
     "gulp-uglify": "^0.3.0",
     "gulp-watch": "^0.6.4",
-    "node-bourbon": "1.2.3"
+    "node-bourbon": "1.2.3",
+    "reactify": "^0.17.1",
+    "vinyl-source-stream": "^1.0.0",
+    "vinyl-transform": "^1.0.0"
   },
-  "chromium-args": "--javascript-harmony --disable-gpu --force-cpu-draw"
+  "chromium-args": "--javascript-harmony --disable-gpu --force-cpu-draw",
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
+    ]
+  }
 }

@@ -1,7 +1,9 @@
 /**
  * @jsx React.DOM
  */
- 
+
+var React = require('react') 
+
 var MyComponent = React.createClass({
     render: function(){
         return (
@@ -10,7 +12,7 @@ var MyComponent = React.createClass({
     }
 })
 
-React.renderComponent(
-    <MyComponent/>,
-    document.querySelector('div.logo')
-);
+// React.renderComponent(
+//     <MyComponent/>,
+//     document.querySelector('div.logo')
+// );

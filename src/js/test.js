@@ -74,3 +74,16 @@ win.menu = nativeMenuBar;
 // win.show()
 
 win.showDevTools()
+
+/* @jsx React.DOM */
+
+// var React = require('react');
+// var HelloWorld = require('./components/helloWorld.jsx');
+
+// React.render(<HelloWorld />, document.querySelector('div.logo'));
+
+
+// React.render(
+//     React.createElement(MyComponent, null),
+//     window.document.querySelector('div.logo')
+// );
