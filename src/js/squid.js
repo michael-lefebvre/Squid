@@ -30,7 +30,7 @@ var SquidCore = function()
   this._tray              = new Tray()
 
   // window position on display
-  this._winPos            = ( ( Gui.App.manifest.window.width / 2 ) - 15 )
+  this._winPos            = ( ( Gui.App.manifest.window.width / 2 ) - 11 )
 
   // return Squid reference
   return this
