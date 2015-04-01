@@ -76,7 +76,7 @@ gulp.task('browserify', function ()
 gulp.task('watch', function () 
 {
   gulp.watch(
-      ['./src/scss/*.scss', './src/scss/**/*.scss', './src/js/*', './index.js']
+      ['./src/scss/*.scss', './src/scss/**/*.scss', './src/js/*', './src/js/**/*', './index.js']
     , ['sass', 'concat']
   )
 })
