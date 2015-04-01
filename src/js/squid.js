@@ -2,7 +2,7 @@
 var Tray = require('./helpers/tray')
   , Gui  = window.require('nw.gui')
   , Win  = Gui.Window.get()
-  , _    = require('./helpers/underscore')
+  , _    = require('underscore')
 
 var SquidCore = function()
 {
