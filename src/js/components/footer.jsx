@@ -6,13 +6,12 @@ var React  = require('react')
   , Squid  = require('../squid')
   , PubSub = require('pubsub-js')
 
-module.exports = Login = React.createClass(
+var Login = React.createClass(
 {
     // Initialize
 
     componentDidMount: function()
     {
-      console.info('caching #js-login-feedback')
       this._feedbackNode = document.getElementById('js-login-feedback')
       this._loginEmail   = document.getElementById('input-username')
       this._loginPass    = document.getElementById('input-password')
@@ -136,6 +135,31 @@ module.exports = Login = React.createClass(
           <p>
             We don’t store your credentials. But of course, we just need them to access your repositories.
           </p>
+        </div>
+      )
+    }
+})
+
+
+var Gears = React.createClass(
+{
+    render: function(){
+      return (
+        <div className="footer_logged u-cf">
+          <div className="footer__gears"></div>
+        </div>
+      )
+    }
+})
+
+
+module.exports = Footer = React.createClass(
+{
+    render: function(){
+      return (
+        <div className="login">
+          <Gears />
+          <Login />
         </div>
       )
     }
