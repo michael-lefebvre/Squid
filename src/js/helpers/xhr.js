@@ -24,9 +24,7 @@ module.exports = xhrCall = function( options )
     if( isSuccessStatus( this.status ) )
     {
       if( options.success )
-      {
-        options.success.call(this)
-      }
+        options.success( JSON.parse( this.response ) )
 
       return
     }
