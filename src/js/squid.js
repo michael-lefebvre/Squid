@@ -10,26 +10,25 @@ var SquidCore = function()
   // -------------
 
   // Current version of the library.
-  this._VERSION           = '0.1.0'
+  this._VERSION     = '0.1.0'
+
+  // User credentials localStorage's item name
+  this._CREDENTIALS = 'SquidCredentials'
 
   // App state
-  this._isVisible         = false
-
-  // Pub/Sub channel,
-  // extends the original `Backbone.Events`
-  // this._event  = _.extend( {}, Backbone.Events )
+  this._isVisible   = false
 
   // current user's 'model
-  this._user              = false
+  this._user        = false
 
   // current user's credentials
-  this._credentials       = false
+  this._credentials = false
 
   // system tray
-  this._tray              = new Tray()
+  this._tray        = new Tray()
 
   // window position on display
-  this._winPos            = ( ( Gui.App.manifest.window.width / 2 ) - 11 )
+  this._winPos      = ( ( Gui.App.manifest.window.width / 2 ) - 11 )
 
   // return Squid reference
   return this
@@ -38,8 +37,6 @@ var SquidCore = function()
 //  App Starter point
 SquidCore.prototype.init = function()
 {
-  // console.info( 'Initialize App router' )
-
   // Minimal Menu bar item
   var nativeMenuBar = new Gui.Menu({ type: "menubar" })
   
@@ -50,27 +47,7 @@ SquidCore.prototype.init = function()
   // Register window events
   this._tray.get().on( 'click', _.bind( this.show, this ) )
 
-  Win.on('blur', _.bind( this.hide, this ) )
-
-  try {
-    this.getCredentials()
-  }
-  catch( e ) {
-    console.warn(  e.message )
-  }
-
-var myXHR = this.api( 'user/repos', {
-    success : function( response )
-    {
-      console.log('success')
-      console.log( response )
-    }
-  , error : function( response, status )
-    {
-      console.warn('error')
-      console.log( this )
-    }
-})
+  // Win.on('blur', _.bind( this.hide, this ) )
 
   return this
 }
@@ -108,27 +85,22 @@ SquidCore.prototype.hide = function()
 }
 
 
-// EVENTS
-//-------------------------------
-
-
 // CREDENTIALS / LOGIN
 //-------------------------------
 
 
 // Set user credentials.
-// Load user settings and locales
 //
 //      @param   {string}   `Basic Auth` encoded string
 //      @return  {void}
 //
 SquidCore.prototype.setCredentials = function( credentials )
 {
-  console.info('Set user credentials')
+  console.info('Store user encoded credentials')
 
   this._credentials = credentials
 
-  window.localStorage[ this._CREDENTIALSCOOKIE ] = credentials
+  window.localStorage[ this._CREDENTIALS ] = credentials
 }
 
 // Return current user `Basic Auth` encoded credentials
@@ -137,7 +109,7 @@ SquidCore.prototype.setCredentials = function( credentials )
 //
 SquidCore.prototype.getCredentials = function()
 {
-  this._credentials = window.localStorage[ this._CREDENTIALSCOOKIE ]
+  this._credentials = window.localStorage[ this._CREDENTIALS ]
 
   if( !this._credentials )
     throw new Error( 'User credentials are not set' )
@@ -146,13 +118,20 @@ SquidCore.prototype.getCredentials = function()
 }
 
 // Check if current user is logged in
-// If `true`, trigger `user::loggedIn` event
 //
 //      @return  {boolean}
 //
 SquidCore.prototype.isLogin = function()
 {
-  var credentials = this.getCredentials()
+  try {
+    var credentials = this.getCredentials()
+  }
+  catch( e ) 
+  {
+    console.warn(  e.message )
+
+    return false
+  }
 
   if( !credentials )
     return false
@@ -171,7 +150,7 @@ SquidCore.prototype.logout = function()
 
   this._credentials = false
 
-  delete window.localStorage[ this._CREDENTIALSCOOKIE ]
+  delete window.localStorage[ this._CREDENTIALS ]
 }
 
 
@@ -212,24 +191,27 @@ SquidCore.prototype.api = function( service, options )
   }
   catch( e )
   {
-    throw new Error( e.message )
+    console.warn( e.message )
+
+    return false
   }
 
+  try 
+  {
+    var encoded = this.getCredentials()
+  }
+  catch( e ) 
+  {
+    console.warn( e.message )
 
-  var credentials  = 
-      {
-          username: 'michael@scenedata.com'
-        , password: 'test'
-      }
-    , encode       = window.btoa( unescape( encodeURIComponent( [ credentials.username, credentials.password ].join(':') ) ) )
-
+    return false
+  }
 
   options = _.extend( options || {}, {
     headers:  {
-      Authorization: 'Basic ' + encode
+      Authorization: 'Basic ' + encoded
     }
   })
-
   
   var xhr   = new XMLHttpRequest()
     , done  = false
@@ -253,9 +235,9 @@ SquidCore.prototype.api = function( service, options )
 
       return
     }
-
+// console.log( this)
     if( options.error )
-      options.error.call( this )
+      options.error( this.statusText, this )
   }
 
   Object.keys( options.headers || {} )

@@ -1,11 +1,36 @@
 /* @jsx React.DOM */
 
-var React = require('react')
-  , Gui   = window.require('nw.gui')
-  , Logo  = require('./components/logo.jsx')
-  , Squid = require('./src/js/squid.js');
+var React  = require('react')
+  , Gui    = window.require('nw.gui')
+  , Login  = require('./src/js/components/login.jsx')
+  , Squid  = require('./src/js/squid.js')
+  , PubSub = require('pubsub-js')
 
-// React.render(<Logo />, document.getElementById('logo'));
+
+// UI elemnets
+var _body = document.getElementsByTagName('body')[0]
+
+// UI interactions
+
+var showRepositories = function( msg, data )
+{
+  console.info( 'user is logged in, show repositories' )
+
+  _body.classList.add( 'context_logged' )
+}
+
+var hideRepositories = function( msg, data )
+{
+  console.info( 'hide repositories' )
+  
+  _body.classList.remove( 'context_logged' )
+}
+
+// PUB/SUB
+PubSub.subscribe( 'squid::showRepositories', showRepositories )
+
+// Mount Rect components
+React.render(<Login />, document.getElementById('squid-login'));
 
 onload = function() 
 {
@@ -13,4 +38,7 @@ onload = function()
     Gui.Window.get().showDevTools()
 
   Squid.init()
+
+  if( Squid.isLogin() )
+    showRepositories()
 }

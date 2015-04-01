@@ -30,11 +30,15 @@
 
 .login {
   color: #999;
-  padding: 25px 20px;
+  padding: 5px 20px 0;
   text-align: center;
 
   .input {
     width: 100%;
+
+    &[disabled] {
+      background-color: #eee;
+    }
   }
 
   p {
