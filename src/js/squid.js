@@ -1,6 +1,5 @@
 
 var Tray = require('./helpers/tray')
-  , Xhr  = require('./helpers/xhr')
   , Gui  = window.require('nw.gui')
   , Win  = Gui.Window.get()
   , _    = require('./helpers/underscore')
@@ -48,7 +47,7 @@ SquidCore.prototype.init = function()
 
   Win.menu = nativeMenuBar
 
-  // Events
+  // Register window events
   this._tray.get().on( 'click', _.bind( this.show, this ) )
 
   Win.on('blur', _.bind( this.hide, this ) )
@@ -60,21 +59,8 @@ SquidCore.prototype.init = function()
     console.warn(  e.message )
   }
 
-  var credentials  = 
-      {
-          username: 'michael@scenedata.com'
-        , password: 'test'
-      }
-    , encode       = window.btoa( unescape( encodeURIComponent( [ credentials.username, credentials.password ].join(':') ) ) )
-
-var myXHR = Xhr(
-{
-    url: this.formatUrl( 'user/repos' )
-  , headers: 
-    {
-      Authorization: 'Basic ' + encode
-    }
-  , success : function( response )
+var myXHR = this.api( 'user/repos', {
+    success : function( response )
     {
       console.log('success')
       console.log( response )
@@ -206,27 +192,83 @@ SquidCore.prototype.formatUrl = function( fragment )
   return Gui.App.manifest.serviceUrl + fragment
 }
 
-// Call a service protected by closure
+// Call a Github service
 //
-//      @params  {string}  service name
-//      @params  {object}  service arguments
+//      @params  {string}  service url
+//      @params  {object}  xhr options
 //      @return  {mixed}
 //
-SquidCore.prototype.xhr = function( serviceName, args )
+SquidCore.prototype.api = function( service, options )
 {
-  var service = Helpers.getNested( Components, serviceName, false )
-    , args    = args || null
+  // check response status
+  var isSuccessStatus = function ( status )
+  {
+    return status >= 200 && status < 300 || status == 304
+  }
 
-  if( !service )
-    throw new Error( 'Squid API do not include ' + serviceName )
+  try
+  {
+    var url = this.formatUrl( service )
+  }
+  catch( e )
+  {
+    throw new Error( e.message )
+  }
 
-  // if it's a Backbone's element ( a.k.a. a model, collection or view)
-  // we create a new instance
-  if( _.isFunction( service ) )
-    return new service( args )
 
-  return service
+  var credentials  = 
+      {
+          username: 'michael@scenedata.com'
+        , password: 'test'
+      }
+    , encode       = window.btoa( unescape( encodeURIComponent( [ credentials.username, credentials.password ].join(':') ) ) )
+
+
+  options = _.extend( options || {}, {
+    headers:  {
+      Authorization: 'Basic ' + encode
+    }
+  })
+
+  
+  var xhr   = new XMLHttpRequest()
+    , done  = false
+    , async = options.hasOwnProperty('async') ? options.async : true
+
+  xhr.open( options.method || 'GET', url, async )
+
+  xhr.onreadystatechange = function()
+  {
+    if( done ) return
+    if( this.readyState != 4 ) return
+
+    done = true
+
+    if( isSuccessStatus( this.status ) )
+    {
+      // if success and has callback
+      // return json parsed response
+      if( options.success )
+        options.success( JSON.parse( this.response ) )
+
+      return
+    }
+
+    if( options.error )
+      options.error.call( this )
+  }
+
+  Object.keys( options.headers || {} )
+    .forEach( function( key )
+    {
+      xhr.setRequestHeader( key, options.headers[ key ] )
+    })
+
+  xhr.send( options.data || null )
+
+  return xhr
 }
+
 
 // Global Init
 
