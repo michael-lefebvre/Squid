@@ -1,18 +1,20 @@
 
-var tray = function()
+var Gui = window.require('nw.gui')
+
+module.exports = Tray = function()
 {
   this._hires = this.hires()
 
   var icon = ( this._hires ) ? 'Icon-@2x.png' : 'Icon.png'
 
   // Create a tray icon
-  this._tray = new gui.Tray({ title: '', icon: icon })
+  this._tray = new Gui.Tray({ title: '', icon: icon })
 
   return this
 }
 
 //  test for retina / high resolution / high pixel density.
-tray.prototype.hires = function() 
+Tray.prototype.hires = function() 
 {
   // starts with default value for modern browsers
   var dpr = window.devicePixelRatio ||
@@ -26,8 +28,14 @@ tray.prototype.hires = function()
   return !!(dpr > 1);
 }
 
+// Get _tray instance
+Tray.prototype.get = function() 
+{
+  return this._tray
+}
+
 // Set new icon
-tray.prototype.set = function( icon ) 
+Tray.prototype.set = function( icon ) 
 {
   if( this._hires )
     icon = icon + '-@2x'

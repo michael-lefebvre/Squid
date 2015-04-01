@@ -1,14 +1,14 @@
 
-$('div.logo').add('div.card__picture').on('click', function()
-{
-  $body.toggleClass('context_logged')
-})
+// $('div.logo').add('div.card__picture').on('click', function()
+// {
+//   $body.toggleClass('context_logged')
+// })
 
 
-$('div.header__search').on('click', function()
-{
-  $body.toggleClass('context_search')
-})
+// $('div.header__search').on('click', function()
+// {
+//   $body.toggleClass('context_search')
+// })
 // var hires = function() {
 //   // starts with default value for modern browsers
 //   var dpr = window.devicePixelRatio ||

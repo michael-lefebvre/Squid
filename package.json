@@ -5,6 +5,7 @@
   "main": "index.html",
   "serviceUrl": "https://api.github.com/",
   "single-instance": true,
+  "debug": true,
   "window": {
     "title": "Squid",
     "toolbar": false,
@@ -16,7 +17,7 @@
     "show": false
   },
   "dependencies": {
-    "react": "^0.12.2"
+    "react": "^0.13.1"
   },
   "devDependencies": {
     "browserify": "^7.0.3",

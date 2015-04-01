@@ -36,30 +36,31 @@ gulp.task('sass', function ()
 
 gulp.task('concat', function () 
 {
-  browserify( './components.js' )
+  browserify( './index.js' )
     .transform( reactify )
     .bundle()
-    .pipe( source('bundle.js') )
+    .pipe( source('squid.js') )
     .pipe( gulp.dest( buildFolder ) )
 
-  gulp.src([
-        './src/lib/jquery-2.0.3/build/jquery.js'
-      , './src/lib/underscore-1.5.2/build/underscore.js'
-      , './src/lib/backbone-1.1.0/build/backbone.js'
-      // , './src/lib/react-0.8.0/build/react.js'
-      // , './src/lib/react-0.8.0/build/JSXTransformer.js'
-      , './build/bundle.js'
-      , './src/js/closure.intro.js'
-      , './src/js/helpers/*.js'
-      , './src/js/models/*.js'
-      , './src/js/squid.js'
-      , './src/js/test.js'
-      , './src/js/closure.outro.js'])
-    // .pipe( sourcemaps.init() )
-      .pipe( concat('squid.js') )
-    // .pipe( sourcemaps.write() )
-    // .pipe( uglify() )
-    .pipe( gulp.dest( buildFolder ) )
+// './src/lib/jquery-2.0.3/build/jquery.js'
+// , './src/lib/react-0.8.0/build/react.js'
+// , './src/lib/react-0.8.0/build/JSXTransformer.js'
+
+
+  // gulp.src([
+  //       './src/lib/underscore-1.5.2/build/underscore.js'
+  //     , './src/lib/backbone-1.1.0/build/backbone.js'
+  //     , './src/js/closure.intro.js'
+  //     , './src/js/helpers/*.js'
+  //     , './src/js/models/*.js'
+  //     , './src/js/squid.js'
+  //     , './src/js/test.js'
+  //     , './src/js/closure.outro.js'])
+  //   // .pipe( sourcemaps.init() )
+  //     .pipe( concat('squid.js') )
+  //   // .pipe( sourcemaps.write() )
+  //   // .pipe( uglify() )
+  //   .pipe( gulp.dest( buildFolder ) )
 })
 
 gulp.task('browserify', function () 
@@ -75,7 +76,7 @@ gulp.task('browserify', function ()
 gulp.task('watch', function () 
 {
   gulp.watch(
-      ['./src/scss/*.scss', './src/scss/**/*.scss', './src/js/*']
+      ['./src/scss/*.scss', './src/scss/**/*.scss', './src/js/*', './index.js']
     , ['sass', 'concat']
   )
 })

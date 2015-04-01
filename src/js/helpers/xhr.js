@@ -1,55 +1,47 @@
 
-var xhrCall = function( options )
+var Gui  = window.require('nw.gui')
+
+function isSuccessStatus( status )
 {
-  var _void    = function(){}
-
-  var defaults = {
-      type:        'GET'
-    , dataType:    'json'
-    , data:        {}
-    , cache:       false
-    , queryString: false
-    , setAuth:     false
-    , success:     function( data, textStatus, jqXHR )
-      {
-        if( settings.onSuccess && _.isFunction( settings.onSuccess ) )
-          settings.onSuccess( data, textStatus, jqXHR )
-      }
-    , error:       function( jqXHR, textStatus, errorThrown )
-      {
-        if( settings.onError && _.isFunction( settings.onError ) )
-          settings.onError( jqXHR, textStatus, errorThrown )
-      }
-  }
-
-  options = options || {}
-
-  if( !options.url )
-    throw new Error('no URL provided')
-
-  options.url = Squid.formatUrl( options.url )
-
-  var settings = $.extend( {}, defaults, options )
-
-  if( settings.queryString )
-  {
-    for( var key in settings.queryString )
-    {
-      url += '&' + key + '=' + settings.queryString[ key ]
-    }
-  }
-
-  if( settings.setAuth )
-    settings.headers = this.getAuth()
-
-  var xhr = $.ajax( settings )
-
-  return xhr
+  return status >= 200 && status < 300 || status == 304
 }
 
-xhrCall.prototype.getAuth = function()
+module.exports = xhrCall = function( options )
 {
-  return {
-    Authorization: 'Basic ' + Squid.getCredentials()
+  var xhr   = new XMLHttpRequest()
+    , done  = false
+    , async = options.hasOwnProperty('async') ? options.async : true
+
+  xhr.open( options.method || 'GET', options.url, async )
+
+  xhr.onreadystatechange = function()
+  {
+    if( done ) return
+    if( this.readyState != 4 ) return
+
+    done = true
+
+    if( isSuccessStatus( this.status ) )
+    {
+      if( options.success )
+      {
+        options.success.call(this)
+      }
+
+      return
+    }
+
+    if( options.error )
+      options.error.call( this )
   }
+
+  Object.keys( options.headers || {} )
+    .forEach( function( key )
+    {
+      xhr.setRequestHeader( key, options.headers[ key ] )
+    })
+
+  xhr.send( options.data || null )
+
+  return xhr
 }

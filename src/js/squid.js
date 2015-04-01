@@ -1,4 +1,10 @@
 
+var Tray = require('./helpers/tray')
+  , Xhr  = require('./helpers/xhr')
+  , Gui  = window.require('nw.gui')
+  , Win  = Gui.Window.get()
+  , _    = require('./helpers/underscore')
+
 var SquidCore = function()
 {
   // APP'S Constants
@@ -12,7 +18,7 @@ var SquidCore = function()
 
   // Pub/Sub channel,
   // extends the original `Backbone.Events`
-  this._event  = _.extend( {}, Backbone.Events )
+  // this._event  = _.extend( {}, Backbone.Events )
 
   // current user's 'model
   this._user              = false
@@ -21,10 +27,10 @@ var SquidCore = function()
   this._credentials       = false
 
   // system tray
-  this._tray              = new tray()
+  this._tray              = new Tray()
 
   // window position on display
-  this._winPos            = ( ( gui.App.manifest.window.width / 2 ) - 15 )
+  this._winPos            = ( ( Gui.App.manifest.window.width / 2 ) - 15 )
 
   // return Squid reference
   return this
@@ -33,12 +39,45 @@ var SquidCore = function()
 //  App Starter point
 SquidCore.prototype.init = function()
 {
-  console.info( 'Initialize App router' )
+  // console.info( 'Initialize App router' )
+
+  // Minimal Menu bar item
+  var nativeMenuBar = new Gui.Menu({ type: "menubar" })
+  
+  nativeMenuBar.createMacBuiltin('Squid')
+
+  Win.menu = nativeMenuBar
 
   // Events
-  this._tray._tray.on( 'click', _.bind( this.show, this ) )
+  this._tray.get().on( 'click', _.bind( this.show, this ) )
 
-  // win.on('blur', _.bind( this.hide, this ) )
+  Win.on('blur', _.bind( this.hide, this ) )
+
+  var credentials  = 
+      {
+          username: 'michael@scenedata.com'
+        , password: 'test'
+      }
+    , encode       = window.btoa( unescape( encodeURIComponent( [ credentials.username, credentials.password ].join(':') ) ) )
+
+var myXHR = Xhr(
+{
+    url: this.formatUrl( 'user/repos' )
+  , headers: 
+    {
+      Authorization: 'Basic ' + encode
+    }
+  , success : function()
+    {
+      console.log('success')
+      console.log( this )
+    }
+  , error : function()
+    {
+      console.warn('error')
+      console.log( this )
+    }
+})
 
   return this
 }
@@ -56,10 +95,10 @@ console.log('call show')
     return    
   }
 
-  win.moveTo( ( event.x - this._winPos ), event.y )
+  Win.moveTo( ( event.x - this._winPos ), event.y )
 
-  win.show()
-  win.focus()
+  Win.show()
+  Win.focus()
 
   this._isVisible = true
 }
@@ -71,8 +110,8 @@ SquidCore.prototype.hide = function()
     return
 
   console.log('hideWindow')
-  win.hide()
-  win.blur()
+  Win.hide()
+  Win.blur()
 
   this._isVisible = false
 }
@@ -81,66 +120,66 @@ SquidCore.prototype.hide = function()
 // EVENTS
 //-------------------------------
 
-// Backbone's events shortcuts
+// // Backbone's events shortcuts
 
-// Bind an event to a `callback` function. Passing `"all"` will bind
-// the callback to all events fired.
-// 
-//      @param   {string}   event's name
-//      @param   {function} the callback
-//      @param   {function} scope context
-//      @return  {void}
-//
-SquidCore.prototype.on = function( name, callback, context )
-{
-  this._event.on( name, callback, context )
-}
+// // Bind an event to a `callback` function. Passing `"all"` will bind
+// // the callback to all events fired.
+// // 
+// //      @param   {string}   event's name
+// //      @param   {function} the callback
+// //      @param   {function} scope context
+// //      @return  {void}
+// //
+// SquidCore.prototype.on = function( name, callback, context )
+// {
+//   this._event.on( name, callback, context )
+// }
 
-// Bind an event to only be triggered a single time. After the first time
-// the callback is invoked, it will be removed.
-// 
-//      @param   {string}   event's name
-//      @param   {function} the callback
-//      @param   {function} scope context
-//      @return  {void}
-//
-SquidCore.prototype.once = function( name, callback, context )
-{
-  this._event.once( name, callback, context )
-}
+// // Bind an event to only be triggered a single time. After the first time
+// // the callback is invoked, it will be removed.
+// // 
+// //      @param   {string}   event's name
+// //      @param   {function} the callback
+// //      @param   {function} scope context
+// //      @return  {void}
+// //
+// SquidCore.prototype.once = function( name, callback, context )
+// {
+//   this._event.once( name, callback, context )
+// }
 
 
-// Remove one or many callbacks. If `context` is null, removes all
-// callbacks with that function. If `callback` is null, removes all
-// callbacks for the event. If `name` is null, removes all bound
-// callbacks for all events.
-//
-//      @return  {void}
-//
+// // Remove one or many callbacks. If `context` is null, removes all
+// // callbacks with that function. If `callback` is null, removes all
+// // callbacks for the event. If `name` is null, removes all bound
+// // callbacks for all events.
+// //
+// //      @return  {void}
+// //
 
-SquidCore.prototype.off = function( name, callback, context )
-{
-  this._event.off( name, callback, context )
-}
+// SquidCore.prototype.off = function( name, callback, context )
+// {
+//   this._event.off( name, callback, context )
+// }
 
-// Trigger one or many events, firing all bound callbacks. Callbacks are
-// passed the same arguments as `trigger` is, apart from the event name
-// (unless you're listening on `"all"`, which will cause your callback to
-// receive the true name of the event as the first argument).
-// 
-//      @return  {void}
-//
-// TODO: `args1... oh my god ! need to find a better solution
-SquidCore.prototype.trigger = function( args1, args2, args3, args4, args5, args6, args7 )
-{
-/*
-var args = [].slice.call( arguments, 1 )
-console.log( arguments )
-this._event.trigger.apply( this, arguments )
-*/
+// // Trigger one or many events, firing all bound callbacks. Callbacks are
+// // passed the same arguments as `trigger` is, apart from the event name
+// // (unless you're listening on `"all"`, which will cause your callback to
+// // receive the true name of the event as the first argument).
+// // 
+// //      @return  {void}
+// //
+// // TODO: `args1... oh my god ! need to find a better solution
+// SquidCore.prototype.trigger = function( args1, args2, args3, args4, args5, args6, args7 )
+// {
+// /*
+// var args = [].slice.call( arguments, 1 )
+// console.log( arguments )
+// this._event.trigger.apply( this, arguments )
+// */
 
-  this._event.trigger( args1, args2, args3, args4, args5, args6, args7 )
-}
+//   this._event.trigger( args1, args2, args3, args4, args5, args6, args7 )
+// }
 
 
 // COOKIES
@@ -271,7 +310,7 @@ SquidCore.prototype.formatUrl = function( fragment )
   if( !fragment )
     throw new Error( 'Squid need a Github API method' )
 
-  return gui.App.manifest.serviceUrl + fragment
+  return Gui.App.manifest.serviceUrl + fragment
 }
 
 // Call a service protected by closure
@@ -280,7 +319,7 @@ SquidCore.prototype.formatUrl = function( fragment )
 //      @params  {object}  service arguments
 //      @return  {mixed}
 //
-SquidCore.prototype.api = function( serviceName, args )
+SquidCore.prototype.xhr = function( serviceName, args )
 {
   var service = Helpers.getNested( Components, serviceName, false )
     , args    = args || null
@@ -298,7 +337,7 @@ SquidCore.prototype.api = function( serviceName, args )
 
 // Global Init
 
-console.groupCollapsed( 'Squid Global Init' )
+// console.groupCollapsed( 'Squid Global Init' )
 
-window.Squid = new SquidCore()
+module.exports = Squid = new SquidCore()
 
