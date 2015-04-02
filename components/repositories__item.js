@@ -8,15 +8,18 @@ var React  = require('react')
 
 module.exports = Item = React.createClass(
 {
-    render: function(){
+    render: function()
+    {
+      var avatar = this.props.repo.owner.avatar_url + '&s=34'
       return (
         <li>
           <span className="repo__avatar">
-            <img src="src/fixtures/org-efounders.png" width="34"/>
+            <img src={avatar} width="34"/>
           </span>
           <span className="repo__label">
             <span>
-              <span className="repo__org">efounders/</span><span className="repo__name">efounders-website</span>
+              <span className="repo__org">{this.props.repo.owner.login}/</span><span className="repo__name">{this.props.repo.name}</span>
+              <span className="repo__desc">{this.props.repo.description}</span>
             </span>
           </span>
         </li>

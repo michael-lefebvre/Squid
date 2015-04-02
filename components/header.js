@@ -8,7 +8,13 @@ var React  = require('react')
 
 module.exports = Header = React.createClass(
 {
-    render: function(){
+    toggleSearch: function()
+    {
+      document.getElementsByTagName('body')[0]
+        .classList.toggle('context_search')
+    }
+
+  , render: function(){
       return (
         <div className="header__content">
           <div className="header__welcome">
@@ -21,7 +27,7 @@ module.exports = Header = React.createClass(
           <div className="header__connected">
             <div className="card u-cf">
               <div className="card__picture">
-                <img src="src/fixtures/avatar.jpg" width="34"/>
+                <img src="https://avatars0.githubusercontent.com/u/279053?v=3&s=34" width="34"/>
               </div>
               <div className="card__profile">
                 <div className="card__name">
@@ -31,7 +37,7 @@ module.exports = Header = React.createClass(
                   You have <strong>30 repositories</strong> available
                 </div>
               </div>
-              <div className="header__search"></div>
+              <div className="header__search" onClick={this.toggleSearch}></div>
             </div>
           </div>
         </div>

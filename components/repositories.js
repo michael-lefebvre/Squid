@@ -5,22 +5,37 @@
 var React  = require('react')
   , PubSub = require('pubsub-js')
   , Search = require('./repositories__search')
-  , Item   = require('./repositories__item')
+  , List   = require('./repositories__list')
+  , Repos  = require('./fixture-repos.json')
   // , Squid  = require('../squid')
 
 module.exports = Repositories = React.createClass(
 {
-    render: function(){
+    getInitialState: function() 
+    {
+        return {
+            filterText: ''
+        }
+    }
+
+  , handleUserInput: function( filterText ) 
+    {
+      this.setState({
+          filterText: filterText
+      })
+    }
+
+  , render: function(){
       return (
         <div className="repositories__content">
           <div className="repositories__search">
-            <Search />
+            <Search
+              filterText={this.state.filterText}
+              onUserInput={this.handleUserInput} />
           </div>
-          <div className="repositories__list -loading">
-            <ul>
-              <Item />
-            </ul>            
-          </div>
+          <List 
+            repos={Repos} 
+            filterText={this.state.filterText} />
         </div>
       )
     }
