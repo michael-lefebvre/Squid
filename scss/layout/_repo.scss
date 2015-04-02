@@ -65,6 +65,12 @@
   }
 }
 
+.repo__label,
+.repo__desc {
+  @include text-truncate;
+  max-width: $repo-label-width;
+}
+
 .repo__label {
   display: table-cell;
   height: 64px;
