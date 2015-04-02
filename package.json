@@ -2,6 +2,19 @@
   "name": "Squid",
   "description": "Squid gives you a quick access to all your Github repositories.",
   "version": "0.1.0",
+  "license": "MIT",
+  "homepage": "https://github.com/michael-lefebvre/Squid",
+  "bugs": "https://github.com/michael-lefebvre/Squid/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michael-lefebvre/Squid"
+  },
+  "keywords": [
+    "react",
+    "github",
+    "node-webkit",
+    "nw.js"
+  ],
   "main": "index.html",
   "serviceUrl": "https://api.github.com/",
   "single-instance": true,

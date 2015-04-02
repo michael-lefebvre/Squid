@@ -1,5 +1,30 @@
-global.document = window.document;
-global.navigator = window.navigator;
+/*
+
+           MMM.           .MMM
+           MMMMMMMMMMMMMMMMMMM
+           MMMMMMMMMMMMMMMMMMM      _______________________
+          MMMMMMMMMMMMMMMMMMMMM    |                      |
+         MMMMMMMMMMMMMMMMMMMMMMM   | Respect the Octocat! |
+        MMMMMMMMMMMMMMMMMMMMMMMM   |_   __________________|
+        MMMM::- -:::::::- -::MMMM    |/
+         MM~:~   ~:::::~   ~:~MM
+    .. MMMMM::. .:::+:::. .::MMMMM ..
+          .MM::::: ._. :::::MM.
+             MMMM;:::::;MMMM
+      -MM        MMMMMMM
+      ^  M+     MMMMMMMMM
+          MMMMMMM MM MM MM
+               MM MM MM MM
+               MM MM MM MM
+            .~~MM~MM~MM~MM~~.
+         ~~~~MM:~MM~~~MM~:MM~~~~
+        ~~~~~~==~==~~~==~==~~~~~~
+         ~~~~~~==~==~==~==~~~~~~
+             :~==~==~==~==~~
+*/
+
+global.document  = window.document
+global.navigator = window.navigator
 
 var React     = require('react')
   , Gui       = window.require('nw.gui')
