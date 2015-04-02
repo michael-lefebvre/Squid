@@ -1,9 +1,10 @@
-/* @jsx React.DOM */
+global.document = window.document;
+global.navigator = window.navigator;
 
 var React  = require('react')
   , Gui    = window.require('nw.gui')
-  , Squid  = require('./src/js/squid.js')
-  , Footer = require('./components/footer.jsx')
+  , Squid  = require('./methods/squid.js')
+  , Window = require('./components/window')
   , PubSub = require('pubsub-js')
 
 
@@ -30,7 +31,7 @@ var hideRepositories = function( msg, data )
 PubSub.subscribe( 'squid::showRepositories', showRepositories )
 
 // Mount Rect components
-React.render( <Footer />, document.getElementById('squid-footer') )
+React.render( <Window />, document.getElementById('squid-window') )
 
 onload = function() 
 {

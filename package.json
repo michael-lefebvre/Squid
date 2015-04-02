@@ -2,7 +2,7 @@
   "name": "Squid",
   "description": "Squid gives you a quick access to all your Github repositories.",
   "version": "0.1.0",
-  "main": "build/index.html",
+  "main": "index.html",
   "serviceUrl": "https://api.github.com/",
   "single-instance": true,
   "debug": true,
@@ -26,29 +26,13 @@
     "browserify": "^7.0.3",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.1.0",
-    "gulp-bower": "0.0.10",
     "gulp-concat": "^2.2.0",
-    "gulp-minify-css": "^0.3.4",
-    "gulp-plumber": "^1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^0.7.1",
     "gulp-sourcemaps": "^1.5.0",
-    "gulp-uglify": "^0.3.0",
     "gulp-watch": "^0.6.4",
     "node-bourbon": "1.2.3",
     "reactify": "^0.17.1",
-    "vinyl-source-stream": "^1.0.0",
-    "vinyl-transform": "^1.0.0"
-  },
-  "chromium-args": "--javascript-harmony --disable-gpu --force-cpu-draw",
-  "browserify": {
-    "transform": [
-      [
-        "reactify",
-        {
-          "es6": true
-        }
-      ]
-    ]
+    "vinyl-source-stream": "^1.0.0"
   }
 }
