@@ -2,8 +2,8 @@
 
 var React  = require('react')
   , Gui    = window.require('nw.gui')
-  , Footer = require('./src/js/components/footer.jsx')
   , Squid  = require('./src/js/squid.js')
+  , Footer = require('./components/footer.jsx')
   , PubSub = require('pubsub-js')
 
 

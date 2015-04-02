@@ -3,7 +3,7 @@
  */
 
 var React  = require('react')
-  , Squid  = require('../squid')
+  , Squid  = require('../src/js/squid.js')
   , PubSub = require('pubsub-js')
   , Login  = require('./login')
   , Gears  = require('./gears')

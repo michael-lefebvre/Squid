@@ -2,7 +2,7 @@
   "name": "Squid",
   "description": "Squid gives you a quick access to all your Github repositories.",
   "version": "0.1.0",
-  "main": "index.html",
+  "main": "build/index.html",
   "serviceUrl": "https://api.github.com/",
   "single-instance": true,
   "debug": true,
