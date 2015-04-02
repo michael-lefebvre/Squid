@@ -12,7 +12,6 @@ module.exports = Login = React.createClass(
 
     componentDidMount: function()
     {
-      console.info('caching #js-login-feedback')
       this._feedbackNode = document.getElementById('js-login-feedback')
       this._loginEmail   = document.getElementById('input-username')
       this._loginPass    = document.getElementById('input-password')

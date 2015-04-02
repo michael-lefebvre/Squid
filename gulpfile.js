@@ -32,6 +32,7 @@ gulp.task('move', function()
     .src([
         'index.html'
       , 'package.json'
+      , 'components/repos.json'
       , 'icons/*'
     ])
     .pipe( gulp.dest( buildFolder ) )
@@ -52,6 +53,7 @@ gulp.task('watch', function()
   gulp.watch( [
       'scss/*.scss'
     , 'scss/**/*.scss'
+    , 'index.js'
     , 'components/*.js'
     , 'methods/*.js'
   ], ['sass','browserify'] )
