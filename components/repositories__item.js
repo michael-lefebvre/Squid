@@ -3,8 +3,6 @@
  */
 
 var React  = require('react')
-  , PubSub = require('pubsub-js')
-  // , Squid  = require('../squid')
 
 module.exports = Item = React.createClass(
 {
@@ -18,8 +16,15 @@ module.exports = Item = React.createClass(
           </span>
           <span className="repo__label">
             <span>
-              <span className="repo__org">{this.props.repo.owner.login}/</span><span className="repo__name">{this.props.repo.name}</span>
-              <span className="repo__desc">{this.props.repo.description}</span>
+              <span className="repo__org">
+                {this.props.repo.owner.login}/
+              </span>
+              <span className="repo__name">
+                {this.props.repo.name}
+              </span>
+              <span className="repo__desc">
+                {this.props.repo.description}
+              </span>
             </span>
           </span>
         </li>

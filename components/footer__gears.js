@@ -3,8 +3,6 @@
  */
 
 var React  = require('react')
-  , PubSub = require('pubsub-js')
-  // , Squid  = require('../squid')
 
 module.exports = Gears = React.createClass(
 {

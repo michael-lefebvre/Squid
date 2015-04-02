@@ -3,7 +3,6 @@
  */
 
 var React  = require('react')
-  , PubSub = require('pubsub-js')
   , Login  = require('./footer__login')
   , Gears  = require('./footer__gears')
 

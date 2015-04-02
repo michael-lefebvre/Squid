@@ -3,7 +3,6 @@
  */
 
 var React  = require('react')
-  , PubSub = require('pubsub-js')
   , Header = require('./header')
   , Footer = require('./footer')
   , Repo   = require('./repositories')
