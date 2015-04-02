@@ -2,7 +2,11 @@
 
 Squid is a small cool tool that give you a quick access to all your Github repositories, straight from from your Mac OS X menu bar.
 
-The original idea came from a React.js/Node-Webik playground.
+### Builded on top of:
+
+* [nw.js](http://nwjs.io/)
+* [react.js](https://facebook.github.io/react/)
+* [Github API](https://developer.github.com/v3/)
 
 ### Contributors
 
@@ -20,7 +24,7 @@ The original idea came from a React.js/Node-Webik playground.
 * Start at user login [ref](https://github.com/nwjs/nw.js/wiki/Making-your-app-start-at-user-login-(OS-X))
 
 
-### Personal reminders / Troubleshoots
+## Personal reminders / Troubleshoots
 
 run the app:  
 
