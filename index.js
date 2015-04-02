@@ -1,11 +1,11 @@
 global.document = window.document;
 global.navigator = window.navigator;
 
-var React  = require('react')
-  , Gui    = window.require('nw.gui')
-  , Squid  = require('./methods/squid.js')
-  , Window = require('./components/window')
-  , PubSub = require('pubsub-js')
+var React     = require('react')
+  , Gui       = window.require('nw.gui')
+  , Squid     = require('./methods/squid.js')
+  , Container = require('./components/container')
+  , PubSub    = require('pubsub-js')
 
 
 // UI elemnets
@@ -31,7 +31,7 @@ var hideRepositories = function( msg, data )
 PubSub.subscribe( 'squid::showRepositories', showRepositories )
 
 // Mount Rect components
-React.render( <Window />, document.getElementById('squid-window') )
+React.render( <Container /> , document.getElementById('squid-window') )
 
 onload = function() 
 {

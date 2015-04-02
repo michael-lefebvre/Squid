@@ -9,7 +9,7 @@ var React  = require('react')
   , Repo   = require('./repositories')
   // , Squid  = require('../squid')
 
-module.exports = Window = React.createClass(
+module.exports = Container = React.createClass(
 {
     render: function(){
       return (
