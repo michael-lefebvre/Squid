@@ -18,6 +18,11 @@ module.exports = Login = React.createClass(
       this._parent       = document.getElementById('squid-login')
 
       this._loginEmail.focus()
+
+      this._parent.addEventListener( 'webkitAnimationEnd', function() 
+      {
+        this._parent.classList.remove('shake')
+      }.bind( this ))
     }
 
     // Valid inputs
@@ -105,6 +110,8 @@ module.exports = Login = React.createClass(
           {
             // Remove Credentials
             Squid.logout()
+
+            self._parent.classList.add('shake')
 
             // Display Error message
             var text = document.createTextNode( response )
