@@ -124,7 +124,7 @@ SquidCore.prototype.getCredentials = function()
 SquidCore.prototype.isLogin = function()
 {
   try {
-    var credentials = this.getCredentials()
+    return this.getCredentials()
   }
   catch( e ) 
   {
@@ -132,11 +132,6 @@ SquidCore.prototype.isLogin = function()
 
     return false
   }
-
-  if( !credentials )
-    return false
-
-  return true
 }
 
 // Unset user credentials. 
@@ -235,7 +230,7 @@ SquidCore.prototype.api = function( service, options )
 
       return
     }
-// console.log( this)
+
     if( options.error )
       options.error( this.statusText, this )
   }
@@ -253,8 +248,6 @@ SquidCore.prototype.api = function( service, options )
 
 
 // Global Init
-
-// console.groupCollapsed( 'Squid Global Init' )
 
 module.exports = Squid = new SquidCore()
 
