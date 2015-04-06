@@ -65,6 +65,8 @@ module.exports = Container = React.createClass(
 
             Squid.setUser( response )
 
+            PubSub.publish( 'squid::userLogged' )
+
             self.showRepositories()
 
             if( _.isFunction( obj.success ) )

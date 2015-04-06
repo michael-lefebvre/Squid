@@ -4,6 +4,7 @@
 
 var React  = require('react')
   , PubSub = require('pubsub-js')
+  , Squid  = require('../methods/squid')
 
 module.exports = Header = React.createClass(
 {
@@ -13,6 +14,20 @@ module.exports = Header = React.createClass(
 
   , componentDidMount: function()
     {
+      var self = this
+
+      // PUB/SUB
+      PubSub.subscribe( 'squid::userLogged', function( msg, data )
+      {
+        
+      })
+    }
+
+  , getInitialState: function() 
+    {
+      return {
+          userLogged: false
+      }
     }
 
   , toggleSearch: function()
