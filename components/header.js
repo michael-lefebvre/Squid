@@ -12,7 +12,8 @@ module.exports = Header = React.createClass(
         .classList.toggle('context_search')
     }
 
-  , render: function(){
+  , render: function()
+    {
       return (
         <div className="header__content">
           <div className="header__welcome">

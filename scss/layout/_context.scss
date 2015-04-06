@@ -39,7 +39,11 @@
   .repositories__list {
     height: ( $content-height - $header-close-height - $footer-close-height - $repo-search-height );
   }
-  // .repositories {
-  //   bottom: 0
-  // }
+}
+
+.context_offline {
+  .footer__login {
+    height: 0;
+    // transform: translateY(-210px);
+  }
 }

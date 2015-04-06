@@ -28,52 +28,6 @@
   }
 }
 
-.login {
-  color: #999;
-  padding: 0 20px;
-  text-align: center;
-
-  &.shake {
-    animation-duration: .5s;
-    animation-fill-mode: both;
-    animation-name: shake;
-  }
-
-  .input {
-    width: 100%;
-
-    &[disabled] {
-      background-color: #eee;
-    }
-  }
-
-  p {
-    font-size: 11px;
-
-    &.form-control {
-      margin-bottom: 10px;
-    }
-  }
-}
-
-@keyframes shake {
-  0%, 100% { transform: translate3d(0, 0, 0) }
-  10%,
-  30%,
-  50%,
-  70%,
-  90% { transform: translate3d(-10px, 0, 0) }
-  20%,
-  40%,
-  60%,
-  80% { transform: translate3d(10px, 0, 0) }
-}
-
-
-.is-header-welcome {
-
-}
-
 .header__connected {
   background-image: -webkit-linear-gradient(-180deg, #FBFCFF 0%, #ECECEC 100%);
   height: $header-close-height;

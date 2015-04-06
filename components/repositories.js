@@ -23,7 +23,8 @@ module.exports = Repositories = React.createClass(
       })
     }
 
-  , render: function(){
+  , render: function()
+    {
       return (
         <div className="repositories__content">
           <div className="repositories__search">

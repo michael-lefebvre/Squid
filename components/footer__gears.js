@@ -2,9 +2,12 @@
  * @jsx React.DOM
  */
 
-var React = require('react')
-  , Gui   = window.require('nw.gui')
-  , Squid = require('../methods/squid')
+var React  = require('react')
+  , Gui    = window.require('nw.gui')
+  , Win    = Gui.Window.get()
+  , PubSub = require('pubsub-js')
+  , Squid  = require('../methods/squid')
+  , _      = require('underscore')
 
 module.exports = Gears = React.createClass(
 {
@@ -13,55 +16,58 @@ module.exports = Gears = React.createClass(
     componentDidMount: function()
     {
       // Create an empty menu
-      this._settingsDropDown = menu = new Gui.Menu();
+      this._settingsDropDown = menu = new Gui.Menu()
 
-      // Add some items
+      // Add items
+      
       menu.append(new Gui.MenuItem({
-          label: 'Profile'
-        , click: function() 
-          {
-            console.log("I'm clicked")
-          }
+          label: 'profile'
+        , click: _.bind( this.goToProfile, this )
       }))
+
       menu.append(new Gui.MenuItem({
-          label: 'Logout'
-        , click: function() 
-          {
-            console.log("I'm clicked")
-          }
+          label: 'logout'
+        , click: _.bind( this.userLogout, this )
       }))
+
       menu.append(new Gui.MenuItem({ type: 'separator' }))
+
       menu.append(new Gui.MenuItem({
-          label: 'Quit'
-        , click: function() 
-          {
-            console.log("I'm clicked")
-          }
+          label: 'quit'
+        , click: _.bind( this.quitApp, this )
       }))
+    }
+
+    // Clicks
+    // --------------------
+
+    // Go to user profile
+  , goToProfile: function()
+    {
+      if( !Squid.getUser )
+      {
+        alert('not logged in')
+        return
+      }
+      
+      // Open URL with default browser.
+      Gui.Shell.openExternal( Squid.getUser().getProfileUrl() )
+    }
+
+  , userLogout: function()
+    {
+      PubSub.publish( 'squid::userLogout' )
+    }
+
+  , quitApp: function()
+    {
+      Win.close()
     }
 
   , handleClick: function( event )
     {
-      var element   = event.target
-        , xPosition = 0
-        , yPosition = 0
-    
-      while( element )
-      {
-        xPosition += ( element.offsetLeft - element.scrollLeft + element.clientLeft )
-        yPosition += ( element.offsetTop - element.scrollTop + element.clientTop )
-        element = element.offsetParent
-      }
-
-      // +16 to display popup
-      // on bottom/right
-      var position = { 
-          x: ( xPosition + 16 )
-        , y: ( yPosition + 16 ) 
-      }
-
       // Popup as context menu
-      this._settingsDropDown.popup( position.x, position.y )
+      this._settingsDropDown.popup( 330, 420 )
 
     }
 
