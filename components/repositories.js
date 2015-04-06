@@ -3,18 +3,35 @@
  */
 
 var React  = require('react')
+  , PubSub = require('pubsub-js')
   , Search = require('./repositories__search')
   , List   = require('./repositories__list')
   , Repos  = require('./fixture-repos.json')
 
 module.exports = Repositories = React.createClass(
 {
-    getInitialState: function() 
+    // Initialize
+
+    componentDidMount: function()
+    {
+      var self = this
+
+      // PUB/SUB
+      PubSub.subscribe( 'squid::userLogged', function( msg, data )
+      {
+        self.handleRepositoriesLoaded( [] )
+      })
+    }
+
+  , getInitialState: function() 
     {
       return {
-          filterText: ''
+          filterText:   ''
+        , repositories: []
       }
     }
+
+    // User events
 
   , handleUserInput: function( filterText ) 
     {
@@ -22,6 +39,15 @@ module.exports = Repositories = React.createClass(
           filterText: filterText
       })
     }
+
+  , handleRepositoriesLoaded: function( repositories ) 
+    {
+      this.setState({
+          repositories: repositories
+      })
+    }
+
+    // Render
 
   , render: function()
     {
@@ -33,7 +59,7 @@ module.exports = Repositories = React.createClass(
               onUserInput={this.handleUserInput} />
           </div>
           <List 
-            repos={Repos} 
+            repositories={this.state.repositories}
             filterText={this.state.filterText} />
         </div>
       )
