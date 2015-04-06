@@ -251,7 +251,7 @@ Squid.prototype.api = function( service, options )
       // if success and has callback
       // return json parsed response
       if( options.success )
-        options.success( JSON.parse( this.response ) )
+        options.success( JSON.parse( this.response ), this.getAllResponseHeaders() )
 
       return
     }

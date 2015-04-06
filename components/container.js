@@ -44,6 +44,14 @@ module.exports = Container = React.createClass(
         this.handleUserAuth({
           hash: isLogin
         })
+        Squid.setCredentials( isLogin )
+        Squid.api('user/repos', {
+          success: function( response, header )
+          {
+console.log( response )
+console.log( header )
+          }
+        })
       }
     }
 
