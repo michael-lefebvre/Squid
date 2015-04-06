@@ -3,13 +3,29 @@
  */
 
 var React  = require('react')
+  , PubSub = require('pubsub-js')
 
 module.exports = Header = React.createClass(
 {
-    toggleSearch: function()
+    _searchOpen: false
+
+    // Initialize
+
+  , componentDidMount: function()
+    {
+    }
+
+  , toggleSearch: function()
     {
       document.getElementsByTagName('body')[0]
         .classList.toggle('context_search')
+
+      this._searchOpen = ( !this._searchOpen )
+
+      if( this._searchOpen )
+        PubSub.publish( 'squid::displaySearch' )
+      else
+        PubSub.publish( 'squid::hideSearch' )
     }
 
   , render: function()
