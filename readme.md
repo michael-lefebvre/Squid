@@ -28,7 +28,7 @@ Squid is a small cool tool that give you a quick access to all your Github repos
 
 run the app:  
 
-	tmp/nwjs.app/Contents/MacOS/nwjs .
+	../tmp/nwjs.app/Contents/MacOS/nwjs .
 
 if gulp throw a `'Error: EMFILE, open '/path/to/package.json' error`, run the following command: 
 
