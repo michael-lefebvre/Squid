@@ -23,6 +23,11 @@ module.exports = Repository = Backbone.Model.extend(
       return this.get('html_url')
     }
 
+  , getOwner: function()
+    {
+      return this.get('owner').login
+    }
+
   , getDesc: function()
     {
       return this.get('description')

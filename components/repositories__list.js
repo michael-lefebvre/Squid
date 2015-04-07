@@ -19,7 +19,7 @@ module.exports = Repositories = React.createClass(
           if ( repo.searchable().search( searched ) === -1 )
             return
 
-          rows.push( <Item repo={repo.toJSON()} key={repo.get('id')} />)
+          rows.push( <Item repo={repo} key={repo.get('id')} />)
         }.bind(this))
       }
 
