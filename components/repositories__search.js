@@ -3,10 +3,30 @@
  */
 
 var React  = require('react')
+  , PubSub = require('pubsub-js')
 
 module.exports = Search = React.createClass(
 {
-    handleChange: function() 
+    // Initialize
+
+    componentDidMount: function()
+    {
+      var self = this
+
+      // PUB/SUB
+      PubSub.subscribe( 'squid::displaySearch', function( msg, data )
+      {
+        self.refs.filterTextInput.getDOMNode().focus()
+      })
+
+      PubSub.subscribe( 'squid::hideSearch', function( msg, data )
+      {
+        self.refs.filterTextInput.getDOMNode().value = ''
+        self.handleChange()
+      })
+    }
+
+  , handleChange: function() 
     {
       this.props.onUserInput(
           this.refs.filterTextInput.getDOMNode().value

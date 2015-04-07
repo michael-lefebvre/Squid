@@ -3,16 +3,48 @@
  */
 
 var React  = require('react')
+  , PubSub = require('pubsub-js')
+  , Squid  = require('../methods/squid')
 
 module.exports = Header = React.createClass(
 {
-    toggleSearch: function()
+    _searchOpen: false
+
+    // Initialize
+
+  , componentDidMount: function()
+    {
+      var self = this
+
+      // PUB/SUB
+      PubSub.subscribe( 'squid::userLogged', function( msg, data )
+      {
+        
+      })
+    }
+
+  , getInitialState: function() 
+    {
+      return {
+          userLogged: false
+      }
+    }
+
+  , toggleSearch: function()
     {
       document.getElementsByTagName('body')[0]
         .classList.toggle('context_search')
+
+      this._searchOpen = ( !this._searchOpen )
+
+      if( this._searchOpen )
+        PubSub.publish( 'squid::displaySearch' )
+      else
+        PubSub.publish( 'squid::hideSearch' )
     }
 
-  , render: function(){
+  , render: function()
+    {
       return (
         <div className="header__content">
           <div className="header__welcome">

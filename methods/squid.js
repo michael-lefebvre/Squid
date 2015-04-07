@@ -1,10 +1,11 @@
 
-var Tray = require('./helpers/tray')
-  , Gui  = window.require('nw.gui')
-  , Win  = Gui.Window.get()
-  , _    = require('underscore')
+var Gui     = window.require('nw.gui')
+  , Win     = Gui.Window.get()
+  , _       = require('underscore')
+  , Tray    = require('./tray')
+  , Profile = require('./profile')
 
-var SquidCore = function()
+var Squid = function()
 {
   // APP'S Constants
   // -------------
@@ -14,6 +15,9 @@ var SquidCore = function()
 
   // User credentials localStorage's item name
   this._CREDENTIALS = 'SquidCredentials'
+
+  // test instance uniqueness
+  this._UID         = _.uniqueId('squid_')
 
   // App state
   this._isVisible   = false
@@ -35,8 +39,10 @@ var SquidCore = function()
 }
 
 //  App Starter point
-SquidCore.prototype.init = function()
+Squid.prototype.init = function()
 {
+  console.info('debug mode: ' + Gui.App.manifest.debug )
+
   // Minimal Menu bar item
   var nativeMenuBar = new Gui.Menu({ type: "menubar" })
   
@@ -47,7 +53,8 @@ SquidCore.prototype.init = function()
   // Register window events
   this._tray.get().on( 'click', _.bind( this.show, this ) )
 
-  // Win.on('blur', _.bind( this.hide, this ) )
+  if( !Gui.App.manifest.debug )
+    Win.on('blur', _.bind( this.hide, this ) )
 
   return this
 }
@@ -56,7 +63,7 @@ SquidCore.prototype.init = function()
 //-------------------------------
 
 // Display App
-SquidCore.prototype.show = function( event )
+Squid.prototype.show = function( event )
 {
   if( this._isVisible )
   {
@@ -73,7 +80,7 @@ SquidCore.prototype.show = function( event )
 }
 
 // Hide App
-SquidCore.prototype.hide = function()
+Squid.prototype.hide = function()
 {
   if( !this._isVisible )
     return
@@ -94,7 +101,7 @@ SquidCore.prototype.hide = function()
 //      @param   {string}   `Basic Auth` encoded string
 //      @return  {void}
 //
-SquidCore.prototype.setCredentials = function( credentials )
+Squid.prototype.setCredentials = function( credentials )
 {
   console.info('Store user encoded credentials')
 
@@ -107,7 +114,7 @@ SquidCore.prototype.setCredentials = function( credentials )
 //
 //      @return  {object}
 //
-SquidCore.prototype.getCredentials = function()
+Squid.prototype.getCredentials = function()
 {
   this._credentials = window.localStorage[ this._CREDENTIALS ]
 
@@ -121,7 +128,7 @@ SquidCore.prototype.getCredentials = function()
 //
 //      @return  {boolean}
 //
-SquidCore.prototype.isLogin = function()
+Squid.prototype.isLogin = function()
 {
   try {
     return this.getCredentials()
@@ -139,13 +146,31 @@ SquidCore.prototype.isLogin = function()
 //
 //      @return  {void}
 //
-SquidCore.prototype.logout = function()
+Squid.prototype.logout = function()
 {
   console.info( 'user logout' )
 
   this._credentials = false
+  this._user        = false
 
   delete window.localStorage[ this._CREDENTIALS ]
+}
+
+
+// User model
+//-------------------------------
+
+Squid.prototype.setUser = function( user )
+{
+  this._user = new Profile( user )
+
+  return this._user
+}
+
+
+Squid.prototype.getUser = function()
+{
+  return this._user
 }
 
 
@@ -158,7 +183,7 @@ SquidCore.prototype.logout = function()
 //      @params  {string}  service's URL
 //      @return  {string}
 //
-SquidCore.prototype.formatUrl = function( fragment )
+Squid.prototype.formatUrl = function( fragment )
 {
   if( !fragment )
     throw new Error( 'Squid need a Github API method' )
@@ -172,7 +197,7 @@ SquidCore.prototype.formatUrl = function( fragment )
 //      @params  {object}  xhr options
 //      @return  {mixed}
 //
-SquidCore.prototype.api = function( service, options )
+Squid.prototype.api = function( service, options )
 {
   // check response status
   var isSuccessStatus = function ( status )
@@ -226,7 +251,7 @@ SquidCore.prototype.api = function( service, options )
       // if success and has callback
       // return json parsed response
       if( options.success )
-        options.success( JSON.parse( this.response ) )
+        options.success( JSON.parse( this.response ), this.getAllResponseHeaders() )
 
       return
     }
@@ -246,8 +271,7 @@ SquidCore.prototype.api = function( service, options )
   return xhr
 }
 
+// Init 
+// ----------
 
-// Global Init
-
-module.exports = Squid = new SquidCore()
-
+module.exports = new Squid()

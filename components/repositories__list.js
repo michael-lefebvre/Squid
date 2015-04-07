@@ -9,10 +9,11 @@ module.exports = Repositories = React.createClass(
 {
     render: function()
     {
+console.log( this.props.repositories )
       var rows = []
         , searched = this.props.filterText.toLowerCase()
 
-      this.props.repos.forEach(function( repo )
+      this.props.repositories.forEach(function( repo )
       {
         if ( repo.name.toLowerCase().search( searched ) === -1 )
           return

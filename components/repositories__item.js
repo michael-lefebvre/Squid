@@ -3,14 +3,21 @@
  */
 
 var React  = require('react')
+  , Gui    = window.require('nw.gui')
 
 module.exports = Item = React.createClass(
 {
-    render: function()
+    goToRepository: function()
+    {
+      // Open URL with default browser.
+      Gui.Shell.openExternal( this.props.repo.html_url )
+    }
+
+  , render: function()
     {
       var avatar = this.props.repo.owner.avatar_url + '&s=34'
       return (
-        <li>
+        <li onDoubleClick={this.goToRepository}>
           <span className="repo__avatar">
             <img src={avatar} width="34"/>
           </span>

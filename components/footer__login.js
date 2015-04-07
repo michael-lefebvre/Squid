@@ -4,7 +4,6 @@
 
 var React  = require('react')
   , PubSub = require('pubsub-js')
-  // , Squid  = require('../squid')
 
 module.exports = Login = React.createClass(
 {
@@ -95,22 +94,16 @@ module.exports = Login = React.createClass(
         self._loginEmail.focus()
       }
 
-      Squid.setCredentials( encode )
-
-      var myXHR = Squid.api( 'user', {
-          success : function( response )
+      var obj = {
+          hash:    encode
+        , success: function( response )
           {
-            console.info('Login succeeded')
-            console.log( response )
-
-            PubSub.publish( 'squid::showRepositories' )
+            self._loginEmail.value = ''
+            self._loginPass.value  = ''
             resetState()
           }
-        , error : function( response )
+        , error:   function( response )
           {
-            // Remove Credentials
-            Squid.logout()
-
             self._parent.classList.add('shake')
 
             // Display Error message
@@ -118,17 +111,16 @@ module.exports = Login = React.createClass(
             self._feedbackNode.appendChild( text )
 
             resetState()
-
-            console.warn('error')
-            console.log( response  )
           }
-      })
+      }
+
+      PubSub.publish( 'squid::userAuth', obj )
     }
 
   , render: function(){
       return (
-        <div className="login" id="squid-login">
-          <div className="login__warning" id="js-login-feedback"></div>
+        <div className="footer__login" id="squid-login">
+          <div className="footer__login__warning" id="js-login-feedback"></div>
           <p className="form-control">
             <input type="text" id="input-username" className="input" placeholder="Your username or email"
               onKeyDown={this.handleKey}
