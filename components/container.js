@@ -7,6 +7,7 @@ var React  = require('react')
   , Footer = require('./footer')
   , Repo   = require('./repositories')
   , Squid  = require('../methods/squid')
+  , Gui    = window.require('nw.gui')
   , _      = require('underscore')
   , PubSub = require('pubsub-js')
 
@@ -41,11 +42,19 @@ module.exports = Container = React.createClass(
 
       if( isLogin )
       {
+        var pagination = Gui.App.manifest.repoPagination
+          , serviceUrl = 'user/repos?per_page='+ pagination
+
+        console.log( pagination )
+        console.log( serviceUrl )
+        
+        Squid.setCredentials( isLogin )
+
         this.handleUserAuth({
           hash: isLogin
         })
-        Squid.setCredentials( isLogin )
-        Squid.api('user/repos', {
+        
+        Squid.api( serviceUrl, {
           success: function( response, header )
           {
 console.log( response )

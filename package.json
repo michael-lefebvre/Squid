@@ -17,6 +17,7 @@
   ],
   "main": "index.html",
   "serviceUrl": "https://api.github.com/",
+  "repoPagination": 30,
   "single-instance": true,
   "debug": true,
   "window": {
