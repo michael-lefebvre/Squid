@@ -2,11 +2,13 @@
  * @jsx React.DOM
  */
 
-var React  = require('react')
-  , PubSub = require('pubsub-js')
-  , Search = require('./repositories__search')
-  , List   = require('./repositories__list')
-  , Repos  = require('./fixture-repos.json')
+var React      = require('react')
+  , PubSub     = require('pubsub-js')
+  , Search     = require('./repositories__search')
+  , List       = require('./repositories__list')
+  , Gui        = window.require('nw.gui')
+  , Squid      = require('../methods/squid')
+  , Collection = require('../methods/repositories')
 
 module.exports = Repositories = React.createClass(
 {
@@ -19,7 +21,24 @@ module.exports = Repositories = React.createClass(
       // PUB/SUB
       PubSub.subscribe( 'squid::userLogged', function( msg, data )
       {
-        self.handleRepositoriesLoaded( [] )
+        self.loadRepos()
+      })
+    }
+
+  , loadRepos: function()
+    {
+      var pagination = Gui.App.manifest.repoPagination
+        , serviceUrl = 'user/repos?per_page='+ pagination
+        , self       = this
+
+      // console.log( pagination )
+      // console.log( serviceUrl )
+
+      Squid.api( serviceUrl, {
+        success: function( response, header )
+        {
+          self.handleRepositoriesLoaded( new Collection( response ) )
+        }
       })
     }
 
@@ -27,7 +46,7 @@ module.exports = Repositories = React.createClass(
     {
       return {
           filterText:   ''
-        , repositories: []
+        , repositories: false
       }
     }
 

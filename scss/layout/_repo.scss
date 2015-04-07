@@ -49,7 +49,7 @@
     border-bottom: 1px solid #D6D6D6;
     height: 64px;
     line-height: 64px;
-    padding: 0 10px;
+    padding: 0 15px;
     position: relative;
 
     // &:before {
@@ -90,6 +90,7 @@
   width: 34px;
 
   img {
+    border-radius: 50%;
     display: inline-block;
     vertical-align: middle
   }

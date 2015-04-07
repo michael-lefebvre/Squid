@@ -42,24 +42,10 @@ module.exports = Container = React.createClass(
 
       if( isLogin )
       {
-        var pagination = Gui.App.manifest.repoPagination
-          , serviceUrl = 'user/repos?per_page='+ pagination
-
-        console.log( pagination )
-        console.log( serviceUrl )
-        
         Squid.setCredentials( isLogin )
 
         this.handleUserAuth({
           hash: isLogin
-        })
-        
-        Squid.api( serviceUrl, {
-          success: function( response, header )
-          {
-console.log( response )
-console.log( header )
-          }
         })
       }
     }

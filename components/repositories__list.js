@@ -9,17 +9,19 @@ module.exports = Repositories = React.createClass(
 {
     render: function()
     {
-console.log( this.props.repositories )
       var rows = []
         , searched = this.props.filterText.toLowerCase()
 
-      this.props.repositories.forEach(function( repo )
+      if( this.props.repositories )
       {
-        if ( repo.name.toLowerCase().search( searched ) === -1 )
-          return
+        this.props.repositories.forEach(function( repo )
+        {
+          if ( repo.searchable().search( searched ) === -1 )
+            return
 
-        rows.push( <Item repo={repo} key={repo.id} />)
-      }.bind(this))
+          rows.push( <Item repo={repo.toJSON()} key={repo.get('id')} />)
+        }.bind(this))
+      }
 
       return (
         <div className="repositories__list -loading">
