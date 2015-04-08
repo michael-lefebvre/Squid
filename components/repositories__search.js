@@ -37,7 +37,7 @@ module.exports = Search = React.createClass(
     {
       return (
         <input 
-          type="text" 
+          type="search" 
           id="search-query" 
           className="input" 
           placeholder="Search a repository…" 

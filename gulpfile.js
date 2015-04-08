@@ -53,6 +53,7 @@ gulp.task('watch', function()
   gulp.watch( [
       'scss/*.scss'
     , 'scss/**/*.scss'
+    , 'package.json'
     , 'index.js'
     , 'components/*.js'
     , 'methods/*.js'

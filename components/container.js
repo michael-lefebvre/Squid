@@ -7,6 +7,7 @@ var React  = require('react')
   , Footer = require('./footer')
   , Repo   = require('./repositories')
   , Squid  = require('../methods/squid')
+  , Gui    = window.require('nw.gui')
   , _      = require('underscore')
   , PubSub = require('pubsub-js')
 
@@ -41,16 +42,10 @@ module.exports = Container = React.createClass(
 
       if( isLogin )
       {
+        Squid.setCredentials( isLogin )
+
         this.handleUserAuth({
           hash: isLogin
-        })
-        Squid.setCredentials( isLogin )
-        Squid.api('user/repos', {
-          success: function( response, header )
-          {
-console.log( response )
-console.log( header )
-          }
         })
       }
     }
