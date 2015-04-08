@@ -38,6 +38,6 @@ onload = function()
 
   Squid.init()
 
-  // Mount Rect components
+  // Mount React components
   React.render( <Container /> , document.getElementById('squid-window') )
 }
