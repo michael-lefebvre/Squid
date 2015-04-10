@@ -33,6 +33,7 @@ gulp.task('move', function()
         'index.html'
       , 'package.json'
       , 'components/repos.json'
+      , 'squid-header.png'
       , 'icons/*'
     ])
     .pipe( gulp.dest( buildFolder ) )
