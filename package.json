@@ -33,6 +33,9 @@
   "dependencies": {
     "backbone": "^1.1.2",
     "pubsub-js": "^1.5.2",
+    "flux": "^2.0.1",
+    "keymirror": "~0.1.0",
+    "object-assign": "^1.0.0",
     "react": "^0.13.1",
     "underscore": "^1.8.2"
   },
