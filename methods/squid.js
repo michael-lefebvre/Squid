@@ -44,7 +44,7 @@ Squid.prototype.init = function()
   console.info('debug mode: ' + Gui.App.manifest.debug )
 
   // Minimal Menu bar item
-  var nativeMenuBar = new Gui.Menu({ type: "menubar" })
+  var nativeMenuBar = new Gui.Menu({ type: 'menubar' })
   
   nativeMenuBar.createMacBuiltin('Squid')
 
