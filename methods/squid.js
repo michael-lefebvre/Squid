@@ -19,6 +19,9 @@ var Squid = function()
   // test instance uniqueness
   this._UID         = _.uniqueId('squid_')
 
+  // Github API base url
+  this._API_URL     = Gui.App.manifest.serviceUrl
+
   // App state
   this._isVisible   = false
 
@@ -188,7 +191,9 @@ Squid.prototype.formatUrl = function( fragment )
   if( !fragment )
     throw new Error( 'Squid need a Github API method' )
 
-  return Gui.App.manifest.serviceUrl + fragment
+  var url = fragment.indexOf('//') >= 0 ? fragment : this._API_URL + fragment
+  
+  return url + ( (/\?/).test( url ) ? '&' : '?' ) + ( new Date() ).getTime()
 }
 
 // Call a Github service
@@ -229,7 +234,9 @@ Squid.prototype.api = function( service, options )
 
   options = _.extend( options || {}, {
     headers:  {
-      Authorization: 'Basic ' + encoded
+        'Authorization': 'Basic ' + encoded
+      , 'Accept':        'application/vnd.github.v3+json'
+      , 'Content-Type':  'application/json;charset=UTF-8'
     }
   })
   
@@ -238,6 +245,7 @@ Squid.prototype.api = function( service, options )
     , async = options.hasOwnProperty('async') ? options.async : true
 
   xhr.open( options.method || 'GET', url, async )
+  xhr.dataType = 'json'
 
   xhr.onreadystatechange = function()
   {
@@ -251,7 +259,7 @@ Squid.prototype.api = function( service, options )
       // if success and has callback
       // return json parsed response
       if( options.success )
-        options.success( JSON.parse( this.response ), this.getAllResponseHeaders() )
+        options.success( JSON.parse( this.response ), this )
 
       return
     }

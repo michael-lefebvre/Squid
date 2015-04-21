@@ -9,6 +9,7 @@ var React      = require('react')
   , Gui        = window.require('nw.gui')
   , Squid      = require('../methods/squid')
   , Collection = require('../methods/repositories')
+  , _          = require('underscore')
 
 module.exports = Repositories = React.createClass(
 {
@@ -21,25 +22,43 @@ module.exports = Repositories = React.createClass(
       // PUB/SUB
       PubSub.subscribe( 'squid::userLogged', function( msg, data )
       {
-        self.loadRepos()
+        self.requestAllPages()
       })
     }
 
-  , loadRepos: function()
+  , requestAllPages: function()
     {
       var pagination = Gui.App.manifest.repoPagination
         , serviceUrl = 'user/repos?per_page='+ pagination
+        , next       = false
         , self       = this
+        , results    = []
 
-      // console.log( pagination )
-      // console.log( serviceUrl )
-
-      Squid.api( serviceUrl, {
-        success: function( response, header )
+      // pagination stolen from Github.js by Michael Aufreiter
+      ;(function iterate() 
+      {
+        Squid.api( serviceUrl, 
         {
-          self.handleRepositoriesLoaded( new Collection( response ) )
-        }
-      })
+          success: function( response, xhr )
+          {
+            results.push.apply( results, response )
+
+            var links = (xhr.getResponseHeader('link') || '').split(/\s*,\s*/g)
+              , next  = _.find( links, function( link ) { return /rel="next"/.test( link ) })
+
+            if (next)
+              next = (/<(.*)>/.exec(next) || [])[1]
+
+            if (!next)
+              self.handleRepositoriesLoaded( new Collection( results ) )
+            else 
+            {
+              serviceUrl = next
+              iterate()
+            }
+          }
+        })
+      })()
     }
 
   , getInitialState: function() 
