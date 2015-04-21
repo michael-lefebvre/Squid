@@ -64,6 +64,8 @@ module.exports = Repositories = React.createClass(
       this.setState({
           repositories: repositories
       })
+
+      PubSub.publish( 'squid::repoLoad', repositories.length )
     }
 
     // Render

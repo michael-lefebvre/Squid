@@ -5,6 +5,7 @@
 var React  = require('react')
   , PubSub = require('pubsub-js')
   , Squid  = require('../methods/squid')
+  , Card   = require('./header__card')
 
 module.exports = Header = React.createClass(
 {
@@ -19,7 +20,7 @@ module.exports = Header = React.createClass(
       // PUB/SUB
       PubSub.subscribe( 'squid::userLogged', function( msg, data )
       {
-        
+        self.handleUserLogged()
       })
     }
 
@@ -30,17 +31,14 @@ module.exports = Header = React.createClass(
       }
     }
 
-  , toggleSearch: function()
+
+    // User events
+
+  , handleUserLogged: function() 
     {
-      document.getElementsByTagName('body')[0]
-        .classList.toggle('context_search')
-
-      this._searchOpen = ( !this._searchOpen )
-
-      if( this._searchOpen )
-        PubSub.publish( 'squid::displaySearch' )
-      else
-        PubSub.publish( 'squid::hideSearch' )
+      this.setState({
+          userLogged: true
+      })
     }
 
   , render: function()
@@ -55,20 +53,7 @@ module.exports = Header = React.createClass(
             </p>
           </div>
           <div className="header__connected">
-            <div className="card u-cf">
-              <div className="card__picture">
-                <img src="https://avatars0.githubusercontent.com/u/279053?v=3&s=34" width="34"/>
-              </div>
-              <div className="card__profile">
-                <div className="card__name">
-                  Hi michael-lefebvre,
-                </div>
-                <div className="card__repos">
-                  You have <strong>30 repositories</strong> available
-                </div>
-              </div>
-              <div className="header__search" onClick={this.toggleSearch}></div>
-            </div>
+            <Card userLogged={this.state.userLogged} />
           </div>
         </div>
       )

@@ -15,4 +15,9 @@ module.exports = Profile = Backbone.Model.extend(
     {
       return this.get('html_url')
     }
+
+  , getAvatar: function()
+    {
+      return this.get('avatar_url') + '&s=34'
+    }
 })
