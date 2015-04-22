@@ -63,6 +63,8 @@ gulp.task('watch', function()
 
 gulp.task('default', ['move', 'sass', 'browserify', 'watch'])
 
+gulp.task('build', ['move', 'sass', 'browserify'])
+
 
 
 
