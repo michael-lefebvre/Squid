@@ -70,7 +70,7 @@ module.exports = Container = React.createClass(
 
             PubSub.publish( 'squid::userLogged' )
 
-            self.showRepositories()
+            self.getUserOrgs()
 
             if( _.isFunction( obj.success ) )
               obj.success( response )
@@ -87,6 +87,31 @@ module.exports = Container = React.createClass(
               obj.error( response )
           }
       })
+    }
+
+  , getUserOrgs: function()
+    {
+      var self  = this
+
+      var myXHR = Squid.api( 'user/orgs', 
+      {
+          success : function( response )
+          {
+            console.info('user orgs succeeded')
+            console.log( response )
+
+            var user = Squid.getUser()
+
+            user.setOrgs( response )
+
+            self.showRepositories()
+          }
+        , error : function( response )
+          {
+            console.warn('error')
+            console.log( response )
+          }
+      })      
     }
 
   , handleUserLogout: function()

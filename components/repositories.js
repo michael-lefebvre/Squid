@@ -22,11 +22,13 @@ module.exports = Repositories = React.createClass(
       // PUB/SUB
       PubSub.subscribe( 'squid::userLogged', function( msg, data )
       {
-        self.requestAllPages()
+        self.requestAllRepos()
       })
     }
 
-  , requestAllPages: function()
+    // TODO: refactor request repos
+
+  , requestAllRepos: function()
     {
       var pagination = Gui.App.manifest.repoPagination
         , serviceUrl = 'user/repos?per_page='+ pagination
@@ -50,7 +52,15 @@ module.exports = Repositories = React.createClass(
               next = (/<(.*)>/.exec(next) || [])[1]
 
             if (!next)
-              self.handleRepositoriesLoaded( new Collection( results ) )
+            {
+              var user = Squid.getUser()
+                , orgs = user.get('orgs')
+
+              if( !orgs.length )
+                self.handleRepositoriesLoaded( new Collection( results ) )
+              else
+                self.requestAllOrgsRepos( results, orgs )
+            }
             else 
             {
               serviceUrl = next
@@ -59,6 +69,47 @@ module.exports = Repositories = React.createClass(
           }
         })
       })()
+    }
+
+  , requestAllOrgsRepos: function( results, orgs )
+    {
+      var total      = orgs.length
+        , done       = 0
+        , pagination = Gui.App.manifest.repoPagination
+        , self       = this
+
+      orgs.forEach( function( org )
+      {
+        var serviceUrl = org.repos_url + '?per_page='+ pagination
+          , next       = false
+
+        ;(function iterate() 
+        {
+          Squid.api( serviceUrl, 
+          {
+            success: function( response, xhr )
+            {
+              results.push.apply( results, response )
+
+              var links = (xhr.getResponseHeader('link') || '').split(/\s*,\s*/g)
+                , next  = _.find( links, function( link ) { return /rel="next"/.test( link ) })
+
+              if (next)
+                next = (/<(.*)>/.exec(next) || [])[1]
+
+              if (!next)
+              {
+                self.handleRepositoriesLoaded( new Collection( results ) )
+              }
+              else 
+              {
+                serviceUrl = next
+                iterate()
+              }
+            }
+          })
+        })()
+      })
     }
 
   , getInitialState: function() 

@@ -20,4 +20,9 @@ module.exports = Profile = Backbone.Model.extend(
     {
       return this.get('avatar_url') + '&s=34'
     }
+
+  , setOrgs: function( orgs )
+    {
+      this.set( 'orgs', orgs )
+    }
 })
