@@ -35,3 +35,4 @@ rm Squid.app/Contents/Resources/nw.icns
 cp "$root_dir/Info.plist" Squid.app/Contents
 cp app.nw Squid.app/Contents/Resources/app.nw
 cp "$root_dir/squid.icns" Squid.app/Contents/Resources
+codesign -d --deep-verify -v -v -v Squid.app
