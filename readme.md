@@ -8,27 +8,47 @@ Squid is a small cool tool that give you a quick access to all your Github repos
 * [react.js](https://facebook.github.io/react/)
 * [Github API](https://developer.github.com/v3/)
 
-### Contributors
+### Contributors:
 
-* [Didier Forest](https://github.com/welcometothesky) for the cool design.  
-* [Adrien Griveau](https://dribbble.com/adrien-griveau) for the nice icons.  
-* [e-Founders](http://www.e-founders.com) for the time.
+* [Didier Forest](https://github.com/welcometothesky) for the cool design 
+* [Adrien Griveau](https://dribbble.com/adrien-griveau) for the nice icons
+* [e-Founders](http://www.e-founders.com) for the time
+
+## Dev Env
+
+After you clone this repository on your workstation, follow these 4 steps to run Squid into developer mode:
+
+* First download [nw.js](http://dl.nwjs.io/v0.12.1/chromedriver-nw-v0.12.1-osx-x64.zip) into the `tmp` folder.
+
+* then install Node.js packages:
+
+		npm install
+		
+* into `package.json` set `debug` property to true (optional but useful)
+	
+* finaly run Gulp command
+
+		gulp
+		
+Now you can launch app from the `build` folder:
+
+	cd build
+	../tmp/nwjs.app/Contents/MacOS/nwjs .
+	
+## Build app
+
+Run these command
+
+	sh build.sh
+	
+The freshly builded app will be available into the `release` folder.
 
 ## Roadmap
 
-### 0.2.0:
-
-* Distribution build script
-* Unit-test
-* Node-Webkit auto update [ref](https://github.com/edjafarov/node-webkit-updater)
-* Start at user login [ref](https://github.com/nwjs/nw.js/wiki/Making-your-app-start-at-user-login-(OS-X))
+See the [roadmap](https://github.com/michael-lefebvre/Squid/milestones) future developments.
 
 
 ## Personal reminders / Troubleshoots
-
-run the app:  
-
-	../tmp/nwjs.app/Contents/MacOS/nwjs .
 
 if gulp throw a `'Error: EMFILE, open '/path/to/package.json' error`, run the following command: 
 
