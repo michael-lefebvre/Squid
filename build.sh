@@ -36,3 +36,17 @@ cp "$root_dir/Info.plist" Squid.app/Contents
 cp app.nw Squid.app/Contents/Resources/app.nw
 cp "$root_dir/squid.icns" Squid.app/Contents/Resources
 codesign -d --deep-verify -v -v -v Squid.app
+
+test -f Squid-Installer.dmg && rm Squid-Installer.dmg
+$root_dir/create-dmg/create-dmg \
+--volname "Squid Installer" \
+--volicon "$root_dir/squid.icns" \
+--background "$root_dir/dmg_background.png" \
+--window-pos 200 120 \
+--window-size 800 400 \
+--icon-size 100 \
+--icon Squid.app 200 190 \
+--hide-extension Squid.app \
+--app-drop-link 600 185 \
+Squid-Installer.dmg \
+.
