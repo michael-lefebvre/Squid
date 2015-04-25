@@ -32,10 +32,11 @@
   },
   "dependencies": {
     "backbone": "^1.1.2",
-    "pubsub-js": "^1.5.2",
     "flux": "^2.0.1",
     "keymirror": "~0.1.0",
+    "nw": "^0.12.1",
     "object-assign": "^1.0.0",
+    "pubsub-js": "^1.5.2",
     "react": "^0.13.1",
     "underscore": "^1.8.2"
   },
@@ -51,5 +52,8 @@
     "node-bourbon": "1.2.3",
     "reactify": "^0.17.1",
     "vinyl-source-stream": "^1.0.0"
+  },
+  "scripts": {
+    "start": "nw ./build"
   }
 }
