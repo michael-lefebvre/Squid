@@ -10,9 +10,8 @@ Squid is a small cool tool that give you a quick access to all your Github repos
 
 ### Contributors:
 
-* [Didier Forest](https://github.com/welcometothesky) for the cool design 
-* [Adrien Griveau](https://dribbble.com/adrien-griveau) for the nice icons
-* [e-Founders](http://www.e-founders.com) for the time
+* [Didier Forest](https://github.com/welcometothesky) for the design 
+* [Adrien Griveau](https://dribbble.com/adrien-griveau) for the iconography
 
 ## Dev Env
 
