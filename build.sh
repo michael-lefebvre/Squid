@@ -16,7 +16,7 @@ gulp build
 
 release_dir="$root_dir/release"
 build_dir="$root_dir/build"
-deps_dir="$root_dir/tmp"
+deps_dir="$root_dir/node_modules/nw/nwjs"
 
 mkdir -p $release_dir
 
