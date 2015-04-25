@@ -22,7 +22,7 @@ After you clone this repository on your workstation, follow these 4 steps to run
 
 		npm install
 		
-* into `package.json` set `debug` property to true (optional but useful)
+* into `package.json` set `debug` property to `true` (optional but useful)
 	
 * run Gulp command
 
@@ -30,7 +30,7 @@ After you clone this repository on your workstation, follow these 4 steps to run
 		
 * In a new terminal window run:
 
-	npm start
+		npm start
 	
 ## Build app
 
