@@ -18,9 +18,7 @@ Squid is a small cool tool that give you a quick access to all your Github repos
 
 After you clone this repository on your workstation, follow these 4 steps to run Squid into developer mode:
 
-* First download [nw.js](http://dl.nwjs.io/v0.12.1/chromedriver-nw-v0.12.1-osx-x64.zip) into the `tmp` folder.
-
-* then install Node.js packages:
+* first install Node.js packages:
 
 		npm install
 		
@@ -30,10 +28,9 @@ After you clone this repository on your workstation, follow these 4 steps to run
 
 		gulp
 		
-Now you can launch app from the `build` folder:
+* In a new terminal window run:
 
-	cd build
-	../tmp/nwjs.app/Contents/MacOS/nwjs .
+	npm start
 	
 ## Build app
 
