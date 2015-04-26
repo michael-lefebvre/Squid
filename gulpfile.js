@@ -35,6 +35,8 @@ gulp.task('move', function()
       , 'components/repos.json'
       , 'squid-header.png'
       , 'icons/*'
+      , 'updater.js'
+      , 'VERSION'
     ])
     .pipe( gulp.dest( buildFolder ) )
 })
@@ -56,9 +58,11 @@ gulp.task('watch', function()
     , 'scss/**/*.scss'
     , 'package.json'
     , 'index.js'
+    , 'updater.js'
     , 'components/*.js'
     , 'methods/*.js'
-  ], ['sass','browserify'] )
+    , 'VERSION'
+  ], ['sass','browserify', 'move'] )
 })
 
 gulp.task('default', ['move', 'sass', 'browserify', 'watch'])
