@@ -9,6 +9,7 @@ module.exports = Profile = Backbone.Model.extend(
       , public_repos: null
       , avatar_url:   null
       , email:        null
+      , orgs:         0
     }
 
   , getProfileUrl: function()

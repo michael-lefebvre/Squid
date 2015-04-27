@@ -201,13 +201,13 @@ Squid.prototype.formatUrl = function( fragment )
 }
 
 
-// Call a single Github service page, eg `user`
+// Call a Github service
 //
 //      @params  {string}  service url
 //      @params  {object}  xhr options
 //      @return  {mixed}
 //
-Squid.prototype.apiGet = function( service, options )
+Squid.prototype.api = function( service, options )
 {
   options = options || {}
 
@@ -252,7 +252,7 @@ Squid.prototype.apiGet = function( service, options )
 //      @params  {object}  xhr options
 //      @return  {mixed}
 //
-Squid.prototype.apiGetPages = function( service, options, results )
+Squid.prototype.apiPages = function( service, options, results )
 {
   var serviceUrl = service + '?per_page='+ this._pagination
     , next       = false
@@ -262,7 +262,7 @@ Squid.prototype.apiGetPages = function( service, options, results )
   // pagination stolen from Github.js by Michael Aufreiter
   ;(function iterate() 
   {
-    self.apiGet( serviceUrl, 
+    self.api( serviceUrl, 
     {
       success: function( response, xhr )
       {
@@ -289,89 +289,6 @@ Squid.prototype.apiGetPages = function( service, options, results )
       }
     })
   })()
-}
-
-// Call a Github service
-//
-//      @params  {string}  service url
-//      @params  {object}  xhr options
-//      @return  {mixed}
-//
-Squid.prototype.api = function( service, options )
-{
-  // check response status
-  var isSuccessStatus = function ( status )
-  {
-    return status >= 200 && status < 300 || status == 304
-  }
-
-  try
-  {
-    var url = this.formatUrl( service )
-  }
-  catch( e )
-  {
-    console.warn( e.message )
-
-    return false
-  }
-
-  try 
-  {
-    var encoded = this.getCredentials()
-  }
-  catch( e ) 
-  {
-    console.warn( e.message )
-
-    return false
-  }
-
-  options = _.extend( options || {}, {
-    headers:  {
-        'Authorization': 'Basic ' + encoded
-      , 'Accept':        'application/vnd.github.v3+json'
-      , 'Content-Type':  'application/json;charset=UTF-8'
-    }
-  })
-  
-  var xhr   = new XMLHttpRequest()
-    , done  = false
-    , async = options.hasOwnProperty('async') ? options.async : true
-
-  xhr.open( options.method || 'GET', url, async )
-  xhr.dataType = 'json'
-
-  xhr.onreadystatechange = function()
-  {
-    if( done ) return
-    if( this.readyState != 4 ) return
-
-    done = true
-
-    if( isSuccessStatus( this.status ) )
-    {
-      // if success and has callback
-      // return json parsed response
-      if( options.success )
-        options.success( JSON.parse( this.response ), this )
-
-      return
-    }
-
-    if( options.error )
-      options.error( this.statusText, this )
-  }
-
-  Object.keys( options.headers || {} )
-    .forEach( function( key )
-    {
-      xhr.setRequestHeader( key, options.headers[ key ] )
-    })
-
-  xhr.send( options.data || null )
-
-  return xhr
 }
 
 // Init 

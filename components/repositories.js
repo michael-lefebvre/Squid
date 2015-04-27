@@ -26,13 +26,11 @@ module.exports = Repositories = React.createClass(
       })
     }
 
-    // TODO: refactor request repos
-
   , requestAllRepos: function()
     {
       var self = this
 
-      Squid.apiGetPages( 'user/repos', {
+      Squid.apiPages( 'user/repos', {
         onComplete: function( results )
         {
           var user = Squid.getUser()
@@ -46,41 +44,26 @@ module.exports = Repositories = React.createClass(
       })
     }
 
-  , requestAllOrgsRepos: function( results, orgs )
+  , requestAllOrgsRepos: function( repos, orgs )
     {
-      var self = this
+      var total      = orgs.length
+        , done       = 0
+        , self       = this
 
       orgs.forEach( function( org )
       {
-        var serviceUrl = org.repos_url 
-          , next       = false
-
-        ;(function iterate() 
+        Squid.apiPages( org.repos_url, 
         {
-          Squid.api( serviceUrl, 
-          {
-            success: function( response, xhr )
+            onComplete: function( results )
             {
-              results.push.apply( results, response )
+              ++done
 
-              var links = (xhr.getResponseHeader('link') || '').split(/\s*,\s*/g)
-                , next  = _.find( links, function( link ) { return /rel="next"/.test( link ) })
+              repos.push.apply( repos, results )
 
-              if (next)
-                next = (/<(.*)>/.exec(next) || [])[1]
-
-              if (!next)
-              {
-                self.handleRepositoriesLoaded( new Collection( results ) )
-              }
-              else 
-              {
-                serviceUrl = next
-                iterate()
-              }
+              if( done === total )
+                self.handleRepositoriesLoaded( new Collection( repos ) )
             }
-          })
-        })()
+        })
       })
     }
 

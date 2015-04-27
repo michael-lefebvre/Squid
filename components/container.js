@@ -59,7 +59,7 @@ module.exports = Container = React.createClass(
 
       var self  = this
 
-      var myXHR = Squid.apiGet( 'user', 
+      var myXHR = Squid.api( 'user', 
       {
           success : function( response )
           {
@@ -93,16 +93,18 @@ module.exports = Container = React.createClass(
     {
       var self  = this
 
-      var myXHR = Squid.apiGet( 'user/orgs', 
+      var myXHR = Squid.api( 'user/orgs', 
       {
           success : function( response )
           {
-            console.info('user orgs succeeded')
-            console.log( response )
+            // console.info('user orgs succeeded')
+            // console.log( response )
 
-            var user = Squid.getUser()
-
-            user.setOrgs( response )
+            if( response.length )
+            {
+              var user = Squid.getUser()
+              user.setOrgs( response )
+            }
 
             self.showRepositories()
           }
