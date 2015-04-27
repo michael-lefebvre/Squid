@@ -59,7 +59,7 @@ module.exports = Container = React.createClass(
 
       var self  = this
 
-      var myXHR = Squid.api( 'user', 
+      var myXHR = Squid.apiGet( 'user', 
       {
           success : function( response )
           {
@@ -93,7 +93,7 @@ module.exports = Container = React.createClass(
     {
       var self  = this
 
-      var myXHR = Squid.api( 'user/orgs', 
+      var myXHR = Squid.apiGet( 'user/orgs', 
       {
           success : function( response )
           {

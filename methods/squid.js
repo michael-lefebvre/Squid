@@ -3,6 +3,7 @@ var Gui     = window.require('nw.gui')
   , Win     = Gui.Window.get()
   , _       = require('underscore')
   , Tray    = require('./tray')
+  , Xhr     = require('./xhr')
   , Profile = require('./profile')
 
 var Squid = function()
@@ -192,8 +193,73 @@ Squid.prototype.formatUrl = function( fragment )
     throw new Error( 'Squid need a Github API method' )
 
   var url = fragment.indexOf('//') >= 0 ? fragment : this._API_URL + fragment
-  
+
   return url + ( (/\?/).test( url ) ? '&' : '?' ) + ( new Date() ).getTime()
+}
+
+Squid.prototype.apiOptions = function( service, options )
+{
+  options = options || {}
+
+  try
+  {
+    options.url = this.formatUrl( service )
+  }
+  catch( e )
+  {
+    console.warn( e.message )
+
+    return false
+  }
+
+  try 
+  {
+    options.credentials = this.getCredentials()
+  }
+  catch( e ) 
+  {
+    console.warn( e.message )
+
+    return false
+  }
+
+  return options
+}
+
+// Call a single Github service page, eg `user`
+//
+//      @params  {string}  service url
+//      @params  {object}  xhr options
+//      @return  {mixed}
+//
+Squid.prototype.apiGet = function( service, options )
+{
+  options = this.apiOptions( service, options )
+
+  if( !options )
+    return false
+
+  var xhr = new Xhr()
+
+  return xhr.get( options )
+}
+
+// Iterate over Github service pagination, eg `repos`
+//
+//      @params  {string}  service url
+//      @params  {object}  xhr options
+//      @return  {mixed}
+//
+Squid.prototype.apiGetPages = function( service, options )
+{
+  options = this.apiOptions( service, options )
+
+  if( !options )
+    return false
+
+  var xhr = new Xhr()
+
+  return xhr.getAll( options )
 }
 
 // Call a Github service
