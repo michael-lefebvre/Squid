@@ -31,6 +31,20 @@ var React     = require('react')
   , Squid     = require('./methods/squid')
   , Container = require('./components/container')
 
+// App Updater
+var options = {}
+
+options = {
+    source: {
+        host: 'localhost'
+      , port: 8888
+      , path: '/download/Squid-Installer.dmg'
+    }
+  // , app_name: 'nwjs'
+}
+
+global.updaterInst = new Updater( options )
+
 onload = function() 
 {
   if( Gui.App.manifest.debug )

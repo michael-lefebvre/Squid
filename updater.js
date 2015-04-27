@@ -18,6 +18,8 @@ var Updater = function( config )
   // Prevent actions during version check or DMG download
   this._redFlag     = false
 
+  this._PubSub      = false
+
   // Defaut settings
   var _settings = 
   {
@@ -33,6 +35,7 @@ var Updater = function( config )
     , progress: function( percentage ) 
       {
         // console.log( percentage + "%" )
+        document.getElementById('js-update-progress').style.width = percentage + '%'
       }
   }
 
@@ -124,8 +127,13 @@ Updater.prototype._versionCompare = function( local, server )
 //
 //      @return  {bool}
 //
-Updater.prototype._checkRemote = function()
+Updater.prototype.checkRemote = function( PubSub )
 {
+  this._PubSub = PubSub
+
+  if( !navigator.onLine )
+    return
+
   if( this._redFlag )
     return 
 
@@ -152,28 +160,34 @@ Updater.prototype._checkRemote = function()
 
         console.log( 'check: '+ compare )
 
-        if( compare == -1 )
+        if( compare == -1 ) // && window.confirm('New realease available, do you want to update?') )
         {
-          console.warn('UPDATE APP')
-          self.update( function( err )
-          {
-            if (!err) console.log('App has been updated!')
+          // if( window.confirm('New realease available, do you want to update?') )
+          // {
+            console.warn('UPDATE APP')
 
+            self._PubSub.publish( 'squid::updateInvite', version )
+            // self.update( function( err )
+            // {
+            //   if (!err) console.log('App has been updated!')
 
-            var child
-              , child_process = require("child_process")
-              , gui           = require('nw.gui')
-              , win           = gui.Window.get()
+            //   // if( window.confirm('App has been updated! Do you want to restart?') )
+            //   // {
+            //     var child
+            //       , child_process = require("child_process")
+            //       , gui           = require('nw.gui')
+            //       , win           = gui.Window.get()
 
-            child = child_process.spawn('open', ['-n', '-a', process.execPath.match(/^([^\0]+?\.app)\//)[1]], {detached:true})
+            //     child = child_process.spawn('open', ['-n', '-a', process.execPath.match(/^([^\0]+?\.app)\//)[1]], {detached:true})
 
-            child.unref()
-            win.hide()
-            gui.App.quit()
-
-          })
+            //     child.unref()
+            //     win.hide()
+            //     gui.App.quit()
+            //   // }
+            // })
+          // }
         }
-        else
+        else // don't want to update
         {
           self._redFlag = false
         }
@@ -192,6 +206,10 @@ Updater.prototype._checkRemote = function()
       this._redFlag = false
     }
   })
+  .on( 'error', function( e )
+  {
+    console.log("Got error: " + e.message)
+  })
 }
 
 Updater.prototype.update = function( callback )
@@ -208,7 +226,7 @@ Updater.prototype.update = function( callback )
 
       console.info('new release downloaded')
 
-      // self.callMount();
+      self._PubSub.publish( 'squid::updateInstalling' )
       
       // try
       // {
@@ -256,21 +274,6 @@ Updater.prototype.update = function( callback )
       // callback(err)
   }
 }
-
-// Updater.prototype.callMount = function()
-// {
-//   try
-//   {
-//     this._mount( function( mount_point )
-//     {
-//       console.log( 'ok: ' + mount_point )
-//     })
-//   }
-//   catch( err )
-//   {
-//     console.error( err )
-//   }
-// }
 
 // Download last App version and save it localy
 //
@@ -435,18 +438,19 @@ Updater.prototype._removeQuarantine = function( directory, callback )
 }
 
 
-////////////////////////
-var options = {}
 
-options = {
-    // app_name: 'nwjs'
-    source: {
-      host: 'localhost'
-    , port: 8888
-    , path: '/download/Squid-Installer.dmg'
-  }
-}
+// ////////////////////////
+// var options = {}
 
-var updater = new Updater( options )
+// options = {
+//     source: {
+//         host: 'localhost'
+//       , port: 8888
+//       , path: '/download/Squid-Installer.dmg'
+//     }
+//   // , app_name: 'nwjs'
+// }
 
-updater._checkRemote()
+// var updater = new Updater( options )
+
+// updater.checkRemote()

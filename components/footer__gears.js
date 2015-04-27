@@ -2,12 +2,13 @@
  * @jsx React.DOM
  */
 
-var React  = require('react')
-  , Gui    = window.require('nw.gui')
-  , Win    = Gui.Window.get()
-  , PubSub = require('pubsub-js')
-  , Squid  = require('../methods/squid')
-  , _      = require('underscore')
+var React     = require('react')
+  , Gui       = window.require('nw.gui')
+  , Win       = Gui.Window.get()
+  , PubSub    = require('pubsub-js')
+  , Squid     = require('../methods/squid')
+  , _         = require('underscore')
+  , UpdaterUi = require('./footer__updater')
 
 module.exports = Gears = React.createClass(
 {
@@ -74,6 +75,9 @@ module.exports = Gears = React.createClass(
   , render: function(){
       return (
         <div className="footer_logged u-cf">
+          <div className="footer__updater">
+            <UpdaterUi />
+          </div>
           <div className="footer__gears" onClick={this.handleClick}></div>
         </div>
       )
