@@ -31,7 +31,7 @@ module.exports = UpdaterUi = React.createClass(
       
       var wait    = document.getElementById('js-installing')
         , text    = 'Installing new version'
-        , maxSize = text.length + 3
+        , maxSize = text.length + 2
 
       var dots = window.setInterval( function() 
       {
