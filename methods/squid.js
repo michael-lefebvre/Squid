@@ -23,6 +23,9 @@ var Squid = function()
   // Github API base url
   this._API_URL     = Gui.App.manifest.serviceUrl
 
+  // API per page requested results
+  this._pagination  = Gui.App.manifest.repoPagination
+
   // App state
   this._isVisible   = false
 
@@ -197,7 +200,14 @@ Squid.prototype.formatUrl = function( fragment )
   return url + ( (/\?/).test( url ) ? '&' : '?' ) + ( new Date() ).getTime()
 }
 
-Squid.prototype.apiOptions = function( service, options )
+
+// Call a single Github service page, eg `user`
+//
+//      @params  {string}  service url
+//      @params  {object}  xhr options
+//      @return  {mixed}
+//
+Squid.prototype.apiGet = function( service, options )
 {
   options = options || {}
 
@@ -214,7 +224,7 @@ Squid.prototype.apiOptions = function( service, options )
 
   try 
   {
-    options.credentials = this.getCredentials()
+    var credentials = this.getCredentials()
   }
   catch( e ) 
   {
@@ -223,25 +233,17 @@ Squid.prototype.apiOptions = function( service, options )
     return false
   }
 
-  return options
-}
+  options = _.extend( options || {}, {
+    headers:  {
+        'Authorization': 'Basic ' + credentials
+      , 'Accept':        'application/vnd.github.v3+json'
+      , 'Content-Type':  'application/json;charset=UTF-8'
+    }
+  })
 
-// Call a single Github service page, eg `user`
-//
-//      @params  {string}  service url
-//      @params  {object}  xhr options
-//      @return  {mixed}
-//
-Squid.prototype.apiGet = function( service, options )
-{
-  options = this.apiOptions( service, options )
+  var xhr = new Xhr( options )
 
-  if( !options )
-    return false
-
-  var xhr = new Xhr()
-
-  return xhr.get( options )
+  return xhr
 }
 
 // Iterate over Github service pagination, eg `repos`
@@ -250,16 +252,43 @@ Squid.prototype.apiGet = function( service, options )
 //      @params  {object}  xhr options
 //      @return  {mixed}
 //
-Squid.prototype.apiGetPages = function( service, options )
+Squid.prototype.apiGetPages = function( service, options, results )
 {
-  options = this.apiOptions( service, options )
+  var serviceUrl = service + '?per_page='+ this._pagination
+    , next       = false
+    , self       = this
+    , results    = results || []
 
-  if( !options )
-    return false
+  // pagination stolen from Github.js by Michael Aufreiter
+  ;(function iterate() 
+  {
+    self.apiGet( serviceUrl, 
+    {
+      success: function( response, xhr )
+      {
+        results.push.apply( results, response )
 
-  var xhr = new Xhr()
+        var links = ( xhr.getResponseHeader('link') || '' ).split(/\s*,\s*/g)
+          , next  = _.find( links, function( link ) { return /rel="next"/.test( link ) })
 
-  return xhr.getAll( options )
+        if( next )
+          next = (/<(.*)>/.exec(next) || [])[1]
+
+        if( !next )
+        {
+          if( _.isFunction( options.onComplete ) )
+            options.onComplete( results )
+          else
+            return results
+        }
+        else 
+        {
+          serviceUrl = next
+          iterate()
+        }
+      }
+    })
+  })()
 }
 
 // Call a Github service

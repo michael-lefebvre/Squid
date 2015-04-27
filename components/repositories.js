@@ -30,57 +30,29 @@ module.exports = Repositories = React.createClass(
 
   , requestAllRepos: function()
     {
-      var pagination = Gui.App.manifest.repoPagination
-        , serviceUrl = 'user/repos?per_page='+ pagination
-        , next       = false
-        , self       = this
-        , results    = []
+      var self = this
 
-      // pagination stolen from Github.js by Michael Aufreiter
-      ;(function iterate() 
-      {
-        Squid.api( serviceUrl, 
+      Squid.apiGetPages( 'user/repos', {
+        onComplete: function( results )
         {
-          success: function( response, xhr )
-          {
-            results.push.apply( results, response )
+          var user = Squid.getUser()
+            , orgs = user.get('orgs')
 
-            var links = (xhr.getResponseHeader('link') || '').split(/\s*,\s*/g)
-              , next  = _.find( links, function( link ) { return /rel="next"/.test( link ) })
-
-            if (next)
-              next = (/<(.*)>/.exec(next) || [])[1]
-
-            if (!next)
-            {
-              var user = Squid.getUser()
-                , orgs = user.get('orgs')
-
-              if( !orgs.length )
-                self.handleRepositoriesLoaded( new Collection( results ) )
-              else
-                self.requestAllOrgsRepos( results, orgs )
-            }
-            else 
-            {
-              serviceUrl = next
-              iterate()
-            }
-          }
-        })
-      })()
+          if( !orgs.length )
+            self.handleRepositoriesLoaded( new Collection( results ) )
+          else
+            self.requestAllOrgsRepos( results, orgs )
+        }
+      })
     }
 
   , requestAllOrgsRepos: function( results, orgs )
     {
-      var total      = orgs.length
-        , done       = 0
-        , pagination = Gui.App.manifest.repoPagination
-        , self       = this
+      var self = this
 
       orgs.forEach( function( org )
       {
-        var serviceUrl = org.repos_url + '?per_page='+ pagination
+        var serviceUrl = org.repos_url 
           , next       = false
 
         ;(function iterate() 
