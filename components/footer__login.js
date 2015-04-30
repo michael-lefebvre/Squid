@@ -107,7 +107,7 @@ module.exports = Login = React.createClass(
             self._parent.classList.add('shake')
 
             // Display Error message
-            var text = document.createTextNode( response )
+            var text = document.createTextNode( "Try again, you gloupsed it up!" )
             self._feedbackNode.appendChild( text )
 
             resetState()
