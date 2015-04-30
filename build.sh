@@ -43,10 +43,10 @@ $root_dir/create-dmg/create-dmg \
 --volicon "$root_dir/squid.icns" \
 --background "$root_dir/dmg_background.png" \
 --window-pos 200 120 \
---window-size 800 400 \
+--window-size 500 350 \
 --icon-size 100 \
---icon Squid.app 200 190 \
+--icon Squid.app 150 160 \
 --hide-extension Squid.app \
---app-drop-link 600 185 \
+--app-drop-link 350 155 \
 Squid-Installer.dmg \
 .
