@@ -36,7 +36,7 @@
   margin: 5px 15px;
   width: calc( 100% - 30px);
   padding: 0 5px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .repositories__list {
@@ -89,6 +89,7 @@
 .repo__avatar {
   height: 100%;
   float: left;
+  font-size: 0;
   margin-right: 10px;
   width: 34px;
 

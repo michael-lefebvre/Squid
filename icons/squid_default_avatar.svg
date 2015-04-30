@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="68px" height="68px" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="squid_default_avatar">
+            <g id="Avatar">
+                <circle id="mask" fill="#D5D5D5" cx="34" cy="34" r="34"></circle>
+                <path d="M42,40 C42,40 42.4,46 36,46 L36,34 L40,34 L40,32 L36,32 L36,29.6 C38.4,28.8 40,26.6 40,24 C40,20.6 37.4,18 34,18 C30.6,18 28,20.6 28,24 C28,26.6 29.6,28.8 32,29.6 L32,32 L28,32 L28,34 L32,34 L32,46 C26,46 26,40 26,40 L24,40 C24,40 24,50 32,50 L36,50 C44,50 44,40 44,40 L42,40 L42,40 Z M32,22 L36,22 L36,26 L32,26 L32,22 L32,22 Z" id="anchor" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
