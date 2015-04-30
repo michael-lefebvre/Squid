@@ -29,7 +29,7 @@
 }
 
 .header__connected {
-  // background-image: -webkit-linear-gradient(-180deg, #FBFCFF 0%, #ECECEC 100%);
+  background: #FBFCFF;
   height: $header-close-height;
   position: relative;
 }
@@ -56,7 +56,7 @@
   color: #999;
   display: block;
   font-size: 12px;
-  margin-bottom: 5px;
+  margin: 2px 0 5px;
 }
 
 .card__repos {
