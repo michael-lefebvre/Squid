@@ -1,4 +1,5 @@
 .footer {
+  background-image: -webkit-linear-gradient(#FBFCFF 0%, #ECECEC 100%);
   border-top: 1px solid #B6B6B6;
   height: $footer-open-height;
   @include position( absolute, null 0 0 0);

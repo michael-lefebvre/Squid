@@ -5,10 +5,16 @@ module.exports = Tray = function()
 {
   this._hires = this.hires()
 
-  var icon = ( this._hires ) ? 'squid-@2x.png' : 'squid.png'
+  var icon    = ( this._hires ) ? 'anchor-black-@2x.png' : 'anchor-black.png'
+    , alticon = ( this._hires ) ? 'anchor-white-@2x.png' : 'anchor-white.png' 
+
 
   // Create a tray icon
-  this._tray = new Gui.Tray({ title: '', icon: icon })
+  this._tray = new Gui.Tray({
+      title:   ''
+    , icon:    icon
+    , alticon: alticon
+  })
 
   return this
 }

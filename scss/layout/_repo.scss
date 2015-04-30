@@ -30,10 +30,13 @@
 }
 
 .repositories__search .input {
+  background: #fff;
   height: 30px;
   line-height: 30px;
-  margin: 5px 10px;
-  width: calc( 100% - 20px);
+  margin: 5px 15px;
+  width: calc( 100% - 30px);
+  padding: 0 5px;
+  font-size: 12px;
 }
 
 .repositories__list {

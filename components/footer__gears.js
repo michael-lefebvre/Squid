@@ -22,19 +22,19 @@ module.exports = Gears = React.createClass(
       // Add items
       
       menu.append(new Gui.MenuItem({
-          label: 'profile'
+          label: 'Profile'
         , click: _.bind( this.goToProfile, this )
       }))
 
       menu.append(new Gui.MenuItem({
-          label: 'logout'
+          label: 'Logout'
         , click: _.bind( this.userLogout, this )
       }))
 
       menu.append(new Gui.MenuItem({ type: 'separator' }))
 
       menu.append(new Gui.MenuItem({
-          label: 'quit'
+          label: 'Quit'
         , click: _.bind( this.quitApp, this )
       }))
     }

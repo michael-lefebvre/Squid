@@ -19,7 +19,7 @@
   "serviceUrl": "https://api.github.com/",
   "repoPagination": 50,
   "single-instance": true,
-  "debug": true,
+  "debug": false,
   "window": {
     "title": "Squid",
     "toolbar": false,

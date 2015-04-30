@@ -26,7 +26,7 @@ module.exports = Card = React.createClass(
       
       if( _.isNull( this.props.totalRepos ) )
       {
-        text = 'loading repositories'
+        text = 'Loading repositories...'
       }
       else
       {
