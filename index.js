@@ -34,14 +34,14 @@ var React     = require('react')
 // App Updater
 var options = {}
 
-options = {
-    source: {
-        host: 'localhost'
-      , port: 8888
-      , path: '/download/Squid-Installer.dmg'
-    }
-  // , app_name: 'nwjs'
-}
+// options = {
+//     source: {
+//         host: 'localhost'
+//       , port: 8888
+//       , path: '/download/Squid-Installer.dmg'
+//     }
+//   // , app_name: 'nwjs'
+// }
 
 global.updaterInst = new Updater( options )
 
