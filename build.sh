@@ -37,6 +37,8 @@ cp app.nw Squid.app/Contents/Resources/app.nw
 cp "$root_dir/squid.icns" Squid.app/Contents/Resources
 codesign -d --deep-verify -v -v -v Squid.app
 
+rm $release_dir/app.nw
+
 test -f Squid-Installer.dmg && rm Squid-Installer.dmg
 $root_dir/create-dmg/create-dmg \
 --volname "Squid Installer" \
