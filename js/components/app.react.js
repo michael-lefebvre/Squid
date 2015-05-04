@@ -4,10 +4,6 @@ var React             = require('react')
   , RepositoriesStore = require('../stores/RepositoriesStore')
   , SquidHeader       = require('./header.react')
   , SquidFooter       = require('./footer.react')
-// var CartStore = require('../stores/CartStore');
-// var ProductStore = require('../stores/ProductStore');
-// var FluxProduct = require('./FluxProduct.react');
-// var FluxCart = require('./FluxCart.react');
 
 // Method to retrieve state from Stores
 function getAppState() 

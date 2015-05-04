@@ -29,7 +29,7 @@ global.navigator = window.navigator
 var React     = require('react')
   , Gui       = window.require('nw.gui')
   , Squid     = require('./utils/squid')
-  , SquidApp  = require('./components/SquidApp.react')
+  , SquidApp  = require('./components/app.react')
 
 
 onload = function() 
@@ -39,7 +39,7 @@ onload = function()
 
   Squid.init()
 
-  // Mount SquidApp Controller View
+  // Mount App Controller View
   React.render(
     <SquidApp />,
     document.getElementById('squid-app')
