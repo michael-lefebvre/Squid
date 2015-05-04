@@ -27,7 +27,7 @@ module.exports = Gears = React.createClass(
       }))
 
       menu.append(new Gui.MenuItem({
-          label: 'Logout'
+          label: 'Log out'
         , click: _.bind( this.userLogout, this )
       }))
 
