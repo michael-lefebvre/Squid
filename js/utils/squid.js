@@ -184,7 +184,7 @@ Squid.prototype.formatUrl = function( fragment )
 //
 //      @params  {string}  service url
 //      @params  {object}  xhr options
-//      @return  {mixed}
+//      @return  {object}  Xhr instance
 //
 Squid.prototype.api = function( service, options )
 {
@@ -192,7 +192,7 @@ Squid.prototype.api = function( service, options )
 
   try
   {
-    options.url = this.formatUrl( service )
+    service = this.formatUrl( service )
   }
   catch( e )
   {
@@ -220,9 +220,7 @@ Squid.prototype.api = function( service, options )
     }
   })
 
-  var xhr = new Xhr( options )
-
-  return xhr
+  return Xhr( service, options )
 }
 
 // Iterate over Github service pagination, eg `repos`

@@ -7,11 +7,14 @@ var AppDispatcher  = require('../dispatcher/AppDispatcher')
   , _              = require('underscore')
 
 // _private
-var _profile = false
+var _profile   = false
+  , _auth      = false
+  , _authError = false
 
 var _setProfile = function( profile )
 {
   _profile = profile
+  _auth    = _.isObject( _profile )
 }
 
 var _setOrgs = function( orgs )
@@ -32,54 +35,68 @@ var UserStore = _.extend( {}, EventEmitter.prototype,
       return _profile.orgs || []
     }
 
+  , isAuth: function()
+    {
+      return _auth
+    }
+
+  , hasAuthError: function()
+    {
+      return _authError
+    }
+
   , requestUserApi: function()
     {
       var self = this
-        , xhr  = Squid.api( 'user', 
-          {
-              success : function( response )
-              {
-                console.info('Login succeeded')
-                console.log( response )
+        , xhr  = Squid.api( 'user' )
 
-                _setProfile( response )
-                self.requestOrgsApi()
-              }
-            , error : function( response )
-              {
-                console.warn('error')
-                console.log( response )
+      // Get User profile
+      xhr.get()
+        .then( function( response )
+        {
+          console.info('Login succeeded')
+          _setProfile( response.json )
 
-                // Remove Credentials
-                Squid.logout()
-              }
-          })
-    }
-
-  , requestOrgsApi: function()
-    {
-      var myXHR = Squid.api( 'user/orgs', 
-      {
-          success : function( response )
-          {
-            // console.info('user orgs succeeded')
-            // console.log( response )
-
-            if( response.length )
+          // Nested Request:
+          // if we succeeded auth 
+          // we ask the user Orgs.
+          // It's a little dirty but
+          // we have no alternative
+          xhr.setUrl( Squid.formatUrl( 'user/orgs') )
+            .get()
+            .then( function( response )
             {
-              _setOrgs( response )
-            }
+              console.info('Orgs succeeded')
 
-            SquidActions.updateUserLogin( _profile )
+              _authError = false
 
-            // self.showRepositories()
-          }
-        , error : function( response )
-          {
-            console.warn('error')
-            console.log( response )
-          }
-      })      
+              if( response.json.length )
+              {
+                _setOrgs( response.json )
+              }
+              
+              SquidActions.updateUserLogin( _profile )
+            })
+            .catch( function( response )
+            {
+              console.warn('orgs error')
+              console.log( response )
+
+              SquidActions.updateUserLogin( _profile )
+            })
+        })
+        .catch( function( response )
+        {
+          console.warn('Login error')
+          console.log( response )
+
+          _authError = true
+
+          // Remove Credentials
+          Squid.logout()
+          // SquidActions.errorUserLogin( response.json )
+          SquidActions.updateUserLogin( false )
+        })
     }
 
     // Emit Change event
