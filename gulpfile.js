@@ -44,7 +44,7 @@ gulp.task('move', function()
 
 gulp.task('browserify', function () 
 {
-  return browserify( './index.js' )
+  return browserify( './js/app.js' )
     .transform( reactify )
     .bundle()
     .pipe( source('squid.js') )
@@ -61,6 +61,8 @@ gulp.task('watch', function()
     , 'updater.js'
     , 'components/*.js'
     , 'methods/*.js'
+    , 'js/*.js'
+    , 'js/*/*.js'
     , 'VERSION'
   ], ['sass','browserify', 'move'] )
 })
