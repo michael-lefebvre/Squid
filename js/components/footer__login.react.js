@@ -85,50 +85,46 @@ module.exports = Login = React.createClass(
       var username = this._loginEmail.value
         , password = this._loginPass.value
         , encode   = window.btoa( unescape( encodeURIComponent( [ username, password ].join(':') ) ) )
-        , self     = this
 
-      var resetState = function()
-      {
-        self.hideLoading()
-        self._loginEmail.focus()
-      }
-
-      // CreateAction
-
-      // SquidActions.updateUserLogin( {} )
-
+      // Store encoded user's 'creadentials
       Squid.setCredentials( encode )
 
-      UserStore.requestUserApi()
-
-      // SquidActions.updateUserLogin( user )
-
-      // var obj = {
-      //     hash:    encode
-      //   , success: function( response )
-      //     {
-      //       self._loginEmail.value = ''
-      //       self._loginPass.value  = ''
-      //       resetState()
-      //     }
-      //   , error:   function( response )
-      //     {
-      //       self._parent.classList.add('shake')
-
-      //       // Display Error message
-      //       var text = document.createTextNode( "Try again, you gloupsed it up!" )
-      //       self._feedbackNode.appendChild( text )
-
-      //       resetState()
-      //     }
-      // }
-      
+      // Call Github API
+      UserStore.requestUserApi()      
     }
 
-  , render: function(){
+  , render: function()
+    {
+      // console.log( 'this.props.hasAuthError', this.props.isAuth )
+      // console.log( 'this.props.isAuth', this.props.hasAuthError )
+
+      var feedbackTxt = ''
+
+      if( this.props.isAuth )
+      {
+        this._loginEmail.value = ''
+        this._loginPass.value  = ''
+
+        this._loginEmail.focus()
+      }
+
+      if( this.props.hasAuthError )
+      {
+        this._parent.classList.add('shake')
+        feedbackTxt = 'Try again, you gloupsed it up!'
+      }
+
+      if( 
+          this.props.isAuth ||
+          this.props.hasAuthError )
+      {
+        this.hideLoading()
+        this._loginEmail.focus()
+      }
+
       return (
         <div className="footer__login" id="squid-login">
-          <div className="footer__login__warning" id="js-login-feedback"></div>
+          <div className="footer__login__warning" id="js-login-feedback">{feedbackTxt}</div>
           <p className="form-control">
             <input type="text" id="input-username" className="input" placeholder="Your username or email"
               onKeyDown={this.handleKey}

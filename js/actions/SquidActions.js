@@ -59,6 +59,15 @@ var SquidActions =
         })
     }
 
+    // dispatch auth error
+  , errorUserLogin: function( response ) 
+    {
+        AppDispatcher.handleAction({
+            actionType: SquidConstants.USER_LOGIN_ERROR
+          , response:   response
+        })
+    }
+
     // Append user's Orgs to profile
   , postUserCredentials: function( credentials ) 
     {

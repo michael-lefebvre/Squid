@@ -1,53 +1,103 @@
-
-var Gui   = window.require('nw.gui')
-  , _     = require('underscore')
-
-module.exports = Xhr = function( options ) 
-{
-  // check response status
-  var _isSuccessStatus = function ( status )
+module.exports = Xhr = function( url, options )
+{ 
+  options = options || {}
+      
+  // Un exemple d'objet
+  var core = 
   {
-    return status >= 200 && status < 300 || status == 304
+      setUrl: function( _url )
+      {
+        url = _url
+
+        return this
+      }
+
+    , error: function( message )
+      {
+        this.name    = 'Squid Xhr'
+        this.message = message || 'XHR has failed'
+        this.url     = url
+        this.options = options
+      }
+
+      // La méthode qui effectue la requête AJAX
+    , ajax : function( method, url, args ) 
+      {
+        // On établit une promesse en retour
+        var promise = new Promise( function ( resolve, reject )
+        {
+          // Instantiate XMLHttpRequest client
+          var client = new XMLHttpRequest()
+            , uri    = url
+
+          client.open( method, uri )
+          client.dataType = 'json' || options.dataType
+
+          // Set headers
+          Object.keys( options.headers || {} )
+            .forEach( function( key )
+            {
+              client.setRequestHeader( key, options.headers[ key ] )
+            })
+
+          // This is called even on 404 etc
+          client.onload = function() 
+          {
+            // so check the status
+            if ( this.status == 200 ) 
+            {
+              resolve({
+                  json: JSON.parse( this.response )
+                , xhr:  this
+              })
+            }
+            else
+            {
+              reject({
+                  message: this.statusText
+                , status:  this.status
+                , xhr:     this
+              })
+            }
+          }
+
+          // Handle network errors
+          client.onerror = function()
+          {
+            throw new core.error({
+                message: this.statusText
+              , status:  this.status
+              , xhr:     this
+            })
+          }
+
+          // Make the request
+          client.send( options.data || null )
+        })
+
+        // Return the promise
+        return promise
+      }
   }
 
-  if( _.isUndefined( options.url ) )
-    throw 'XHR need an URL'
-
-  var xhr   = new XMLHttpRequest()
-    , done  = false
-    , async = options.hasOwnProperty('async') ? options.async : true
-
-  xhr.open( options.method || 'GET', options.url, async )
-  xhr.dataType = 'json'
-
-  xhr.onreadystatechange = function()
-  {
-    if( done ) return
-    if( this.readyState != 4 ) return
-
-    done = true
-
-    if( _isSuccessStatus( this.status ) )
-    {
-      // if success and has callback
-      // return json parsed response
-      if( options.success )
-        options.success( JSON.parse( this.response ), this )
-
-      return
-    }
-
-    if( options.error )
-      options.error( this.statusText, this )
+  // Pattern adaptateur
+  return {
+      'get': function( args ) 
+      {
+        return core.ajax( 'GET', url, args )
+      }
+    , 'post': function( args ) 
+      {
+        return core.ajax( 'POST', url, args )
+      }
+    , 'put': function( args ) 
+      {
+        return core.ajax( 'PUT', url, args )
+      }
+    , 'delete': function( args ) 
+      {
+        return core.ajax( 'DELETE', url, args )
+      }
+    , 'setUrl': core.setUrl
   }
-
-  Object.keys( options.headers || {} )
-    .forEach( function( key )
-    {
-      xhr.setRequestHeader( key, options.headers[ key ] )
-    })
-
-  xhr.send( options.data || null )
-
-  return xhr
 }

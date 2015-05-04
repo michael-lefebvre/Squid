@@ -10,6 +10,7 @@ module.exports = keyMirror(
   , UPDATE_INSTALLED:  null
   , SEARCH_VISIBLE:    null
   , USER_LOGIN:        null
+  , USER_LOGIN_ERROR:  null
   , USER_CREDENTIALS:  null
   , USER_RECEIVE:      null
   , USER_ORGS:         null

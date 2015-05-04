@@ -10,6 +10,8 @@ function getAppState()
 {
   return {
       user:         UserStore.getProfile()
+    , isAuth:       UserStore.isAuth()
+    , hasAuthError: UserStore.hasAuthError()
     , repositories: RepositoriesStore.getRepositories()
   }
 }
@@ -40,7 +42,7 @@ var SquidApp = React.createClass(
     {
       var classes = ClassNames(
       {
-          'context_logged':  this.state.user
+          'context_logged':  ( this.state.user )
         , 'context_search':  false
         , 'context_offline': false
         , 'container':       true
@@ -49,11 +51,19 @@ var SquidApp = React.createClass(
     	return (
         <div className={classes} ref="containerNode">
           <div className="header" id="squid-header">
-            <SquidHeader user={this.state.user} repositories={this.props.repositories} />
+            <SquidHeader 
+              user={this.state.user} 
+              isAuth={this.state.isAuth}
+              hasAuthError={this.state.hasAuthError}
+              repositories={this.state.repositories} />
           </div>
           <div className="footer">
             <div className="footer__content" id="squid-footer">
-              <SquidFooter user={this.state.user} repositories={this.props.repositories} />
+              <SquidFooter 
+                user={this.state.user}
+                isAuth={this.state.isAuth}
+                hasAuthError={this.state.hasAuthError}
+                repositories={this.state.repositories} />
             </div>
           </div>
           <div className="repositories" id="squid-repositories"></div>
