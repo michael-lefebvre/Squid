@@ -29,7 +29,7 @@ var Updater = function( config )
       {
           host: 'michael-lefebvre.github.io'
         , port: 80
-        , path: '/download/Squid-Installer.dmg'
+        , path: '/Squid/download/Squid-Installer.dmg'
       }
     , tmpFile: appPath + '/.squid-update.dmg'
     , progress: function( percentage ) 
@@ -48,7 +48,7 @@ var Updater = function( config )
   this._versionSrc  = {
       host: this._config.source.host
     , port: this._config.source.port
-    , path: '/VERSION'
+    , path: '/Squid/VERSION'
   } 
 
   // Cureent App version
