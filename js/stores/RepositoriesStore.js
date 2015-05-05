@@ -5,7 +5,7 @@ var AppDispatcher  = require('../dispatcher/AppDispatcher')
   , _              = require('underscore')
 
 // _private
-var _repositories = false
+var _repositories = null
 
 var _setRepositories = function( repositories )
 {

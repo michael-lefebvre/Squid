@@ -95,36 +95,37 @@ module.exports = Login = React.createClass(
 
   , render: function()
     {
-      // console.log( 'this.props.hasAuthError', this.props.isAuth )
-      // console.log( 'this.props.isAuth', this.props.hasAuthError )
+      var _feedbackTxt = ''
+        , _isLogged    = this.props.user.isLogged()
+        , _authError   = this.props.user.hasAuthError()
 
-      var feedbackTxt = ''
-
-      if( this.props.isAuth )
+      if( _isLogged )
       {
         this._loginEmail.value = ''
         this._loginPass.value  = ''
 
-        this._loginEmail.focus()
+        this._loginEmail.blur()
+        this._loginPass.blur()
       }
 
-      if( this.props.hasAuthError )
+      if( _authError )
       {
         this._parent.classList.add('shake')
-        feedbackTxt = 'Try again, you gloupsed it up!'
+        _feedbackTxt = 'Try again, you gloupsed it up!'
+
+        this._loginEmail.focus()
       }
 
       if( 
-          this.props.isAuth ||
-          this.props.hasAuthError )
+          _isLogged ||
+          _authError )
       {
         this.hideLoading()
-        this._loginEmail.focus()
       }
 
       return (
         <div className="footer__login" id="squid-login">
-          <div className="footer__login__warning" id="js-login-feedback">{feedbackTxt}</div>
+          <div className="footer__login__warning" id="js-login-feedback">{_feedbackTxt}</div>
           <p className="form-control">
             <input type="text" id="input-username" className="input" placeholder="Your username or email"
               onKeyDown={this.handleKey}

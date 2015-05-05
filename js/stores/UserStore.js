@@ -1,48 +1,77 @@
 
 var AppDispatcher  = require('../dispatcher/AppDispatcher')
   , EventEmitter   = require('events').EventEmitter
+  , Backbone       = require('Backbone')
   , SquidConstants = require('../constants/SquidConstants')
   , SquidActions   = require('../actions/SquidActions')
   , Squid          = require('../utils/squid')
   , _              = require('underscore')
 
+var Profile = Backbone.Model.extend(
+{
+    _authError: false
+
+  , defaults : 
+    {
+        name:         null
+      , public_repos: null
+      , avatar_url:   null
+      , email:        null
+      , orgs:         []
+    }
+
+  , getProfileUrl: function()
+    {
+      return this.get('html_url')
+    }
+
+  , getAvatar: function()
+    {
+      return this.get('avatar_url') + '&s=34'
+    }
+
+  , setOrgs: function( orgs )
+    {
+      this.set( 'orgs', orgs )
+    }
+
+  , setAuthError: function( value )
+    {
+      this._authError = value
+    }
+
+  , hasAuthError: function()
+    {
+      return this._authError
+    }
+
+  , isLogged: function()
+    {
+      return !_.isUndefined( this.id )
+    }
+})
+
+
 // _private
-var _profile   = false
-  , _auth      = false
-  , _authError = false
+var _profile   = new Profile()
 
 var _setProfile = function( profile )
 {
-  _profile = profile
-  _auth    = _.isObject( _profile )
-}
-
-var _setOrgs = function( orgs )
-{
-  _profile.orgs = orgs
+  if( profile )
+  {
+    _profile.setAuthError( false )
+    _profile.set( profile )
+  }
+  else
+    _profile.clear()
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var UserStore = _.extend( {}, EventEmitter.prototype, 
 {
-    getProfile: function()
+    get: function()
     {
       return _profile
-    }
-
-  , getOrgs: function()
-    {
-      return _profile.orgs || []
-    }
-
-  , isAuth: function()
-    {
-      return _auth
-    }
-
-  , hasAuthError: function()
-    {
-      return _authError
     }
 
   , requestUserApi: function()
@@ -68,8 +97,6 @@ var UserStore = _.extend( {}, EventEmitter.prototype,
             {
               console.info('Orgs succeeded')
 
-              _authError = false
-
               if( response.json.length )
               {
                 _setOrgs( response.json )
@@ -90,11 +117,9 @@ var UserStore = _.extend( {}, EventEmitter.prototype,
           console.warn('Login error')
           console.log( response )
 
-          _authError = true
-
           // Remove Credentials
           Squid.logout()
-          // SquidActions.errorUserLogin( response.json )
+          _profile.setAuthError( true )
           SquidActions.updateUserLogin( false )
         })
     }
@@ -133,7 +158,7 @@ AppDispatcher.register( function( payload )
 
     // Respond to USER_ORGS action
     case SquidConstants.USER_ORGS:
-      _setOrgs( action.orgs )
+      _profile.set( action.orgs )
       break
 
     default:
