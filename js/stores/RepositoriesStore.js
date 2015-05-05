@@ -3,6 +3,56 @@ var AppDispatcher  = require('../dispatcher/AppDispatcher')
   , EventEmitter   = require('events').EventEmitter
   , SquidConstants = require('../constants/SquidConstants')
   , _              = require('underscore')
+  , Backbone       = require('Backbone')
+
+var Repository = Backbone.Model.extend(
+{
+    defaults : 
+    {
+        name:         null
+      , full_name:    null
+      , private:      false
+      , html_url:     null
+    }
+    
+  , getAvatar: function()
+    {
+      var owner = this.get('owner')
+
+      return owner.avatar_url + '&s=34'
+    }
+
+  , getUrl: function()
+    {
+      return this.get('html_url')
+    }
+
+  , getOwner: function()
+    {
+      return this.get('owner').login
+    }
+
+  , getDesc: function()
+    {
+      return this.get('description')
+    }
+
+  , searchable: function()
+    {
+      return this.get('full_name').toLowerCase()
+    }
+})
+
+var Repositories = Backbone.Collection.extend(
+{
+    model: Repository
+
+  , comparator: function( model )
+    {
+        return model.get('name').charAt(0).toLowerCase()
+    }
+    
+})
 
 // _private
 var _repositories = null
