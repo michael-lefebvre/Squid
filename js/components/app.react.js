@@ -11,7 +11,7 @@ function getAppState()
 {
   return {
       user:         UserStore.get()
-    , repositories: RepositoriesStore.getRepositories()
+    , repositories: RepositoriesStore.get()
   }
 }
 

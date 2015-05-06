@@ -23,7 +23,7 @@ var Repos = React.createClass(
       
       if( _.isNull( this.props.repositories ) )
       {
-        text = 'Loading repositories...'
+        text = 'Loading repositories<i class="ellipsis"><i>.</i><i>.</i><i>.</i></i>'
       }
       else
       {

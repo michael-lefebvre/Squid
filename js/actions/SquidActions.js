@@ -14,6 +14,14 @@ var SquidActions =
         })
     }
 
+    // Receive inital repositories data
+  , requestRepositories: function() 
+    {
+        AppDispatcher.handleAction({
+            actionType:   SquidConstants.REPO_CALL
+        })
+    }
+
     // New app release infos
   , avalaibleAppUpdate: function( data ) 
     {

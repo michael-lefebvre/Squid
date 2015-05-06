@@ -65,9 +65,33 @@ var _setRepositories = function( repositories )
 // Extend User Store with EventEmitter to add eventing capabilities
 var RepositoriesStore = _.extend( {}, EventEmitter.prototype, 
 {
-    getRepositories: function()
+    get: function()
     {
       return _repositories
+    }
+
+  , request: function()
+    {
+      // var self = this
+      //   , xhr  = Squid.api( 'user' )
+
+      // // Get User profile
+      // xhr.get()
+      //   .then( function( response )
+console.log('request repo')
+      Squid.apiPages( 'user/repos', {
+        onComplete: function( results )
+        {
+console.log( results )
+          // var user = Squid.getUser()
+          //   , orgs = user.get('orgs')
+
+          // if( !orgs.length )
+          //   self.handleRepositoriesLoaded( new Collection( results ) )
+          // else
+          //   self.requestAllOrgsRepos( results, orgs )
+        }
+      })
     }
 
     // Emit Change event
@@ -97,9 +121,14 @@ AppDispatcher.register( function( payload )
 
   switch( action.actionType )
   {
-    // Respond to USER_LOGIN action
+    // Respond to REPO_LOAD action
     case SquidConstants.REPO_LOAD:
       _setRepositories( action.repositories )
+      break
+
+    // Respond to REPO_CALL action
+    case SquidConstants.REPO_CALL:
+      RepositoriesStore.request()
       break
 
     default:

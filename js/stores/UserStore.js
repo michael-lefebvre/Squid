@@ -99,9 +99,10 @@ var UserStore = _.extend( {}, EventEmitter.prototype,
 
               if( response.json.length )
               {
-                _setOrgs( response.json )
+                _profile.set( response.json )
               }
               
+              SquidActions.requestRepositories()
               SquidActions.updateUserLogin( _profile )
             })
             .catch( function( response )
@@ -109,6 +110,7 @@ var UserStore = _.extend( {}, EventEmitter.prototype,
               console.warn('orgs error')
               console.log( response )
 
+              SquidActions.requestRepositories()
               SquidActions.updateUserLogin( _profile )
             })
         })

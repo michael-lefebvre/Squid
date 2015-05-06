@@ -5,6 +5,7 @@ var keyMirror = require('react/lib/keyMirror')
 module.exports = keyMirror(
 {
     REPO_LOAD:         null
+  , REPO_CALL:         null
   , UPDATE_AVALAIBLE:  null
   , UPDATE_DOWNLOADED: null
   , UPDATE_INSTALLED:  null
