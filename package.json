@@ -20,6 +20,16 @@
   "repoPagination": 50,
   "single-instance": true,
   "debug": true,
+  "windowProd": {
+    "title": "Squid",
+    "toolbar": false,
+    "width": 380,
+    "height": 465,
+    "resizable": false,
+    "frame": false,
+    "transparent": true,
+    "show": false
+  },
   "window": {
     "title": "Squid",
     "toolbar": true,
