@@ -160,19 +160,19 @@ body {
 .ellipsis {
   i {
     opacity: 0;
-    animation: dot 1.3s infinite;
+    animation: dot 1s infinite;
     animation-delay: .0s;
   }
 
   i + i {
     opacity: 0;
-    animation: dot 1.3s infinite;
+    animation: dot 1s infinite;
     animation-delay: .2s;
   }
 
   i + i + i {
     opacity: 0;
-    animation: dot 1.3s infinite;
+    animation: dot 1s infinite;
     animation-delay: .3s;
   }
 }
