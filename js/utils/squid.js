@@ -235,20 +235,18 @@ Squid.prototype.apiPages = function( service, options, results )
     , next       = false
     , self       = this
     , results    = results || []
-    , xhr        = this.api( serviceUrl )
+    , api        = this.api( serviceUrl )
 
   // pagination stolen from Github.js by Michael Aufreiter
   ;(function iterate() 
   {
-console.log( serviceUrl  )
-    xhr.setUrl( serviceUrl )
+    api.setUrl( self.formatUrl( serviceUrl ) )
       .get()
-      .then( function( response, xhr )
+      .then( function( response )
       {
-console.log( response.json )
         results.push.apply( results, response.json )
 
-        var links = ( xhr.getResponseHeader('link') || '' ).split(/\s*,\s*/g)
+        var links = ( response.xhr.getResponseHeader('link') || '' ).split(/\s*,\s*/g)
           , next  = _.find( links, function( link ) { return /rel="next"/.test( link ) })
 
         if( next )
@@ -269,6 +267,8 @@ console.log( response.json )
       })
       
   })()
+
+  return api
 }
 
 // Init 

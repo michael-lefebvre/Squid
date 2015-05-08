@@ -25,7 +25,8 @@ var Header = React.createClass(
           <div className="header__connected">
             <Card 
               user={this.props.user}
-              repositories={this.props.repositories} />
+              repositories={this.props.repositories}
+              searchStatus={this.props.searchStatus} />
           </div>
         </div>
       )

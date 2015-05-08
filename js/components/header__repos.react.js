@@ -4,32 +4,20 @@ var React  = require('react')
 
 var Repos = React.createClass(
 {
-    // Initialize
-
-    componentDidMount: function()
-    {
-      var self = this
-
-      // PUB/SUB
-      // PubSub.subscribe( 'squid::repoLoad', function( msg, data )
-      // {
-      //   self.handleRepoUpdate( data )
-      // })
-    }
-
-  , render: function()
+    render: function()
     {
       var text
-      
+
       if( _.isNull( this.props.repositories ) )
       {
         text = 'Loading repositories<i class="ellipsis"><i>.</i><i>.</i><i>.</i></i>'
       }
       else
       {
-        text = ( !this.props.totalRepos )
+        var _total = this.props.repositories.length
+        text = ( !_total )
                ? 'No repositories found'
-               : 'You have <strong>' + this.props.totalRepos + ' ' + ( ( this.props.totalRepos > 1 ) ? 'repositories' : 'repository' )  + '</strong> available'
+               : 'You have <strong>' + _total + ' ' + ( ( _total > 1 ) ? 'repositories' : 'repository' )  + '</strong> available'
       }
 
       return (
@@ -39,6 +27,5 @@ var Repos = React.createClass(
       )
     }
 })
-
 
 module.exports = Repos

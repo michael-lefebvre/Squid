@@ -5,6 +5,7 @@ var React        = require('react')
   , Squid        = require('../utils/squid')
   , _            = require('underscore')
   , SquidActions = require('../actions/SquidActions')
+  , UserStore    = require('../stores/UserStore')
   // , UpdaterUi = require('./footer__updater')
 
 module.exports = Gears = React.createClass(
@@ -42,14 +43,14 @@ module.exports = Gears = React.createClass(
     // Go to user profile
   , goToProfile: function()
     {
-      // if( !Squid.getUser )
-      // {
-      //   alert('not logged in')
-      //   return
-      // }
-      console.log('go to profil')
+      if( !this.props.user.isLogged() )
+      {
+        alert('not logged in')
+        return
+      }
+      
       // Open URL with default browser.
-      // Gui.Shell.openExternal( Squid.getUser().getProfileUrl() )
+      Gui.Shell.openExternal( this.props.user.getProfileUrl() )
     }
 
   , userLogout: function()

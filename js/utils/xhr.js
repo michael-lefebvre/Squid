@@ -12,6 +12,11 @@ module.exports = Xhr = function( url, options )
         return this
       }
 
+    , getUrl: function()
+      {
+        return url
+      }
+
     , error: function( message )
       {
         this.name    = 'Squid Xhr'
@@ -99,5 +104,6 @@ module.exports = Xhr = function( url, options )
         return core.ajax( 'DELETE', url, args )
       }
     , 'setUrl': core.setUrl
+    , 'getUrl': core.getUrl
   }
 }

@@ -20,6 +20,14 @@ var Profile = Backbone.Model.extend(
       , orgs:         []
     }
 
+  , getName: function()
+    {
+      if( !_.isUndefined( this.get('name') ) )
+        return this.get('name')
+
+      return this.get('login')
+    }
+
   , getProfileUrl: function()
     {
       return this.get('html_url')
@@ -99,19 +107,19 @@ var UserStore = _.extend( {}, EventEmitter.prototype,
 
               if( response.json.length )
               {
-                _profile.set( response.json )
+                _profile.set( 'orgs', response.json )
               }
               
-              SquidActions.requestRepositories()
               SquidActions.updateUserLogin( _profile )
+              SquidActions.requestRepositories()
             })
             .catch( function( response )
             {
               console.warn('orgs error')
               console.log( response )
 
-              SquidActions.requestRepositories()
               SquidActions.updateUserLogin( _profile )
+              SquidActions.requestRepositories()
             })
         })
         .catch( function( response )
@@ -160,7 +168,7 @@ AppDispatcher.register( function( payload )
 
     // Respond to USER_ORGS action
     case SquidConstants.USER_ORGS:
-      _profile.set( action.orgs )
+      _profile.set( 'orgs', action.orgs )
       break
 
     default:

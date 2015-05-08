@@ -50,11 +50,11 @@ var SquidActions =
     }
 
     // Update search visibility status
-  , updateSearchVisible: function( searchVisible ) 
+  , updateSearchVisible: function( state ) 
     {
         AppDispatcher.handleAction({
-            actionType:    SquidConstants.SEARCH_VISIBLE
-          , searchVisible: searchVisible
+            actionType:  SquidConstants.SEARCH_VISIBLE
+          , state:       state
         })
     }
 

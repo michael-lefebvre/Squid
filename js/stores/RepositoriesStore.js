@@ -2,6 +2,9 @@
 var AppDispatcher  = require('../dispatcher/AppDispatcher')
   , EventEmitter   = require('events').EventEmitter
   , SquidConstants = require('../constants/SquidConstants')
+  , SquidActions   = require('../actions/SquidActions')
+  , Squid          = require('../utils/squid')
+  , UserStore      = require('./UserStore')
   , _              = require('underscore')
   , Backbone       = require('Backbone')
 
@@ -55,11 +58,17 @@ var Repositories = Backbone.Collection.extend(
 })
 
 // _private
-var _repositories = null
+var _repositories   = null
+  , _isSearchActive = false
 
 var _setRepositories = function( repositories )
 {
   _repositories = repositories
+}
+
+var _setSearchVisibility = function( value )
+{
+  _isSearchActive = value
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -70,26 +79,43 @@ var RepositoriesStore = _.extend( {}, EventEmitter.prototype,
       return _repositories
     }
 
+  , getSearch: function()
+    {
+      return _isSearchActive
+    }
+
   , request: function()
     {
-      // var self = this
-      //   , xhr  = Squid.api( 'user' )
-
-      // // Get User profile
-      // xhr.get()
-      //   .then( function( response )
 console.log('request repo')
-      Squid.apiPages( 'user/repos', {
-        onComplete: function( results )
+      var xhr = Squid.apiPages( 'user/repos', {
+        onComplete: function( repositories )
         {
-console.log( results )
-          // var user = Squid.getUser()
-          //   , orgs = user.get('orgs')
+          var orgs = UserStore.get().get('orgs')
 
-          // if( !orgs.length )
-          //   self.handleRepositoriesLoaded( new Collection( results ) )
-          // else
-          //   self.requestAllOrgsRepos( results, orgs )
+          if( !orgs.length )
+            SquidActions.receiveRepositories( new Repositories( repositories ) )
+          else
+          {
+            var total      = orgs.length
+              , done       = 0
+              , self       = this
+
+            orgs.forEach( function( org )
+            {
+              Squid.apiPages( org.repos_url, 
+              {
+                  onComplete: function( results )
+                  {
+                    ++done
+
+                    repositories.push.apply( repositories, results.json )
+
+                    if( done === total )
+                      SquidActions.receiveRepositories( new Repositories( repositories ) )
+                  }
+              }, repositories )
+            })
+          }
         }
       })
     }
@@ -129,6 +155,11 @@ AppDispatcher.register( function( payload )
     // Respond to REPO_CALL action
     case SquidConstants.REPO_CALL:
       RepositoriesStore.request()
+      break
+
+    // Respond to SEARCH_VISIBLE action
+    case SquidConstants.SEARCH_VISIBLE:
+      _setSearchVisibility( action.state )
       break
 
     default:
