@@ -15,21 +15,22 @@ Squid is a small cool tool that give you a quick access to all your Github repos
 
 ## Dev Env
 
-After you clone this repository on your workstation, follow these 4 steps to run Squid into developer mode:
+After you clone the repository on your workstation, follow these 4 steps to run Squid into developer mode:
 
 * first install Node.js packages:
 
 		npm install
 		
-* into `package.json` set `debug` property to `true` (optional but useful)
+* into `package.json` set `debug` property to `true` (optional but useful). if you want a cosy environment to dev rename the `window` node to `windowProd` and rename the `windowDev` node to `window`. this will display the application into something easer to debug.
 	
 * run Gulp command
 
 		gulp
 		
-* In a new terminal window run:
+* Into a new terminal window run:
 
 		npm start
+		
 	
 ## Build app
 

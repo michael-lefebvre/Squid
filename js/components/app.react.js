@@ -61,6 +61,8 @@ var SquidApp = React.createClass(
         , 'container':       true
       })
 
+      this.props.updater.checkRemote()
+
     	return (
         <div className={classes} ref="containerNode">
           <div className="header" id="squid-header">
@@ -73,7 +75,8 @@ var SquidApp = React.createClass(
             <div className="footer__content" id="squid-footer">
               <SquidFooter 
                 user={this.state.user}
-                repositories={this.state.repositories} />
+                repositories={this.state.repositories}
+                updater={this.props.updater} />
             </div>
           </div>
           <div className="repositories" id="squid-repositories">

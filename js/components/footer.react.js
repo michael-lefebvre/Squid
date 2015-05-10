@@ -14,7 +14,8 @@ var Footer = React.createClass(
       return (
         <div className="login">
           <Gears
-            user={this.props.user} />
+            user={this.props.user}
+            updater={this.props.updater} />
           <Login
             user={this.props.user} />
           <Network />

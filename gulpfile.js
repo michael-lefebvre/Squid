@@ -35,7 +35,7 @@ gulp.task('move', function()
       , 'components/repos.json'
       , 'squid-header.png'
       , 'icons/*'
-      , 'updater.js'
+      , 'js/utils/updater.js'
       , 'VERSION'
     ])
     .pipe( gulp.dest( buildFolder ) )

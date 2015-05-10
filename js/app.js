@@ -26,10 +26,17 @@
 global.document  = window.document
 global.navigator = window.navigator
 
-var React     = require('react')
-  , Gui       = window.require('nw.gui')
-  , Squid     = require('./utils/squid')
-  , SquidApp  = require('./components/app.react')
+var React       = require('react')
+  , Gui         = window.require('nw.gui')
+  , Squid       = require('./utils/squid')
+  , SquidApp    = require('./components/app.react')
+  , updaterOpts = {}
+
+if( Gui.App.manifest.debug )
+  updaterOpts = Gui.App.manifest.updater
+
+// App Updater
+var updater = new Updater( updaterOpts )
 
 
 onload = function() 
@@ -41,7 +48,7 @@ onload = function()
 
   // Mount App Controller View
   React.render(
-    <SquidApp />,
+    <SquidApp updater={updater} />,
     document.getElementById('squid-app')
   )
 }

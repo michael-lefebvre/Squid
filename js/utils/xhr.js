@@ -1,8 +1,7 @@
 module.exports = Xhr = function( url, options )
 { 
   options = options || {}
-      
-  // Un exemple d'objet
+
   var core = 
   {
       setUrl: function( _url )
