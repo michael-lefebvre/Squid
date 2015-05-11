@@ -1,5 +1,6 @@
 var React  = require('react')
   , Item   = require('./repositories__item.react')
+  , _      = require('underscore')
 
 var Repositories = React.createClass(
 {
@@ -9,7 +10,7 @@ var Repositories = React.createClass(
         , searched = this.props.filterText.toLowerCase()
         , klass    = 'repositories__list'
 
-        if( !this.props.repositories )
+        if( _.isNull( this.props.repositories ) )
           klass += ' loading'
 
       if( this.props.repositories )
@@ -21,6 +22,16 @@ var Repositories = React.createClass(
 
           rows.push( <Item repo={repo} key={repo.get('id')} />)
         }.bind(this))
+      }
+
+      if( !_.isNull( this.props.repositories )
+          && !this.props.repositories.length )
+      {
+        return (
+          <div className="repositories__list repositories__list-empty">
+            <div />
+          </div>
+        )        
       }
 
       return (

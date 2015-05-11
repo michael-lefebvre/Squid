@@ -68,6 +68,18 @@
   }
 }
 
+.repositories__list-empty {
+  position: relative;
+
+  > div {
+    @include position( absolute, 50% 0 0 50%);
+    transform: translate(-50%,-50%);
+    background: url(shell.png) center no-repeat;
+    height: 118px;
+    
+  }
+}
+
 .repo__label,
 .repo__desc {
   @include text-truncate;

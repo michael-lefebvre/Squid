@@ -22,7 +22,7 @@ var Profile = Backbone.Model.extend(
 
   , getName: function()
     {
-      if( !_.isUndefined( this.get('name') ) )
+      if( !_.isNull( this.get('name') ) )
         return this.get('name')
 
       return this.get('login')
