@@ -73,7 +73,7 @@ var _setProfile = function( profile )
   else
   {
     Squid.logout()
-    _profile.clear()
+    _profile   = new Profile()
   }
 }
 

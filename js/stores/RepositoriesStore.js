@@ -71,6 +71,15 @@ var _setSearchVisibility = function( value )
   _isSearchActive = value
 }
 
+var _resetRepositories = function()
+{
+  setTimeout( function()
+  {
+    _repositories.reset()
+    _repositories = null
+  }, 250)
+}
+
 // Extend User Store with EventEmitter to add eventing capabilities
 var RepositoriesStore = _.extend( {}, EventEmitter.prototype, 
 {
@@ -92,7 +101,8 @@ console.log('request repo')
         {
           var orgs = UserStore.get().get('orgs')
 
-          if( !orgs.length )
+          if( _.isUndefined( orgs )
+             || !orgs.length )
             SquidActions.receiveRepositories( new Repositories( repositories ) )
           else
           {
@@ -160,6 +170,11 @@ AppDispatcher.register( function( payload )
     // Respond to SEARCH_VISIBLE action
     case SquidConstants.SEARCH_VISIBLE:
       _setSearchVisibility( action.state )
+      break
+
+    // Respond to REPO_CLEAR action
+    case SquidConstants.REPO_CLEAR:
+      _resetRepositories()
       break
 
     default:

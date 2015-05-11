@@ -6,6 +6,7 @@ module.exports = keyMirror(
 {
     REPO_LOAD:         null
   , REPO_CALL:         null
+  , REPO_CLEAR:        null
   , UPDATE_AVALAIBLE:  null
   , UPDATE_DOWNLOADED: null
   , UPDATE_INSTALLED:  null

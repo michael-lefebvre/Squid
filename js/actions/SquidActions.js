@@ -22,6 +22,14 @@ var SquidActions =
         })
     }
 
+    // Clear repositories list
+  , resetRepositories: function() 
+    {
+        AppDispatcher.handleAction({
+            actionType:   SquidConstants.REPO_CLEAR
+        })
+    }
+
     // New app release infos
   , avalaibleAppUpdate: function( data ) 
     {

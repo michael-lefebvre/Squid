@@ -1,12 +1,13 @@
 
-var React        = require('react')
-  , Gui          = window.require('nw.gui')
-  , Win          = Gui.Window.get()
-  , Squid        = require('../utils/squid')
-  , _            = require('underscore')
-  , SquidActions = require('../actions/SquidActions')
-  , UserStore    = require('../stores/UserStore')
-  , UpdaterUi    = require('./footer__updater.react')
+var React             = require('react')
+  , Gui               = window.require('nw.gui')
+  , Win               = Gui.Window.get()
+  , Squid             = require('../utils/squid')
+  , _                 = require('underscore')
+  , SquidActions      = require('../actions/SquidActions')
+  , UserStore         = require('../stores/UserStore')
+  , RepositoriesStore = require('../stores/RepositoriesStore')
+  , UpdaterUi         = require('./footer__updater.react')
 
 module.exports = Gears = React.createClass(
 {
@@ -56,6 +57,7 @@ module.exports = Gears = React.createClass(
   , userLogout: function()
     {
       SquidActions.updateUserLogin( false )
+      SquidActions.resetRepositories()
     }
 
   , quitApp: function()
