@@ -25,8 +25,11 @@ var UpdaterError = function( hash )
 var Updater = function( config )
 {
   // Prevent actions during version check or DMG download
-  this._redFlag     = false
-console.log( config )
+  this._redFlag = false
+
+  // 
+  this._store   = false
+
   // Defaut settings
   var _settings = 
   {
@@ -42,7 +45,6 @@ console.log( config )
     , version: '/Squid/VERSION'
     , progress: function( percentage ) 
       {
-        // console.log( percentage + "%" )
         document.getElementById('js-update-progress').style.width = percentage + '%'
       }
   }
@@ -65,6 +67,11 @@ console.log( config )
   console.info( 'Squid version: '+ this._VERSION )
   console.log( this._versionSrc )
   console.log( this._config )
+}
+
+Updater.prototype.setStore = function( store )
+{
+  this._store = store
 }
 
 Updater.prototype._merge = function( target, source )
@@ -136,7 +143,7 @@ Updater.prototype._versionCompare = function( local, server )
 //
 //      @return  {bool}
 //
-Updater.prototype.checkRemote = function()
+Updater.prototype.checkRemote = function( _callback )
 {
   if( !navigator.onLine )
     return
@@ -169,7 +176,11 @@ Updater.prototype.checkRemote = function()
 
         if( compare == -1 ) // && window.confirm('New realease available, do you want to update?') )
         {
-            console.warn('UPDATE APP')
+          console.warn('UPDATE APP AVAILABLE')
+
+          if( typeof _callback === 'function')
+            _callback( version )
+
         }
         else // don't want to update
         {
@@ -196,11 +207,9 @@ Updater.prototype.checkRemote = function()
   })
 }
 
-Updater.prototype.update = function( callback )
+Updater.prototype.update = function( _callback )
 {
   console.info('downloading update ' + this._config.source.path)
-
-  var self     = this
 
   try 
   {
@@ -210,44 +219,9 @@ Updater.prototype.update = function( callback )
 
       console.info('new release downloaded')
 
-      self._PubSub.publish( 'squid::updateInstalling' )
-      
-      // try
-      // {
-        self._mount( function( mount_point )
-        {
-          console.info( 'update mounted at ' + mount_point )
-        
-          self._hideOriginal( function( err )
-          {
-            if (err) throw err
-
-            console.log('original application hidden')
-            
-            self._copyUpdate( mount_point, function( err, app )
-            {
-              if (err) throw err
-
-              console.log('update applied successfully at ', app)
-                    
-              self._removeQuarantine( app, function( err )
-              {
-                if (err) throw err
-                console.log('quarantine removed, cleaning up')
-              })
-                    
-              // if either of these fails we're still going to call it a (messy) success
-              self._cleanup()
-              self._unmount( mount_point, function()
-              {            
-                console.log('update complete')
-                callback() 
-              })
-            })
-          }) 
-        })
-      // }
-      // catch( e ) { throw e }
+      // self._PubSub.publish( 'squid::updateInstalling' )
+      if( typeof _callback === 'function')
+        _callback()
     })
   }
   catch ( err ) 
@@ -257,6 +231,48 @@ Updater.prototype.update = function( callback )
     // this._cleanup()
       // callback(err)
   }
+}
+
+Updater.prototype.install = function( callback )
+{
+  var self = this
+
+  try
+  {
+    this._mount( function( mount_point )
+    {
+      console.info( 'update mounted at ' + mount_point )
+    
+      self._hideOriginal( function( err )
+      {
+        if (err) throw err
+
+        console.log('original application hidden')
+        
+        self._copyUpdate( mount_point, function( err, app )
+        {
+          if (err) throw err
+
+          console.log('update applied successfully at ', app)
+                
+          self._removeQuarantine( app, function( err )
+          {
+            if (err) throw err
+            console.log('quarantine removed, cleaning up')
+          })
+                
+          // if either of these fails we're still going to call it a (messy) success
+          self._cleanup()
+          self._unmount( mount_point, function()
+          {            
+            console.log('update complete')
+            callback() 
+          })
+        })
+      }) 
+    })
+  }
+  catch( e ) { throw e }
 }
 
 // Download last App version and save it localy
@@ -409,7 +425,6 @@ Updater.prototype._copyUpdate = function( from, callback )
 {
   var self = this
 
-// ' + self._config.app_name + '
   exec( 'cp -R ' + escapeshell( from + '/' + self._config.app_name + '.app' ) + ' ' + escapeshell( appPath ), function( err )
   {
     callback( err, appPath + '/' + self._config.app_name + '.app' )

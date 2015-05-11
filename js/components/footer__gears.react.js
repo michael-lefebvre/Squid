@@ -6,7 +6,7 @@ var React        = require('react')
   , _            = require('underscore')
   , SquidActions = require('../actions/SquidActions')
   , UserStore    = require('../stores/UserStore')
-  // , UpdaterUi = require('./footer__updater')
+  , UpdaterUi    = require('./footer__updater.react')
 
 module.exports = Gears = React.createClass(
 {
@@ -73,7 +73,10 @@ module.exports = Gears = React.createClass(
   , render: function(){
       return (
         <div className="footer_logged u-cf">
-          <div className="footer__updater"></div>
+          <div className="footer__updater">
+            <UpdaterUi
+             updater={this.props.updater} />
+          </div>
           <div className="footer__gears" onClick={this.handleClick}></div>
         </div>
       )

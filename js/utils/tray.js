@@ -46,5 +46,5 @@ Tray.prototype.set = function( icon )
   if( this._hires )
     icon = icon + '-@2x'
   
-  this._tray.icon = 'icons/' + icon + '.png'
+  this._tray.icon = icon + '.png'
 }

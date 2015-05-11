@@ -3,11 +3,11 @@ var React             = require('react')
   , ClassNames        = require('classNames')
   , UserStore         = require('../stores/UserStore')
   , RepositoriesStore = require('../stores/RepositoriesStore')
+  , Squid             = require('../utils/squid')
   , SquidHeader       = require('./header.react')
   , SquidFooter       = require('./footer.react')
   , SquidRepositories = require('./repositories.react')
   , _                 = require('underscore')
-  , Squid             = require('../utils/squid')
 
 
 // Method to retrieve state from Stores
@@ -49,7 +49,6 @@ var SquidApp = React.createClass(
 
       UserStore.addChangeListener( this._onChange )
       RepositoriesStore.addChangeListener( this._onChange )
-
     }
 
     // Remove change listers from stores
@@ -72,8 +71,6 @@ var SquidApp = React.createClass(
         , 'context_offline': ( !this.state.isOnline )
         , 'container':       true
       })
-
-      this.props.updater.checkRemote()
 
     	return (
         <div className={classes} ref="containerNode">
