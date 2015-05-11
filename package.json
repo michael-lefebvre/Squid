@@ -1,7 +1,7 @@
 {
   "name": "Squid",
   "description": "Squid gives you a quick access to all your Github repositories.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "homepage": "https://github.com/michael-lefebvre/Squid",
   "bugs": "https://github.com/michael-lefebvre/Squid/issues",
@@ -74,14 +74,6 @@
     "watchify": "~2.1.0"
   },
   "scripts": {
-    "start": "nw ./build",
-    "_start": "watchify -o js/bundle.js -v -d .",
-    "_build": "browserify . | uglifyjs -cm > js/bundle.min.js"
-  },
-  "browserify": {
-    "transform": [
-      "reactify",
-      "envify"
-    ]
+    "start": "nw ./build"
   }
 }
