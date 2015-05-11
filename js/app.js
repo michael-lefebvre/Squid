@@ -51,4 +51,16 @@ onload = function()
     <SquidApp updater={updater} />,
     document.getElementById('squid-app')
   )
+
+  // Hide App if user click 
+  // outside panel
+  var _body = document.getElementsByTagName('body')[0]
+
+  _body.addEventListener( 'click', function( event )
+  {
+    if( event.target !== _body )
+      return
+
+    Squid.hide()
+  })
 }
