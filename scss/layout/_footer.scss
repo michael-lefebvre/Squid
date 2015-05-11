@@ -1,6 +1,7 @@
 .footer {
   background-image: -webkit-linear-gradient(#FBFCFF 0%, #ECECEC 100%);
   border-top: 1px solid #B6B6B6;
+  border-radius: 0 0 4px 4px;
   height: $footer-open-height;
   @include position( absolute, null 0 0 0);
   z-index: $zindex-footer;
