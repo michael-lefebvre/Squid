@@ -7,6 +7,7 @@ var React             = require('react')
   , SquidFooter       = require('./footer.react')
   , SquidRepositories = require('./repositories.react')
   , _                 = require('underscore')
+  , Squid             = require('../utils/squid')
 
 
 // Method to retrieve state from Stores
@@ -35,6 +36,17 @@ var SquidApp = React.createClass(
     // Add change listeners to stores
   , componentDidMount: function() 
     {
+      // Auto login
+      var isLogin = Squid.isLogin()
+
+      if( isLogin )
+      {
+        Squid.setCredentials( isLogin )
+
+        // Call Github API
+        UserStore.requestUserApi()
+      }
+
       UserStore.addChangeListener( this._onChange )
       RepositoriesStore.addChangeListener( this._onChange )
 

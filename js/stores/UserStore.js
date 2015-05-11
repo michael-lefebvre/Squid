@@ -71,7 +71,10 @@ var _setProfile = function( profile )
     _profile.set( profile )
   }
   else
+  {
+    Squid.logout()
     _profile.clear()
+  }
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities

@@ -15,12 +15,22 @@ module.exports = Login = React.createClass(
       this._loginPass    = document.getElementById('input-password')
       this._parent       = document.getElementById('squid-login')
 
-      this._loginEmail.focus()
+      if( !this.props.user.isLogged() )
+        this._loginEmail.focus()
 
       this._parent.addEventListener( 'webkitAnimationEnd', function() 
       {
         this._parent.classList.remove('shake')
       }.bind( this ))
+    }
+
+  , componentDidUpdate: function()
+    {
+      if( this.props.user.isLogged() )
+      {
+        this._loginEmail.blur()
+        this._loginPass.blur()
+      }
     }
 
     // Valid inputs
