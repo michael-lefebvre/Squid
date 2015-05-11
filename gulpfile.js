@@ -35,6 +35,7 @@ gulp.task('move', function()
       , 'components/repos.json'
       , 'squid-header.png'
       , 'shell.png'
+      , 'avatar-default.png'
       , 'icons/*'
       , 'js/utils/updater.js'
       , 'VERSION'

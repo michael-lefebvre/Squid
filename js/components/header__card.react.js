@@ -25,7 +25,7 @@ var Card = React.createClass(
       return (
         <div className="card u-cf">
           <div className="card__picture">
-            <img src={user.getAvatar()} width="34"/>
+            <img src={user.getAvatar()} width="34" height="34" />
           </div>
           <div className="card__profile">
             <div className="card__name">

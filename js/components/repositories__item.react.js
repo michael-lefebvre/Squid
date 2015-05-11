@@ -19,7 +19,7 @@ var Item = React.createClass(
       return (
         <li onDoubleClick={this.goToRepository} className={klass}>
           <span className="repo__avatar">
-            <img src={this.props.repo.getAvatar()} width="34"/>
+            <img src={this.props.repo.getAvatar()} width="34" height="34" />
           </span>
           <span className="repo__label">
             <span>

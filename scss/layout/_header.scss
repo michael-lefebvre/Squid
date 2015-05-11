@@ -45,6 +45,11 @@
   height: 34px;
   overflow: hidden;
   width: 34px;
+
+  img {
+    background: url(avatar-default.png) center no-repeat;
+    border-radius: 50%;
+  }
 }
 
 .card__profile {
