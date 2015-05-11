@@ -16,7 +16,12 @@ module.exports = Login = React.createClass(
       this._parent       = document.getElementById('squid-login')
 
       if( !this.props.user.isLogged() )
+      {
+        this._loginEmail.disabled = false
+        this._loginPass.disabled  = false
+
         this._loginEmail.focus()
+      }
 
       this._parent.addEventListener( 'webkitAnimationEnd', function() 
       {
@@ -30,6 +35,13 @@ module.exports = Login = React.createClass(
       {
         this._loginEmail.blur()
         this._loginPass.blur()
+      }
+      else
+      {
+        this._loginEmail.disabled = false
+        this._loginPass.disabled  = false
+
+        // this._loginEmail.focus()
       }
     }
 
@@ -109,15 +121,6 @@ module.exports = Login = React.createClass(
         , _isLogged    = this.props.user.isLogged()
         , _authError   = this.props.user.hasAuthError()
 
-      if( _isLogged )
-      {
-        this._loginEmail.value = ''
-        this._loginPass.value  = ''
-
-        this._loginEmail.blur()
-        this._loginPass.blur()
-      }
-
       if( _authError )
       {
         this._parent.classList.add('shake')
@@ -131,6 +134,18 @@ module.exports = Login = React.createClass(
           _authError )
       {
         this.hideLoading()
+      }
+
+      if( _isLogged )
+      {
+        this._loginEmail.value = ''
+        this._loginPass.value  = ''
+
+        this._loginEmail.blur()
+        this._loginPass.blur()
+
+        this._loginEmail.disabled = true
+        this._loginPass.disabled  = true
       }
 
       return (
