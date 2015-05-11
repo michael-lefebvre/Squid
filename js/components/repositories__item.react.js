@@ -23,6 +23,7 @@ var Item = React.createClass(
           </span>
           <span className="repo__label">
             <span>
+              <span className="repo__privacy"></span>
               <span className="repo__org">
                 {this.props.repo.getOwner()}/
               </span>

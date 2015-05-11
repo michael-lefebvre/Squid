@@ -68,6 +68,14 @@
 
     &.private {
       // background-color: #fff9ea;
+
+      .repo__privacy {
+        background: url(icon-private.svg) center no-repeat;
+        display: inline-block;
+        height: 12px;
+        margin-right: 5px;
+        width: 10px;
+      }
     }
   }
 }
