@@ -65,6 +65,10 @@
     //   position: absolute;
     //   width: 0;
     // }
+
+    &.private {
+      // background-color: #fff9ea;
+    }
   }
 }
 
@@ -76,7 +80,7 @@
     transform: translate(-50%,-50%);
     background: url(shell.png) center no-repeat;
     height: 118px;
-    
+
   }
 }
 

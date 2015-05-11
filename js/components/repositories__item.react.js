@@ -12,8 +12,12 @@ var Item = React.createClass(
 
   , render: function()
     {
+      var klass = ( this.props.repo.get('private') )
+                  ? 'private'
+                  : ''
+
       return (
-        <li onDoubleClick={this.goToRepository}>
+        <li onDoubleClick={this.goToRepository} className={klass}>
           <span className="repo__avatar">
             <img src={this.props.repo.getAvatar()} width="34"/>
           </span>
