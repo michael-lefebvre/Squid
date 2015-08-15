@@ -1,6 +1,9 @@
 # Squid
 
 Squid is a small cool tool that give you a quick access to all your Github repositories, straight from from your Mac OS X menu bar. It was originally coded to learn react.js and the flux architecture. Now the project is seriously moving into a Github issues client. Any helps is welcome.
+  
+![screenshot](http://f.cl.ly/items/0G0w1R1J0a2P102M1G0M/search.jpg)  
+<sub><sup>old screenshot, will be updated soon</sup></sub>
 
 ### Builded on top of:
 
