@@ -1,6 +1,6 @@
 # Squid
 
-Squid is a small cool tool that give you a quick access to all your Github repositories, straight from from your Mac OS X menu bar.
+Squid is a small cool tool that give you a quick access to all your Github repositories, straight from from your Mac OS X menu bar. It was originally coded to learn react.js and the flux architecture. Now the project is seriously moving into a Github issues client. Any helps is welcome.
 
 ### Builded on top of:
 
@@ -15,19 +15,19 @@ Squid is a small cool tool that give you a quick access to all your Github repos
 
 ## Dev Env
 
-After you clone the repository on your workstation, follow these 4 steps to run Squid into developer mode:
+After you cloned this repository to your workstation, follow the next steps to run Squid into developer mode:
 
-* first install Node.js packages:
+* first, install Node.js packages:
 
 		npm install
 		
-* into `package.json` set `debug` property to `true` (optional but useful). if you want a cosy environment to dev rename the `window` node to `windowProd` and rename the `windowDev` node to `window`. this will display the application into something easer to debug.
+* into `./package.json` set `debug` property to `true` (optional but useful). If you want a very cosy developpement environnement  rename the `window` property to `windowProd` and rename the `windowDev` node to `window`. This will force nw.js to display the console.
 	
-* run Gulp command
+* the following Gulp command will concatenate js/less files and wait for any further changes to do it again: 
 
 		gulp
 		
-* Into a new terminal window run:
+* To start the Application, into a new terminal window run:
 
 		npm start
 		
@@ -38,7 +38,7 @@ Run these command
 
 	sh build.sh
 	
-The freshly builded app will be available into the `release` folder.
+The freshly builded `.dmg` will be available into the `release` folder.
 
 ## Roadmap
 
